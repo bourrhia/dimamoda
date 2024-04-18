@@ -53,6 +53,7 @@ function Header() {
             backgroundColor: "#fff",
             webkitTextSizeAdjust: "none",
             margin: 0,
+            maxWidth: "100%",
           }}
         >
           <HeaderXs />
