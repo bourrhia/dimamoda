@@ -235,6 +235,8 @@ export default function FuzzySearchMobile({ children }) {
         lineHeight: "1em",
         minWidth: "200px",
         color: "#0F1111",
+        //
+        width: "90%",
       }}
     >
       <Box
@@ -279,7 +281,7 @@ export default function FuzzySearchMobile({ children }) {
           >
             <Box
               sx={{
-                paddingRight: "90px",
+                // paddingRight: "90px",
                 height: "44px",
                 margin: 0,
                 position: "relative",

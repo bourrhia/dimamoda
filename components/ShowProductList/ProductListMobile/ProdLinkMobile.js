@@ -32,19 +32,9 @@ export default function PrdLinkMobile({
     router.back();
   };
 
-  /* const handleTouchEnd = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
-    router.back();
-  };*/
-
   if (buttonName === "renderedImgXsButt") {
     return (
-      <Box
-        component="a"
-        onClick={() => handleNavProduct(productNum)}
-        // onTouchEnd={() => handleNavProduct(productNum)}
-      >
+      <Box component="a" onClick={() => handleNavProduct(productNum)}>
         {children}
         {navProduct && <ShowLoading />}
       </Box>
@@ -53,11 +43,7 @@ export default function PrdLinkMobile({
 
   if (buttonName === "renderImageXsButt") {
     return (
-      <Box
-        component="a"
-        onClick={() => handleNavProduct(productNum)}
-        //   onTouchEnd={() => handleNavProduct(productNum)}
-      >
+      <Box component="a" onClick={() => handleNavProduct(productNum)}>
         {children}
         {navProduct && <ShowLoading />}
       </Box>
@@ -104,11 +90,7 @@ export default function PrdLinkMobile({
 
   if (buttonName === "prodDescButt") {
     return (
-      <Box
-        component="a"
-        onClick={handleClick}
-        //onTouchEnd={handleTouchEnd}
-      >
+      <Box component="a" onClick={handleClick}>
         {children}
       </Box>
     );

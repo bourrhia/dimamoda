@@ -285,9 +285,8 @@ function HeaderXs() {
             left: "12px",
             pointerEvents: "none",
             width: "27px",
-            height: "25px",
-            cursor: "pointer",
             height: "20px",
+            cursor: "pointer",
           }}
           aria-hidden="true"
           focusable="false"
