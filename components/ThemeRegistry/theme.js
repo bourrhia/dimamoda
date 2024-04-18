@@ -7,9 +7,14 @@ const roboto = Roboto({
   subsets: ["latin"],
   display: "swap",
   fallback: ["system-ui", "arial"],
+  display: "swap",
 });
 
-const inter = Inter({ subsets: ["latin"], fallback: ["system-ui", "arial"] });
+const inter = Inter({
+  subsets: ["latin"],
+  fallback: ["system-ui", "arial"],
+  display: "swap",
+});
 
 const theme = createTheme({
   palette: {
