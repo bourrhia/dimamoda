@@ -11,7 +11,7 @@ export const apiSlice = createApi({
   // All of our requests will have URLs starting with '/api'
   //baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/" }),
   baseQuery: fetchBaseQuery({ baseUrl: process.env.VERCEL_URL }),
-  //tagTypes: ["User", "Orders"],
+
   tagTypes: ["Orders"],
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
