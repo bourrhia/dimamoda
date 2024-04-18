@@ -30,7 +30,6 @@ export default function HeaderButtons({ buttonName, children }) {
       <Box
         component="a"
         onClick={(e) => scrollToTop(e)}
-        onTouchEnd={(e) => scrollToTop(e)}
         aria-label="Haut de la page"
         sx={{
           height: "50px",
@@ -68,7 +67,6 @@ export default function HeaderButtons({ buttonName, children }) {
       <Box
         component="a"
         onClick={handleNavHome}
-        onTouchEnd={handleNavHome}
         sx={{
           padding: 0,
           display: "block",

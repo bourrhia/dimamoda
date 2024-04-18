@@ -33,11 +33,7 @@ export default function CartItemsCount() {
     <>
       {navShowCart && <ShowLoading />}
 
-      <IconButton
-        aria-label="cart"
-        onClick={handleNavShowCart}
-        onTouchEnd={handleNavShowCart}
-      >
+      <IconButton aria-label="cart" onClick={handleNavShowCart}>
         <Badge
           sx={{
             "& .MuiBadge-badge": {

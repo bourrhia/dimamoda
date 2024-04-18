@@ -25,11 +25,7 @@ export default function ProdLinkUpSm({ buttonName, productNum, children }) {
     return (
       <>
         {navProduct && <ShowLoading />}
-        <Box
-          component="a"
-          onClick={handleNavProduct}
-          onTouchEnd={handleNavProduct}
-        >
+        <Box component="a" onClick={handleNavProduct}>
           {children}
         </Box>
       </>
@@ -40,11 +36,7 @@ export default function ProdLinkUpSm({ buttonName, productNum, children }) {
     return (
       <>
         {navProduct && <ShowLoading />}
-        <Box
-          component="a"
-          onClick={handleNavProduct}
-          onTouchEnd={handleNavProduct}
-        >
+        <Box component="a" onClick={handleNavProduct}>
           {children}
         </Box>
       </>
@@ -55,11 +47,7 @@ export default function ProdLinkUpSm({ buttonName, productNum, children }) {
     return (
       <>
         {navProduct && <ShowLoading />}
-        <Box
-          component="a"
-          onClick={handleNavProduct}
-          onTouchEnd={handleNavProduct}
-        >
+        <Box component="a" onClick={handleNavProduct}>
           {children}
         </Box>
       </>
@@ -70,11 +58,7 @@ export default function ProdLinkUpSm({ buttonName, productNum, children }) {
     return (
       <>
         {navProduct && <ShowLoading />}
-        <Box
-          component="a"
-          onClick={() => handleNavProduct(productNum)}
-          onTouchEnd={() => handleNavProduct(productNum)}
-        >
+        <Box component="a" onClick={() => handleNavProduct(productNum)}>
           {children}
         </Box>
       </>

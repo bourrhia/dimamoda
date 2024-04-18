@@ -79,7 +79,6 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
           <Box
             component="a"
             onClick={() => handleNavProduct(product.productId)}
-            onTouchEnd={() => handleNavProduct(product.productId)}
             sx={{
               color: "#111820",
               display: "inline-block",

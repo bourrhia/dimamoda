@@ -24,7 +24,7 @@ export default function HeaderButtons({ buttonName, children }) {
 
   if (buttonName === "handleNavHomeButt") {
     return (
-      <Box component="a" onClick={handleNavHome} onTouchEnd={handleNavHome}>
+      <Box component="a" onClick={handleNavHome}>
         <Box
           sx={{
             position: "relative",

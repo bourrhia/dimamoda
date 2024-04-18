@@ -136,10 +136,6 @@ export default function HeaderButtons({ buttonName, children }) {
           e.preventDefault();
           handleNavRest();
         }}
-        onTouchEnd={(e) => {
-          e.preventDefault();
-          handleNavRest();
-        }}
         sx={{
           display: "flex",
           alignItems: "center",
@@ -168,10 +164,6 @@ export default function HeaderButtons({ buttonName, children }) {
       <Box
         component="a"
         onClick={(e) => {
-          e.preventDefault();
-          handleNavHotVac();
-        }}
-        onTouchEnd={(e) => {
           e.preventDefault();
           handleNavHotVac();
         }}
@@ -206,10 +198,6 @@ export default function HeaderButtons({ buttonName, children }) {
           e.preventDefault();
           handleNavElecmg();
         }}
-        onTouchEnd={(e) => {
-          e.preventDefault();
-          handleNavElecmg();
-        }}
         sx={{
           display: "flex",
           alignItems: "center",
@@ -237,10 +225,6 @@ export default function HeaderButtons({ buttonName, children }) {
       <Box
         component="a"
         onClick={(e) => {
-          e.preventDefault();
-          handleNavJouJeu();
-        }}
-        onTouchEnd={(e) => {
           e.preventDefault();
           handleNavJouJeu();
         }}
@@ -274,10 +258,6 @@ export default function HeaderButtons({ buttonName, children }) {
           e.preventDefault();
           handleNavBebes();
         }}
-        onTouchEnd={(e) => {
-          e.preventDefault();
-          handleNavBebes();
-        }}
         sx={{
           display: "flex",
           alignItems: "center",
@@ -305,10 +285,6 @@ export default function HeaderButtons({ buttonName, children }) {
       <Box
         component="a"
         onClick={(e) => {
-          e.preventDefault();
-          handleNavMaisJar();
-        }}
-        onTouchEnd={(e) => {
           e.preventDefault();
           handleNavMaisJar();
         }}
@@ -342,10 +318,6 @@ export default function HeaderButtons({ buttonName, children }) {
           e.preventDefault();
           handleNavLoisirs();
         }}
-        onTouchEnd={(e) => {
-          e.preventDefault();
-          handleNavLoisirs();
-        }}
         sx={{
           display: "flex",
           alignItems: "center",
@@ -373,10 +345,6 @@ export default function HeaderButtons({ buttonName, children }) {
       <Box
         component="a"
         onClick={(e) => {
-          e.preventDefault();
-          handleNavMarFet();
-        }}
-        onTouchEnd={(e) => {
           e.preventDefault();
           handleNavMarFet();
         }}
@@ -410,10 +378,6 @@ export default function HeaderButtons({ buttonName, children }) {
           e.preventDefault();
           handleNavAntq();
         }}
-        onTouchEnd={(e) => {
-          e.preventDefault();
-          handleNavAntq();
-        }}
         sx={{
           display: "flex",
           alignItems: "center",
@@ -441,10 +405,6 @@ export default function HeaderButtons({ buttonName, children }) {
       <Box
         component="a"
         onClick={(e) => {
-          e.preventDefault();
-          handleNavOcas();
-        }}
-        onTouchEnd={(e) => {
           e.preventDefault();
           handleNavOcas();
         }}

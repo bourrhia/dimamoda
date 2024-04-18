@@ -742,7 +742,6 @@ export const HandlesCheckoutXs = () => {
                     <Box
                       component="a"
                       onClick={handleNavHome}
-                      onTouchEnd={handleNavHome}
                       sx={{
                         zIndex: 1,
                         textDecoration: "underline",
@@ -2752,7 +2751,6 @@ export const HandlesCheckoutXs = () => {
                           component="button"
                           aria-disabled="true"
                           onClick={handleNavHome}
-                          onTouchEnd={handleNavHome}
                           sx={{
                             paddingBlock: "1px",
                             paddingInline: "6px",

@@ -223,9 +223,6 @@ export const HandlesFuzzySearchUpSm = ({ allSearchProducts }) => {
                               onClick={() =>
                                 handleNavProduct(product.productId)
                               }
-                              onTouchEnd={() =>
-                                handleNavProduct(product.productId)
-                              }
                               sx={{
                                 color: "#3665f3",
                                 textDecoration: "none",

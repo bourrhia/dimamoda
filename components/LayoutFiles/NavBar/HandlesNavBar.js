@@ -245,10 +245,6 @@ const HandlesNavBar = ({ children }) => {
               e.preventDefault();
               handleNavHome();
             }}
-            onTouchEnd={(e) => {
-              e.preventDefault();
-              handleNavHome();
-            }}
             sx={{
               borderBottom: "solid 2px #555",
               color: "#333",
@@ -290,10 +286,6 @@ const HandlesNavBar = ({ children }) => {
               e.preventDefault();
               handleNavTendences();
             }}
-            onTouchEnd={(e) => {
-              e.preventDefault();
-              handleNavTendences();
-            }}
             sx={{
               color: "#111820",
               textDecoration: "none",
@@ -328,10 +320,6 @@ const HandlesNavBar = ({ children }) => {
           <Box
             component="a"
             onClick={(e) => {
-              e.preventDefault();
-              handleNavVentesFlash();
-            }}
-            onTouchEnd={(e) => {
               e.preventDefault();
               handleNavVentesFlash();
             }}
@@ -372,10 +360,6 @@ const HandlesNavBar = ({ children }) => {
               e.preventDefault();
               handleNavMode();
             }}
-            onTouchEnd={(e) => {
-              e.preventDefault();
-              handleNavMode();
-            }}
             sx={{
               color: "#111820",
               textDecoration: "none",
@@ -410,10 +394,6 @@ const HandlesNavBar = ({ children }) => {
           <Box
             component="a"
             onClick={(e) => {
-              e.preventDefault();
-              handleNavBtSt();
-            }}
-            onTouchEnd={(e) => {
               e.preventDefault();
               handleNavBtSt();
             }}
@@ -452,10 +432,6 @@ const HandlesNavBar = ({ children }) => {
           <Box
             component="a"
             onClick={(e) => {
-              e.preventDefault();
-              handleNavHighTec();
-            }}
-            onTouchEnd={(e) => {
               e.preventDefault();
               handleNavHighTec();
             }}
@@ -500,10 +476,6 @@ const HandlesNavBar = ({ children }) => {
               e.preventDefault();
               handleNavRest();
             }}
-            onTouchEnd={(e) => {
-              e.preventDefault();
-              handleNavRest();
-            }}
             sx={{
               color: "#111820",
               textDecoration: "none",
@@ -542,10 +514,6 @@ const HandlesNavBar = ({ children }) => {
           <Box
             component="a"
             onClick={(e) => {
-              e.preventDefault();
-              handleNavHotVac();
-            }}
-            onTouchEnd={(e) => {
               e.preventDefault();
               handleNavHotVac();
             }}
@@ -589,10 +557,6 @@ const HandlesNavBar = ({ children }) => {
               e.preventDefault();
               handleNavElecmg();
             }}
-            onTouchEnd={(e) => {
-              e.preventDefault();
-              handleNavElecmg();
-            }}
             sx={{
               color: "#111820",
               textDecoration: "none",
@@ -630,10 +594,6 @@ const HandlesNavBar = ({ children }) => {
           <Box
             component="a"
             onClick={(e) => {
-              e.preventDefault();
-              handleNavJouJeu();
-            }}
-            onTouchEnd={(e) => {
               e.preventDefault();
               handleNavJouJeu();
             }}
@@ -678,10 +638,6 @@ const HandlesNavBar = ({ children }) => {
               e.preventDefault();
               handleNavBebes();
             }}
-            onTouchEnd={(e) => {
-              e.preventDefault();
-              handleNavBebes();
-            }}
             sx={{
               color: "#111820",
               textDecoration: "none",
@@ -723,10 +679,6 @@ const HandlesNavBar = ({ children }) => {
               e.preventDefault();
               handleNavMaisJar();
             }}
-            onTouchEnd={(e) => {
-              e.preventDefault();
-              handleNavMaisJar();
-            }}
             sx={{
               color: "#111820",
               textDecoration: "none",
@@ -752,7 +704,6 @@ const HandlesNavBar = ({ children }) => {
             component="li"
             onMouseLeave={closePlusmenu}
             onTouchMove={handleTouchMove}
-            onTouchEnd={closePlusmenu}
             sx={{
               borderLeft: "solid 1px transparent",
               borderRight: "solid 1px transparent",
@@ -768,7 +719,6 @@ const HandlesNavBar = ({ children }) => {
               onMouseEnter={openPlusmenu}
               onClick={openPlusmenu}
               onMouseOver={openPlusmenu}
-              onTouchEnd={openPlusmenu}
               onTouchStart={openPlusmenu}
               sx={{
                 color: "#111820",
