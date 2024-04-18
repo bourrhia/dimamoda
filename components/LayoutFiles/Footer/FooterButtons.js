@@ -2,11 +2,8 @@
 
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import Link from "next/link";
-import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
-
-import CircularProgress from "@mui/material/CircularProgress";
+import ShowLoading from "../../Loading/ShowLoading";
 
 export default function HeaderButtons({ buttonName, children }) {
   const router = useRouter();
@@ -18,31 +15,9 @@ export default function HeaderButtons({ buttonName, children }) {
       setNavHome(true);
       router.push("/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavHome(false);
     }
-  };
-
-  const ShowLoading = () => {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          //position: "fixed",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: "9999",
-        }}
-      >
-        <CircularProgress size={40} />
-      </Box>
-    );
   };
 
   const scrollToTop = (e) => {
@@ -111,24 +86,6 @@ export default function HeaderButtons({ buttonName, children }) {
         {navHome && <ShowLoading />}
         {children}
       </Box>
-    );
-  }
-
-  if (buttonName === "Butt") {
-    return (
-      <Box>
-        <Link href="/" className="custom-link">
-          {children}
-        </Link>
-      </Box>
-    );
-  }
-
-  if (buttonName === "Butt") {
-    return (
-      <Link href="/" className="custom-link">
-        {children}
-      </Link>
     );
   }
 }

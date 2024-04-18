@@ -1,15 +1,10 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import CircularProgress from "@mui/material/CircularProgress";
-//import QteeSelectXs from "../ProductListAllDevices/QteeSelectXs";
-import ProdLinkMobile from "./ProdLinkMobile";
-//import { Suspense } from "react";
 import ShowLoading from "../../Loading/ShowLoading";
-//import { Suspense } from "react";
-//import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { productAdded } from "../../../redux/features/cart/cartSlice";
@@ -54,11 +49,8 @@ export default function HandlesCartItemXs({
       setIsNavOpenCart(true);
       router.push("/cart/showCartXs");
     } catch (err) {
-      // Handle any errors that might occur during navigation
       console.error("An error occurred while navigating to showCart: ", err);
     } finally {
-      // setIsNavOpenCart(false);
-
       setIsNavOpenCart(true);
     }
   };
@@ -81,8 +73,6 @@ export default function HandlesCartItemXs({
     await handleNavOpenCart();
   };
 
-  ///////////////////////////////////////////
-
   const handleNavCheckout = () => {
     try {
       setIsNavCheckout(true);
@@ -90,7 +80,6 @@ export default function HandlesCartItemXs({
         `/checkout/checkoutXs/?cartProdId=${encodeURIComponent(prodId)}`
       );
     } catch (err) {
-      // Handle any errors that might occur during navigation
       console.error("An error occurred while navigating to checkout : ", err);
     } finally {
       setIsNavCheckout(true);
@@ -122,11 +111,8 @@ export default function HandlesCartItemXs({
           marginBottom: "0.7rem",
         }}
       >
-        {/* Start ImageCartItem */}
-
         {children}
 
-        {/* End ImageCartItem */}
         <Box>
           <Box>
             <Box>
@@ -201,25 +187,19 @@ export default function HandlesCartItemXs({
                       >
                         <Box component="span">Quantité</Box>
                       </Box>
-                      {/* Insert QteeSelectXs */}
+
                       <Box
                         component="select"
-                        // value="2"
-                        //value={selected}
                         value={prodQtee}
                         onChange={handleChange}
                         aria-label="Quantité"
                         id="quantity_select"
-                        ////////
                         name="quantity_select"
-                        // autoComplete="off"
-                        // tabIndex="0"
                         sx={{
                           borderRadius: "8px",
                           border: "1px solid #e5e5e5",
                           color: "#111820",
                           lineHeight: "normal",
-
                           WebkitAppearance: "none",
                           MozAppearance: "none",
                           appearance: "none",
@@ -234,8 +214,6 @@ export default function HandlesCartItemXs({
                           WebkitBoxFlex: 1,
                           flexGrow: 1,
                           verticalAlign: "middle",
-
-                          //
                           overflow: "visible !important",
                         }}
                       >
@@ -247,9 +225,6 @@ export default function HandlesCartItemXs({
                         sx={{
                           margin: "0!important",
                           fontSize: ".875rem",
-
-                          //
-
                           right: "1rem",
                           fontSize: ".65rem",
                           color: "#111820",
@@ -295,19 +270,14 @@ export default function HandlesCartItemXs({
                 width: "100%",
               }}
             >
-              {/*  <ProdLinkMobile buttonName={vAchatImmédiatButt}> */}
               <Box
-                //  component="a"
                 component="button"
                 onClick={clickBuyNow}
                 disabled={isNavCheckout}
                 sx={{
-                  // backgroundColor: "#3665f3",
                   backgroundColor: isNavCheckout ? "#e7e9ec" : "#3665f3",
-                  //color: "#fff",
                   color: isNavCheckout ? "#0F1111" : "#fff",
                   fontWeight: "bold",
-                  // border: "1px solid #3665f3",
                   border: isNavCheckout
                     ? "1px solid #e7e9ec"
                     : "1px solid #3665f3",
@@ -329,7 +299,6 @@ export default function HandlesCartItemXs({
                   minWidth: "auto",
                   outlineColor: "#111820",
                   width: "100%",
-
                   cursor: "pointer",
 
                   ":WebkitAnyLink": {
@@ -340,7 +309,6 @@ export default function HandlesCartItemXs({
                 <Box
                   component="span"
                   sx={{
-                    //  color: "#fff",
                     color: isNavCheckout ? "#0F1111" : "#fff",
                     fontWeight: "bold",
                   }}
@@ -351,10 +319,9 @@ export default function HandlesCartItemXs({
                       size={20}
                       sx={{
                         textAlign: "center",
-                        top: "50%", // Center vertically
-                        left: "50%", // Center horizontally
-                        marginTop: "-10px", // Adjust for half of CircularProgress size
-                        // marginLeft: "-10px", // Adjust for half of CircularProgress size*/
+                        top: "50%",
+                        left: "50%",
+                        marginTop: "-10px",
                         marginLeft: "-5px",
                       }}
                     />
@@ -404,7 +371,6 @@ export default function HandlesCartItemXs({
                   ></CircularProgress>
                 </Box>
               </Box>
-              {/* </ProdLinkMobile> */}
             </Box>
 
             <Box
@@ -414,9 +380,7 @@ export default function HandlesCartItemXs({
                 width: "100%",
               }}
             >
-              {/* <ProdLinkMobile buttonName={vAjouterPanierButt}> */}
               <Box
-                //component="a"
                 component="button"
                 onClick={clickOpenCart}
                 disabled={isNavOpenCart}
@@ -456,7 +420,6 @@ export default function HandlesCartItemXs({
                     fontFamily: "inherit",
                     fontWeight: "normal",
                     textAlign: "center",
-
                     boxSizing: "border-box",
                     margin: 0,
                     padding: 0,
@@ -478,10 +441,9 @@ export default function HandlesCartItemXs({
                       size={20}
                       sx={{
                         textAlign: "center",
-                        top: "50%", // Center vertically
-                        left: "50%", // Center horizontally
-                        marginTop: "-10px", // Adjust for half of CircularProgress size
-                        // marginLeft: "-10px", // Adjust for half of CircularProgress size*/
+                        top: "50%",
+                        left: "50%",
+                        marginTop: "-10px",
                         marginLeft: "-5px",
                       }}
                     />
@@ -510,7 +472,6 @@ export default function HandlesCartItemXs({
                     fontSize: "16px",
                     fontWeight: "normal",
                     textAlign: "center",
-
                     boxSizing: "border-box",
                     margin: 0,
                     padding: 0,
@@ -539,7 +500,6 @@ export default function HandlesCartItemXs({
                           transform: "rotate(360deg)",
                         },
                       },
-                      //  display: "none",
                       WebkitAnimation: "spin 600ms linear infinite",
                       animation: "spin 600ms linear infinite",
                       height: "30px",
@@ -548,7 +508,6 @@ export default function HandlesCartItemXs({
                       fontSize: "16px",
                       fontWeight: "normal",
                       textAlign: "center",
-
                       boxSizing: "border-box",
                       margin: 0,
                       padding: 0,
@@ -566,8 +525,6 @@ export default function HandlesCartItemXs({
                   />
                 </Box>
               </Box>
-
-              {/* </ProdLinkMobile> */}
             </Box>
           </Box>
         </Box>

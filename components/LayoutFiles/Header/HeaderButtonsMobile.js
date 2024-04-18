@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Link from "next/link";
 import IconButton from "@mui/material/IconButton";
@@ -12,18 +12,13 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import Divider from "@mui/material/Divider";
-import { useRouter } from "next/navigation";
 
 export default function HeaderButtonsMobile({
   buttonName,
   drawermenu,
   children,
 }) {
-  const router = useRouter();
-  //const [mobileOpen, setMobileOpen] = React.useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  // const [navMenuDrawer, setNavMenuDrawer] = useState(false);
-  ////////////////// ADD inside ul////////////////////////////
 
   const container =
     typeof window !== "undefined" ? window.document.body : undefined;
@@ -32,41 +27,20 @@ export default function HeaderButtonsMobile({
     setMobileOpen(!mobileOpen);
   };
 
-  /* const handleNavMenuDrawer = (href) => {
-    try {
-      console.log("href :", href);
-      // setMobileOpen(!mobileOpen);
-      setNavMenuDrawer(true);
-      // router.prefetch(`${href}`);
-      // router.push(`${href}`);
-      router.prefetch(href);
-      router.push(href);
-    } catch (error) {
-      // Handle any errors that might occur during navigation
-    } finally {
-      setNavMenuDrawer(false);
-      //   setMobileOpen(!mobileOpen);
-      // setMobileOpen(false);
-    }
-  };*/
-
   const drawer = (
     <Box>
       <Box
         sx={(theme) => ({
-          // necessary for content to be below app bar
           ...theme.mixins.toolbar,
           display: "flex",
           alignItems: "center",
           padding: theme.spacing(0, 1),
-          // padding: "0 8px",
           justifyContent: "flex-end",
         })}
       >
         <IconButton
           color="inherit"
           aria-label="close drawer"
-          // edge="close"
           onClick={handleDrawerToggle}
         >
           <ChevronLeftIcon />
@@ -79,15 +53,7 @@ export default function HeaderButtonsMobile({
         <List component="nav">
           {drawermenu.map((menuitem) => (
             <ListItem disablePadding key={menuitem.id}>
-              <ListItemButton
-                component="a"
-                /*onClick={() => {
-                  // e.preventDefault();
-                  setMobileOpen(false);
-                  handleNavMenuDrawer(menuitem.href);
-                }}*/
-                href={menuitem.href}
-              >
+              <ListItemButton component="a" href={menuitem.href}>
                 <ListItemIcon>{menuitem.icon}</ListItemIcon>
                 <ListItemText primary={menuitem.title} />
               </ListItemButton>
@@ -98,48 +64,7 @@ export default function HeaderButtonsMobile({
     </Box>
   );
 
-  const ShowLoading = () => {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          //position: "fixed",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: "99999",
-        }}
-      >
-        <CircularProgress size={40} />
-      </Box>
-    );
-  };
-
   if (buttonName === "handleNavHomeButt") {
-    return (
-      <Link href="/" className="custom-link">
-        {children}
-      </Link>
-    );
-  }
-
-  if (buttonName === "permIdentityIconButt") {
-    return (
-      <Link
-        href="/"
-        style={{ textDecoration: "none !important" }}
-        //  className="custom-link"
-      >
-        {children}
-      </Link>
-    );
-  }
-
-  if (buttonName === "shoppingCartOutlinedIconButt") {
     return (
       <Link href="/" className="custom-link">
         {children}
@@ -162,7 +87,6 @@ export default function HeaderButtonsMobile({
             display: "initial !important",
             color: "#111820",
             padding: "18px 16px",
-            // padding: "18px 8px",
             "@media (min-width:210px) and (max-width: 270px)": {
               padding: "14px 4px",
             },
@@ -193,7 +117,7 @@ export default function HeaderButtonsMobile({
             open={mobileOpen}
             onClose={handleDrawerToggle}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
             }}
             sx={{
               display: { xs: "block", sm: "none" },

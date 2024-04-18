@@ -16,11 +16,9 @@ async function generateAllPrds() {
   return allPrdsImg;
 }
 
-// Return a list of `params` to populate the [pid] dynamic segment
 export async function generateStaticParams() {
   const allPrdsMrventes = JSON.parse(JSON.stringify(await generateAllPrds()));
 
-  // Get the paths we want to pre-render based on posts
   return allPrdsMrventes.map((prod) => ({
     pid: prod.productId.toString(),
   }));

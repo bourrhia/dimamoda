@@ -11,18 +11,8 @@ async function getPrdImg() {
   return myPrdImg;
 }
 
-/*async function getFourPrdImg() {
-  const client = await clientPromise;
-  const db = client.db(process.env.MONGODB_DB);
-
-  const myFourPrdImg = await db.collection("product").find().limit(4).toArray();
-
-  return myFourPrdImg;
-}*/
-
 export const tendUpSm = async () => {
   const prdsImg = JSON.parse(JSON.stringify(await getPrdImg()));
-  //const fourPrdsImg = JSON.parse(JSON.stringify(await getFourPrdImg()));
 
   return <HandlesTendUpSm prdsImg={prdsImg} />;
 };

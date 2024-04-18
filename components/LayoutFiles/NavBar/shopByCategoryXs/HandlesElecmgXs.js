@@ -1,8 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
-
 import CategoryTitle from "../CategoryTitle";
-
 import PrdListXs1 from "../../../ShowProductList/ProductListMobile/PrdListXs1";
 import PrdListXs2 from "../../../ShowProductList/ProductListMobile/PrdListXs2";
 
@@ -11,7 +9,7 @@ export const HandlesElecmgUpSm = ({ fourPrdsImg }) => {
   return (
     <>
       <CategoryTitle cattitle={ctgTitle} />
-      {/*  Breakpoint only xs */}
+
       <Box
         sx={{
           display: { xs: "block", sm: "none" },

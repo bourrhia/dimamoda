@@ -1,12 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-//import * as React from "react";
 import Box from "@mui/material/Box";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import { useRouter } from "next/navigation";
-import CircularProgress from "@mui/material/CircularProgress";
+import ShowLoading from "../../Loading/ShowLoading";
 
 const HandlesNavBar = ({ children }) => {
   const router = useRouter();
@@ -54,17 +53,12 @@ const HandlesNavBar = ({ children }) => {
     }
   };
 
-  const handleTouchEnd = () => {
-    setNavplusmenu(false);
-  };
-
   const handleNavHome = async () => {
     try {
       setNavHome(true);
       router.prefetch("/");
       router.push("/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavHome(false);
     }
@@ -76,7 +70,6 @@ const HandlesNavBar = ({ children }) => {
       router.prefetch("/shopByCategory/shopByCatUpSm/tendencesCat/");
       router.push("/shopByCategory/shopByCatUpSm/tendencesCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavTendences(false);
     }
@@ -88,23 +81,8 @@ const HandlesNavBar = ({ children }) => {
       router.prefetch("/shopByCategory/shopByCatUpSm/ventesFlashCat/");
       router.push("/shopByCategory/shopByCatUpSm/ventesFlashCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavVenteFlash(false);
-    }
-  };
-
-  //////////////////////////////////////////////
-
-  const handleNavAntq = async () => {
-    try {
-      setNavAntiquite(true);
-      router.prefetch("/shopByCategory/shopByCatUpSm/antiquiteCat/");
-      router.push("/shopByCategory/shopByCatUpSm/antiquiteCat/");
-    } catch (error) {
-      // Handle any errors that might occur during navigation
-    } finally {
-      setNavAntiquite(false);
     }
   };
 
@@ -114,7 +92,6 @@ const HandlesNavBar = ({ children }) => {
       router.prefetch("/shopByCategory/shopByCatUpSm/beauteSanteCat/");
       router.push("/shopByCategory/shopByCatUpSm/beauteSanteCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavBeauteSante(false);
     }
@@ -126,7 +103,6 @@ const HandlesNavBar = ({ children }) => {
       router.prefetch("/shopByCategory/shopByCatUpSm/bebesCat/");
       router.push("/shopByCategory/shopByCatUpSm/bebesCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavBebes(false);
     }
@@ -138,7 +114,6 @@ const HandlesNavBar = ({ children }) => {
       router.prefetch("/shopByCategory/shopByCatUpSm/electromgCat/");
       router.push("/shopByCategory/shopByCatUpSm/electromgCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavElectromg(false);
     }
@@ -150,7 +125,6 @@ const HandlesNavBar = ({ children }) => {
       router.prefetch("/shopByCategory/shopByCatUpSm/highTechCat/");
       router.push("/shopByCategory/shopByCatUpSm/highTechCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavHighTec(false);
     }
@@ -162,7 +136,6 @@ const HandlesNavBar = ({ children }) => {
       router.prefetch("/shopByCategory/shopByCatUpSm/hotelsVacCat/");
       router.push("/shopByCategory/shopByCatUpSm/hotelsVacCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavHotelsVac(false);
     }
@@ -174,7 +147,6 @@ const HandlesNavBar = ({ children }) => {
       router.prefetch("/shopByCategory/shopByCatUpSm/jouetJeuxCat/");
       router.push("/shopByCategory/shopByCatUpSm/jouetJeuxCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavJouetJeux(false);
     }
@@ -186,7 +158,6 @@ const HandlesNavBar = ({ children }) => {
       router.prefetch("/shopByCategory/shopByCatUpSm/loisirsCat/");
       router.push("/shopByCategory/shopByCatUpSm/loisirsCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavLoisirs(false);
     }
@@ -198,21 +169,8 @@ const HandlesNavBar = ({ children }) => {
       router.prefetch("/shopByCategory/shopByCatUpSm/maisJardCat/");
       router.push("/shopByCategory/shopByCatUpSm/maisJardCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavMaisJard(false);
-    }
-  };
-
-  const handleNavMarFet = async () => {
-    try {
-      setNavMariageFete(true);
-      router.prefetch("/shopByCategory/shopByCatUpSm/mariageFeteCat/");
-      router.push("/shopByCategory/shopByCatUpSm/mariageFeteCat/");
-    } catch (error) {
-      // Handle any errors that might occur during navigation
-    } finally {
-      setNavMariageFete(false);
     }
   };
 
@@ -222,21 +180,8 @@ const HandlesNavBar = ({ children }) => {
       router.prefetch("/shopByCategory/shopByCatUpSm/modeCat/");
       router.push("/shopByCategory/shopByCatUpSm/modeCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavMode(false);
-    }
-  };
-
-  const handleNavOcas = async () => {
-    try {
-      setNavOccasion(true);
-      router.prefetch("/shopByCategory/shopByCatUpSm/occasionCat/");
-      router.push("/shopByCategory/shopByCatUpSm/occasionCat/");
-    } catch (error) {
-      // Handle any errors that might occur during navigation
-    } finally {
-      setNavOccasion(false);
     }
   };
 
@@ -246,33 +191,9 @@ const HandlesNavBar = ({ children }) => {
       router.prefetch("/shopByCategory/shopByCatUpSm/restaurantCat/");
       router.push("/shopByCategory/shopByCatUpSm/restaurantCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavRestaurant(false);
     }
-  };
-
-  //////////////////////////////////////////////
-
-  const ShowLoading = () => {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          //position: "fixed",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: "99999",
-        }}
-      >
-        <CircularProgress size={40} />
-      </Box>
-    );
   };
 
   return (
@@ -296,7 +217,6 @@ const HandlesNavBar = ({ children }) => {
 
       <Box
         component="ul"
-        // onMouseDown={closePlusmenu}
         sx={{
           whiteSpace: "nowrap",
           position: "relative",
@@ -304,9 +224,6 @@ const HandlesNavBar = ({ children }) => {
           marginBottom: 0,
           marginTop: 0,
           paddingLeft: 0,
-          //
-          // marginLeft: "20px",
-          // backgroundColor: "#00a0e3",
           backgroundColor: "rgba(0,0,0,0.02)",
         }}
       >
@@ -859,21 +776,17 @@ const HandlesNavBar = ({ children }) => {
                 cursor: "pointer",
 
                 "&:hover": {
-                  // textDecoration: "underline",
                   color: "#0654ba",
                 },
 
                 ":-webkit-any-link": {
                   cursor: "pointer",
                 },
-                //
-                //  width: "100%",
                 maxWidth: "100%",
                 overflow: "hidden",
               }}
             >
               <Box
-                //component="span"
                 sx={{
                   cursor: "pointer",
                   display: "inline-block",
@@ -895,7 +808,6 @@ const HandlesNavBar = ({ children }) => {
                           stroke: "currentColor",
                           strokeWidth: 0,
                           verticalAlign: "middle",
-                          // marginLeft: "2px",
                         }}
                         fontSize="small"
                       ></KeyboardArrowDownIcon>
@@ -908,7 +820,6 @@ const HandlesNavBar = ({ children }) => {
                           stroke: "currentColor",
                           strokeWidth: 0,
                           verticalAlign: "middle",
-                          // marginLeft: "2px",
                         }}
                       ></KeyboardArrowUpIcon>
                     )}

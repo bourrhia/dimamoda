@@ -1,10 +1,7 @@
-//"use client";
-
 import React from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
 import Typography from "@mui/material/Typography";
-import PermIdentityIcon from "@mui/icons-material/PermIdentity";
 import SearchIcon from "@mui/icons-material/Search";
 import HeaderButtons from "./HeaderButtons";
 import FuzzySearch from "./FuzzySearch";
@@ -13,8 +10,6 @@ import CartItemsCount from "../../Cart/CartItemsCount";
 function HeaderUpsm() {
   const vHandleNavHomeButt = "handleNavHomeButt";
   const vUserSessionButt = "userSessionButt";
-  const vPermIdentityIconButt = "permIdentityIconButt";
-  const vShoppingCartOutlinedIconButt = "shoppingCartOutlinedIconButt";
 
   return (
     <>
@@ -42,7 +37,6 @@ function HeaderUpsm() {
                 minWidth: "3px",
                 display: "table-cell",
                 textAlign: "left",
-                //  paddingRight: "8px",
                 paddingRight: "80px",
               }}
             >
@@ -55,7 +49,6 @@ function HeaderUpsm() {
               >
                 <HeaderButtons buttonName={vHandleNavHomeButt}>
                   <Box
-                    //component="a"
                     sx={{
                       display: "block",
                       overflow: "hidden",
@@ -127,7 +120,6 @@ function HeaderUpsm() {
                     sx={{
                       fill: "#767676",
                       pointerEvents: "none",
-                      //stroke: "currentColor",
                       strokeWidth: 0,
                       verticalAlign: "middle",
                     }}
@@ -146,7 +138,6 @@ function HeaderUpsm() {
         aria-label="Compte"
         sx={{
           display: { xs: "none", sm: "block" },
-
           boxShadow: "none",
           backgroundColor: "#fff",
           width: "100%",
@@ -154,10 +145,8 @@ function HeaderUpsm() {
           top: 0,
           left: 0,
           height: "30px",
-
           boxSizing: "initial",
           display: "block",
-          //
           whiteSpace: "nowrap",
           lineHeight: 1,
           fontSize: "14px",
@@ -173,7 +162,6 @@ function HeaderUpsm() {
             listStyle: "none outside none",
             marginTop: "2px",
             textAlign: "left",
-
             height: "100%",
           }}
         >
@@ -190,7 +178,6 @@ function HeaderUpsm() {
               margin: 0,
               textAlign: "-webkit-match-parent",
               whiteSpace: "nowrap",
-
               height: "100%",
             }}
           >
@@ -208,7 +195,6 @@ function HeaderUpsm() {
             margin: 0,
             padding: 0,
             listStyle: "none outside none",
-
             alignItems: "center",
             whiteSpace: "nowrap",
             textAlign: "left",
@@ -224,7 +210,6 @@ function HeaderUpsm() {
               listStyle: "none",
               marginRight: 0,
               boxSizing: "border-box",
-
               verticalAlign: "middle",
               position: "relative",
               whiteSpace: "nowrap",
@@ -238,66 +223,9 @@ function HeaderUpsm() {
             <Box
               sx={{
                 position: "relative",
-
                 display: "inline-block",
               }}
             >
-              {/*
-              <Box
-                sx={{
-                  display: "-webkit-flex",
-                  display: "-ms-flexbox",
-                  display: "flex",
-                  height: "100%",
-                  width: "100%",
-                }}
-              >
-                <HeaderButtons buttonName={vPermIdentityIconButt}>
-                  <Box
-                    //component="button"
-                    sx={{
-                      padding: "3px 17px 2px",
-                      marginRight: "4px",
-                      verticalAlign: "top",
-                      // width: "52px",
-                      backgroundColor: "transparent",
-                      cursor: "pointer",
-                      position: "relative",
-                      borderWidth: "1px 1px 0",
-                      fontSize: "12px",
-                      color: "#333 !important",
-
-                      border: "1px solid transparent",
-                      textDecoration: "none !important",
-                      //
-                      display: "-webkit-flex",
-                      display: "-ms-flexbox",
-                      display: "flex",
-                      alignItems: "center",
-                      position: "relative",
-                    }}
-                  >
-                    <PermIdentityIcon
-                      sx={{
-                        margin: "0 8px",
-                      }}
-                    ></PermIdentityIcon>
-
-                    <Box
-                      component="span"
-                      sx={{
-                        color: "#111820 !important",
-                        textDecoration: "none !important",
-                      }}
-                    >
-                      <Typography variant="caption text">
-                        Se Connecter
-                      </Typography>
-                    </Box>
-                  </Box>
-                </HeaderButtons>
-              </Box> */}
-
               <Box
                 sx={{
                   display: "inline",
@@ -318,7 +246,6 @@ function HeaderUpsm() {
               textAlign: "-webkit-match-parent",
               color: "#333",
               padding: 0,
-              //
               flex: "0 0 auto",
               justifyContent: "flex-end",
               display: "flex",
@@ -328,7 +255,6 @@ function HeaderUpsm() {
             <Box
               sx={{
                 position: "relative",
-                //  display: "inline",
                 display: "inline-block",
               }}
             >
@@ -341,11 +267,7 @@ function HeaderUpsm() {
                   width: "100%",
                 }}
               >
-                {/*  
-                <HeaderButtons buttonName={vShoppingCartOutlinedIconButt}> */}
                 <Box
-                  //component="a"
-
                   sx={{
                     padding: 0,
                     color: "#111820 !important",
@@ -353,14 +275,11 @@ function HeaderUpsm() {
                     borderWidth: "1px 1px 0",
                     position: "relative",
                     fontSize: "12px",
-
                     border: "1px solid transparent",
                     textDecoration: "none !important",
-
                     display: "flex",
                     alignItems: "center",
                     position: "relative",
-
                     backgroundColor: "transparent",
                     border: "none",
                     outline: 0,
@@ -379,7 +298,6 @@ function HeaderUpsm() {
                     <Typography variant="caption text">Panier</Typography>
                   </Box>
                 </Box>
-                {/*</HeaderButtons> */}
               </Box>
             </Box>
           </Box>

@@ -21,15 +21,12 @@ export const ImageCartItemXs = ({ selectedprd }) => {
         transition: "height .3s linear",
         position: "relative",
         listStyle: "none",
-
         alignItems: "center",
         borderRadius: "8px",
         display: "flex",
         justifyContent: "center",
         overflow: "hidden",
-
         WebkitBoxAlign: "center",
-        // alignItems: "center",
         WebkitBoxPack: "center",
 
         "&::after": {
@@ -48,10 +45,9 @@ export const ImageCartItemXs = ({ selectedprd }) => {
         src={image.imgJpg}
         alt="Image"
         fill
-        // sizes="100vw"
         sizes="120px"
         style={{
-          objectFit: "contain", // cover, contain, none
+          objectFit: "contain",
         }}
       />
     </Box>
@@ -98,7 +94,6 @@ export const ImageCartItemXs = ({ selectedprd }) => {
               scrollSnapType: "x mandatory",
               listStyleType: "none",
               minWidth: "100%",
-              //
               margin: 0,
               padding: 0,
             }}
@@ -154,7 +149,6 @@ export const ImageCartItemXs = ({ selectedprd }) => {
                   sx={{
                     color: "#111820",
                     fontSize: "1.25rem",
-
                     lineHeight: "24px",
                     display: "block",
                     fontWeight: 400,

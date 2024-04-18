@@ -1,6 +1,5 @@
 import React from "react";
 import HandlesConfOrderXs from "../../../../../components/Cart/HandlesConfOrderXs";
-//import { useSearchParams } from "next/navigation";
 
 export const ConfirmOrderXs = async ({ params }) => {
   const order_Id = params.orderId;

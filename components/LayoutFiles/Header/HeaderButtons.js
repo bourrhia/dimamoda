@@ -5,8 +5,7 @@ import Box from "@mui/material/Box";
 import Link from "next/link";
 import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
-
-import CircularProgress from "@mui/material/CircularProgress";
+import ShowLoading from "../../Loading/ShowLoading";
 
 export default function HeaderButtons({ buttonName, children }) {
   const router = useRouter();
@@ -18,31 +17,9 @@ export default function HeaderButtons({ buttonName, children }) {
       setNavHome(true);
       router.push("/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavHome(false);
     }
-  };
-
-  const ShowLoading = () => {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          //position: "fixed",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: "9999",
-        }}
-      >
-        <CircularProgress size={40} />
-      </Box>
-    );
   };
 
   if (buttonName === "handleNavHomeButt") {
@@ -79,69 +56,8 @@ export default function HeaderButtons({ buttonName, children }) {
           }}
         >
           <Typography variant="caption text">Bienvenue&nbsp;!&nbsp;</Typography>
-          {/*
-          <Box
-            component="button"
-            sx={{
-              textDecoration: "underline",
-              color: "#0654ba",
-              cursor: "pointer",
-              //
-              backgroundColor: "transparent",
-              border: "none",
-              outline: 0,
-              fontFamily: "default",
-            }}
-          >
-            <Typography variant="caption text">Se Connecter</Typography>
-          </Box> */}
-          {/*
-          &nbsp;
-          <Box
-            component="span"
-            sx={{
-              color: "#000",
-            }}
-          >
-            ou&nbsp;
-            <Box
-              component="button"
-              sx={{
-                textDecoration: "underline",
-                color: "#0654ba",
-                cursor: "pointer",
-                //
-                backgroundColor: "transparent",
-                border: "none",
-                outline: 0,
-                fontFamily: "default",
-              }}
-            >
-              <Typography variant="caption text"> S'incsrire</Typography>
-            </Box>
-          </Box>
-        */}
         </Box>
-        {/*  )} */}
       </>
-    );
-  }
-
-  if (buttonName === "permIdentityIconButt") {
-    return (
-      <Box>
-        <Link href="/" className="custom-link">
-          {children}
-        </Link>
-      </Box>
-    );
-  }
-
-  if (buttonName === "shoppingCartOutlinedIconButt") {
-    return (
-      <Link href="/" className="custom-link">
-        {children}
-      </Link>
     );
   }
 }

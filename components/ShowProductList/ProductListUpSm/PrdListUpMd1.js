@@ -1,12 +1,9 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
-//import ShowCatTitle from "./ShowCatTitle";
 import ShowCatTitle from "../ProductListAllDevices/ShowCatTitle";
 import HandlesSlider from "../../Slider/HandlesSlider";
 import ProdLinkUpsm from "./ProdLinkUpSm";
-import { Suspense } from "react";
-import ShowLoading from "../../Loading/ShowLoading";
 
 export const PrdListUpMd1 = ({ imgmrv }) => {
   const vCatTitle = "Meilleures ventes";
@@ -71,9 +68,6 @@ export const PrdListUpMd1 = ({ imgmrv }) => {
         position: "relative",
         padding: "0 2px 0 0 !important",
         margin: "0 !important",
-
-        //
-
         scrollSnapAlign: "start",
       }}
     >
@@ -92,7 +86,6 @@ export const PrdListUpMd1 = ({ imgmrv }) => {
           }}
         >
           <Box
-            //component="a"
             sx={{
               cursor: "pointer",
 
@@ -108,7 +101,6 @@ export const PrdListUpMd1 = ({ imgmrv }) => {
               },
             }}
           >
-            {/* <Suspense fallback={<ShowLoading />}> */}
             <ProdLinkUpsm
               buttonName={vImgClickUpMd1}
               productNum={image.productId}
@@ -133,7 +125,7 @@ export const PrdListUpMd1 = ({ imgmrv }) => {
                     width: "100%",
                     height: "100%",
                     maxHeight: "100%",
-                    //
+
                     height: "250px",
                     width: "198px",
                   }}
@@ -142,17 +134,14 @@ export const PrdListUpMd1 = ({ imgmrv }) => {
                     src={image.imgJpg}
                     alt="Image"
                     fill
-                    //sizes="100vw"
                     sizes="198px"
-                    // priority={true}
                     style={{
-                      objectFit: "contain", // cover, contain, none
+                      objectFit: "contain",
                     }}
                   />
                 </Box>
               </Box>
             </ProdLinkUpsm>
-            {/* </Suspense> */}
           </Box>
         </Box>
       </Box>

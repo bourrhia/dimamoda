@@ -1,63 +1,13 @@
 import React from "react";
-//import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import SvgIcon from "@mui/material/SvgIcon";
 import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
 import LoopIcon from "@mui/icons-material/Loop";
-//import Typography from "@mui/material/Typography";
-//import Link from "next/link";
-//import { useRouter } from "next/router";
-//import { useDispatch } from "react-redux";
-//import { productAdded } from "../../../redux/features/cart/cartSlice";
-//import { useAddUserIdMutation } from "../../../redux/features/api/apiSlice";
-//import Dialog from "@mui/material/Dialog";
-//import DialogContent from "@mui/material/DialogContent";
-//import DialogTitle from "@mui/material/DialogTitle";
-//import DialogActions from "@mui/material/DialogActions";
-//import DialogContentText from "@mui/material/DialogContentText";
-//import Backdrop from "@mui/material/Backdrop";
-import CloseIcon from "@mui/icons-material/Close";
-//import { useSession } from "next-auth/react";
-///import QteeSelectUpSm from "../ProductListAllDevices/QteeSelectUpSm";
-//import ProdLinkUpSm from "./ProdLinkUpSm";
 import HandlesCartItemUpSm from "./HandlesCartItemUpSm";
 
 export const ProdViewUpSm = ({ selectedprd }) => {
-  // const { data: session } = useSession();
-
-  /*if (session && session.user) {
-    console.log("session userid : ", session.user.id);
-  } else {
-    console.log("Session or user is undefined");
-  }*/
-
-  /*const [openBuyNow, setOpenBuyNow] = useState(false);
-  const [isNavCheckout, setIsNavCheckout] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isNavOpenCart, setIsNavOpenCart] = useState(false);
-  const [isNavSignIn, setIsNavSignIn] = useState(false);
-  const [checkoutWithoutInsc, setCheckoutWithoutInsc] = useState(false);*/
-
-  /* const handleCloseBuyNow = () => {
-    setOpenBuyNow(false);
-  };*/
-
-  // const dispatch = useDispatch();
-
-  //const router = useRouter();
-
-  /*function CustCloseIcon(props) {
-    return (
-      <SvgIcon {...props}>
-        <CloseIcon />
-      </SvgIcon>
-    );
-  }*/
-
-  //const vaAouterPanierButt = "ajouterPanierButt";
-
   const prodId = selectedprd[0]?.productId;
   const prodImage = selectedprd[0]?.imgJpg;
   const prodDesc = selectedprd[0]?.descPrd;
@@ -65,7 +15,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
   const prodEtat = selectedprd[0]?.etatprd;
   const prodQteeDisp = selectedprd[0]?.qteedisp || 0;
   const status = "idle";
-  ////////
 
   const vDescPrd = selectedprd[0]?.descPrd;
   const vMarque = selectedprd[0]?.marque;
@@ -112,8 +61,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
   const vContenance = selectedprd[0]?.contenance;
   const vTension = selectedprd[0]?.tension;
 
-  //let qteemax = selectedprd[0]?.qteedisp || 0;
-
   const CartItemPrixAct = parseFloat(Math.round(prodPrix * 100) / 100).toFixed(
     2
   );
@@ -129,149 +76,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
       </SvgIcon>
     );
   }
-
-  /* useEffect(() => {
-    const handleRouteChangeStart = () => {
-      setIsLoading(true);
-    };
-
-    const handleRouteChangeComplete = () => {
-      setIsLoading(false);
-    };
-
-    router.events.on("routeChangeStart", handleRouteChangeStart);
-    router.events.on("routeChangeComplete", handleRouteChangeComplete);
-
-    return () => {
-      router.events.off("routeChangeStart", handleRouteChangeStart);
-      router.events.off("routeChangeComplete", handleRouteChangeComplete);
-    };
-  }, []); */
-
-  /* const [
-    addUserId,
-    {
-      data: addUserIdData,
-      isLoading: addUserIdIsLoading,
-      isSuccess: addUserIdIsSuccess,
-      error: addUserIdError,
-      isError: addUserIdIsError,
-    },
-  ] = useAddUserIdMutation();*/
-
-  /*const handleNavCheckout = async (userId) => {
-    setIsNavCheckout(true);
-    try {
-      await router.push({
-        pathname: "/checkout",
-        query: {
-          userId: userId,
-        },
-      });
-    } catch (error) {
-    } finally {
-      setIsNavCheckout(false);
-    }
-  };*/
-
-  /* const clickOpenBuyNow = async (e) => {
-    e.preventDefault();
-    if (!session || !session.user) {
-      setOpenBuyNow(true);
-    } else {
-      dispatch(
-        productAdded({
-          prodId,
-          prodImage,
-          prodDesc,
-          prodQtee,
-          prodPrix,
-          prodEtat,
-          status,
-          prodQteeDisp,
-        })
-      );
-
-      if (session.user.id) {
-        await handleNavCheckout(session.user.id);
-      }
-    }
-  };*/
-
-  /*const handleNavOpenCart = async () => {
-    setIsNavOpenCart(true);
-    try {
-      await router.push({
-        pathname: "/cart",
-      });
-    } catch (error) {
-    } finally {
-      setIsNavOpenCart(false);
-    }
-  };*/
-
-  /* const handleNavSignIn = async () => {
-    setIsNavSignIn(true);
-    try {
-      await router.push({
-        pathname: "/auth/authForm",
-      });
-    } catch (error) {
-    } finally {
-      setIsNavSignIn(false);
-      handleCloseBuyNow();
-    }
-  };*/
-
-  /* const clickOpenCart = async (e) => {
-    e.preventDefault();
-    dispatch(
-      productAdded({
-        prodId,
-        prodImage,
-        prodDesc,
-        prodQtee,
-        prodPrix,
-        prodEtat,
-        status,
-        prodQteeDisp,
-      })
-    );
-
-    await handleNavOpenCart();
-  };*/
-
-  /* const clickBuyNoInsc = async () => {
-    try {
-      if (!session || !session.user) {
-        //setOpenBuyNow(false);
-        handleCloseBuyNow();
-        dispatch(
-          productAdded({
-            prodId,
-            prodImage,
-            prodDesc,
-            prodQtee,
-            prodPrix,
-            prodEtat,
-            status,
-            prodQteeDisp,
-          })
-        );
-      }
-    } catch (err) {
-      console.error(
-        "Un probleme est survenu pour acheter sans être inscrit: ",
-        err
-      );
-    } finally {
-      const response = await addUserId().unwrap();
-
-      if (addUserIdIsSuccess || response?.userId) {
-        await handleNavCheckout(response?.userId);
-      }
-    }
-  }; */
 
   function CustPaymentOutlinedIcon(props) {
     return (
@@ -343,7 +147,7 @@ export const ProdViewUpSm = ({ selectedprd }) => {
               wordWrap: "break-word",
               textAlign: "-webkit-match-parent",
               borderCollapse: "collapse",
-              //
+
               height: "550px",
             }}
           >
@@ -351,16 +155,8 @@ export const ProdViewUpSm = ({ selectedprd }) => {
               sx={{
                 display: "block",
                 maxWidth: "390px",
-                // maxHeight: "283.947px",
                 width: "100%!important",
-                //height: "auto!important",
-                //
-                // width: "390px",
-                // height: "283.947px",
-
                 height: "560px",
-                // Add  position: "relative",
-                //position: "absolute",
                 position: "relative",
                 overflow: "hidden",
               }}
@@ -369,10 +165,9 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                 src={image.imgJpg}
                 alt="Image"
                 fill
-                //sizes="100vw"
                 sizes="390px"
                 style={{
-                  objectFit: "contain", // cover, contain, none
+                  objectFit: "contain",
                 }}
               />
             </Box>
@@ -381,357 +176,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
       </Box>
     </Box>
   ));
-
-  /* const ClickAchatMtnt = () => {
-    return (
-      <Dialog
-        open={openBuyNow}
-        onClose={handleCloseBuyNow}
-        aria-labelledby="responsive-dialog-title"
-        // BackdropComponent={Backdrop}
-        //  BackdropProps={{
-        //  onClick: handleCloseBuyNow,
-        //  style: {
-        //    // background: "rgba(15, 17, 17,0.1)",
-         //   background: "rgba(17,24,32,.7)",
-         // },
-        }}
-       // PaperProps={{
-          // Example of new approach
-         // sx: {
-            //background: "rgba(17,24,32,.7)",
-          //  background: "rgba(15, 17, 17,0.1)",
-         // },
-        //}}
-        position="fixed"
-      >
-        <DialogContent>
-          <Box
-            sx={{
-              display: "flex",
-              backgroundColor: "rgba(17,24,32,.7)",
-              bottom: 0,
-              left: 0,
-              overflowY: "auto",
-              //position: "fixed",
-              right: 0,
-              top: 0,
-              willChange: "background-color",
-              zIndex: 100000,
-              alignItems: "flex-start",
-              justifyContent: "center",
-            }}
-          >
-            <Box
-              sx={{
-                maxWidth: "396px",
-                borderRadius: 0,
-
-                "@media screen and (min-width: 769px)": {
-                  maxWidth: "616px",
-                },
-
-                backgroundColor: "#fff",
-                display: "flex",
-                flex: "1 0 auto",
-                flexDirection: "column",
-                minHeight: "55px",
-                willChange: "opacity,transform",
-                // marginTop: "15vh",
-              }}
-            >
-              <Box
-                sx={{
-                  paddingBottom: "10px",
-                  justifyContent: "right",
-                  display: "flex",
-                  flexShrink: 0,
-                  margin: "16px 16px 0",
-                  position: "relative",
-                }}
-              >
-                <Box
-                  component="button"
-                  onClick={handleCloseBuyNow}
-                  sx={{
-                    width: "25px",
-                    height: "25px",
-                    cursor: "pointer",
-                    display: "inline-block",
-                    backgroundColor: "#fff",
-                    alignSelf: "center",
-                    border: 0,
-                    minWidth: "32px",
-                    position: "relative",
-                    zIndex: 1,
-
-                    "&:not(:focus-visible)": {
-                      outline: 0,
-                    },
-
-                    borderRadius: "50%",
-                    boxSizing: "border-box",
-                    margin: 0,
-                    padding: 0,
-                    verticalAlign: "text-bottom",
-                  }}
-                >
-                  <CustCloseIcon
-                    sx={{
-                      maxWidth: "75%",
-                      position: "relative",
-                      //height: "14px",
-                      // width: "14px",
-                      display: "inline-block",
-                      pointerEvents: "none",
-                      stroke: "currentColor",
-                      strokeWidth: 0,
-                      verticalAlign: "middle",
-                    }}
-                  />
-                </Box>
-              </Box>
-              <Box
-                sx={{
-                  margin: 0,
-                  boxSizing: "border-box",
-                  flex: "1 1 auto",
-                  position: "relative",
-                  minHeight: "18px",
-                }}
-              >
-                <Box
-                  sx={{
-                    "&:last-child": {
-                      marginBottom: 0,
-                    },
-
-                    "&:first-child": {
-                      marginTop: 0,
-                    },
-                  }}
-                >
-                  <Box
-                    sx={{
-                      width: "364px",
-                      // padding: "16px 16px",
-                    }}
-                  >
-                    <Box
-                      sx={{
-                        height: "auto",
-                        display: "flex",
-                        ////
-
-                        margin: 0,
-                        padding: 0,
-                        border: 0,
-                        fontWeight: "normal",
-                        fontSize: "100%",
-                      }}
-                    >
-                      <Box
-                        sx={{
-                          marginRight: "16px",
-                          width: "152px",
-                          height: "auto",
-                          position: "relative",
-                        }}
-                      >
-                        <Image
-                          src={prodImage}
-                          alt="Achat immédiat"
-                          // layout="responsive"
-                          // width={152}
-                          // height="auto"
-                          layout="fill"
-                        />
-                      </Box>
-                      <Box
-                        sx={{
-                          height: "78px",
-                          color: "#151e27",
-                          fontSize: "1rem",
-                          //
-                          margin: 0,
-                          padding: 0,
-                          border: 0,
-                          fontWeight: "normal",
-                        }}
-                      >
-                        <Box
-                          component="span"
-                          sx={{
-                            color: "#151e27",
-                          }}
-                        >
-                          {prodDesc}
-                        </Box>
-                      </Box>
-                    </Box>
-                    <Box
-                      sx={{
-                        marginTop: "28px",
-                      }}
-                    >
-                      <Box>
-                        <Box
-                          //component="a"
-                          component="button"
-                          onClick={handleNavSignIn}
-                          disabled={
-                            isLoading ||
-                            isNavCheckout ||
-                            isNavOpenCart ||
-                            isNavSignIn
-                          }
-                          sx={{
-                            backgroundColor: "#3665f3",
-                            fontSize: "1rem",
-                            width: "364px",
-                            borderRadius: "3px",
-                            height: "48px",
-                            lineHeight: 1.563,
-                            fontWeight: "400 !important",
-
-                            color: "#fff",
-                            padding: "9px 0",
-                            border: "1px solid #0053a0",
-                            outlineColor: "#0053a0",
-                            boxSizing: "border-box",
-                            margin: 0,
-                            textAlign: "center",
-                            textDecoration: "none",
-                            verticalAlign: "bottom",
-
-                            display: "inline-block",
-                            minHeight: "40px",
-                            minWidth: "88px",
-
-                            cursor: "pointer",
-                            "a:-webkit-any-link": {
-                              cursor: "pointer",
-                            },
-
-                            maxWidth: "364px !important",
-                            //":root": {
-                             // "--bubble-filter":
-                             //   "drop-shadow(0 2px 7px rgba(0,0,0,0.15)) drop-shadow(0 5px 17px rgba(0,0,0,0.2))",
-                           // },
-                           // filter: "var(--bubble-filter)",
-                            /////
-
-                            // backgroundColor: "transparent",
-                            // border: "none",
-                            // outline: 0,
-                          }}
-                        >
-                          <Box
-                            component="span"
-                            sx={{
-                              display: "block",
-                              maxWidth: "90%",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                            }}
-                          >
-                            <Box
-                              component="span"
-                              sx={{
-                                fontWeight: 400,
-                              }}
-                            >
-                              Se connecter pour finaliser l'achat
-                            </Box>
-                          </Box>
-                        </Box>
-                      </Box>
-                      <Box
-                        sx={{
-                          marginTop: "16px",
-                        }}
-                      >
-                        <Box
-                          //component="a"
-                          // component="button"
-                          // onClick={clickBuyNoInsc}
-                          // disabled={
-                          //  isLoading ||
-                          //  isNavCheckout ||
-                          //  isNavOpenCart ||
-                          //  isNavSignIn
-                          // }
-                          sx={{
-                            borderColor: "#c7c7c7",
-                            color: "#006efc !important",
-                            backgroundColor: "#fff !important",
-                            fontSize: "1rem",
-                            width: "364px",
-                            borderRadius: "3px",
-                            height: "48px",
-                            lineHeight: 1.563,
-                            fontWeight: "400 !important",
-
-                            border: "1px solid",
-                            boxSizing: "border-box",
-                            margin: 0,
-                            textAlign: "center",
-                            textDecoration: "none",
-                            verticalAlign: "bottom",
-
-                            display: "inline-block",
-                            minHeight: "40px",
-                            minWidth: "88px",
-                            padding: "9.5px 20px",
-                            cursor: "pointer",
-                            "a:-webkit-any-link": {
-                              cursor: "pointer",
-                            },
-                            //
-                            maxWidth: "364px !important",
-                            //
-                            //  backgroundColor: "transparent",
-                            // border: "none",
-                            // outline: 0,
-                            // textAlign: "center!important",
-                            // width: "100%!important",
-                          }}
-                        >
-                          <Box
-                            component="span"
-                            sx={
-                              {
-                                // display: 'block',
-                           // maxWidth: '90%',
-                           //  overflow: 'hidden',
-                           //  textOverflow: 'ellipsis',
-                           //  whiteSpace: 'nowrap', 
-                              }
-                            }
-                          >
-                            <Box
-                              component="span"
-                              sx={{
-                                fontWeight: 400,
-                              }}
-                            >
-                              Finaliser l'achat sans être inscrit
-                            </Box>
-                          </Box>
-                        </Box>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-          </Box>
-        </DialogContent>
-      </Dialog>
-    );
-  }; */
 
   const rightCol = (
     <Box
@@ -757,25 +201,13 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                 }}
               >
                 <Box
-                  // component="form"
-                  // method="post"
-                  // id="addToCart"
                   sx={{
                     marginBottom: 0,
-                    // marginBottom: "14px",
                     display: "block",
                     marginTop: "0em",
                   }}
                 >
-                  <Box
-                    sx={
-                      {
-                        // ADD ADD //
-                        // marginLeft: "auto",
-                        //  marginRight: "auto",
-                      }
-                    }
-                  >
+                  <Box>
                     <Box
                       sx={{
                         "&: only-child": {
@@ -841,7 +273,7 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                                       opacity: 0,
                                       color: "#0F1111",
                                       lineHeight: "normal",
-                                      //
+
                                       fontSize: "28px",
                                     }}
                                   >
@@ -941,296 +373,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                                 status={status}
                               ></HandlesCartItemUpSm>
 
-                              {/*
-                              <Box>
-                                <Box
-                                  sx={{
-                                    textAlign: "left!important",
-                                    marginBottom: "12px!important",
-                                  }}
-                                >
-                                  <Box
-                                    sx={{
-                                      padding: "0!important",
-                                      marginBottom: "0!important",
-                                      textAlign: "left!important",
-                                      fontSize: "14px",
-                                      lineHeight: "20px",
-                                    }}
-                                  >
-                                    <Box component="span">
-                                      <Box
-                                        sx={{
-                                          marginBottom: "12px!important",
-                                          width: "100%",
-
-                                          "&::after,&::before": {
-                                            display: "table",
-                                            content: '""',
-                                            lineHeight: 0,
-                                            fontSize: 0,
-                                          },
-
-                                          "&::after": {
-                                            clear: "both",
-                                          },
-                                        }}
-                                      >
-                                        <Box
-                                          sx={{
-                                            width: "100%",
-                                            marginRight: 0,
-                                            float: "left",
-                                            minHight: "1px",
-                                            overflow: "visible",
-                                            textAlign: "left!important",
-                                            display: "block",
-                                          }}
-                                        >
-                                          <Box
-                                            component="span"
-                                            sx={{
-                                              position: "relative",
-                                            }}
-                                          >
-                                            <Box
-                                              component="label"
-                                              htmlFor="quantité"
-                                              sx={{
-                                                paddingRight: "5px",
-                                                opacity: 1,
-                                                zIndex: "auto",
-                                                position: "static",
-                                                display: "inline",
-                                                fontWeight: "normal",
-                                                maxWidth: "100%",
-                                                left: 0,
-                                                paddingLeft: "2px",
-                                                paddingBottom: "2px",
-                                                cursor: "default",
-                                              }}
-                                            >
-                                              Quantité :
-                                            </Box>
-
-                                            <Box
-                                              component="select"
-                                              name="quantité"
-                                              autocomplete="off"
-                                              id="quantité"
-                                              tabindex="0"
-                                              //
-                                              value={prodQtee}
-                                              onChange={handleChange}
-                                              sx={{
-                                                opacity: 1,
-                                                filter: "alpha(opacity=100)",
-                                                zIndex: "auto",
-                                                position: "static",
-                                                display: "inline",
-                                                fontWeight: "normal",
-                                                maxWidth: "100%",
-                                                left: 0,
-                                                border: "1px solid #DDD",
-                                                borderRadius: "4px 4px 4px 4px",
-                                                padding: "3px",
-                                                WebkitTransition:
-                                                  "all .1s linear",
-                                                transition: "all .1s linear",
-                                                lineHeight: "19px",
-                                                color: "#0F1111",
-                                                margin: 0,
-                                                fontSize: "100%",
-                                                verticalAlign: "middle",
-
-                                                ":select:not(:-internal-list-box)":
-                                                  {
-                                                    overflow:
-                                                      "visible !important",
-                                                  },
-                                              }}
-                                            >
-                                              {options}
-                                            </Box>
-                                          </Box>
-                                        </Box>
-                                      </Box>
-                                    </Box>
-                                  </Box>
-                                </Box>
-                              </Box>
-                              <Box>
-                                <Box
-                                  //component="a"
-                                  component="button"
-                                  onClick={clickOpenCart}
-                                  disabled={
-                                    isLoading ||
-                                    isNavCheckout ||
-                                    isNavOpenCart ||
-                                    isNavSignIn
-                                  }
-                                  sx={{
-                                    backgroundColor: "transparent",
-                                    border: "none",
-                                    outline: 0,
-                                    textAlign: "center!important",
-                                    width: "100%!important",
-                                  }}
-                                >
-                                  <Box component="span">
-                                    <Box
-                                      component="span"
-                                      sx={{
-                                        display: "block",
-                                        borderRadius: "20px",
-                                        boxShadow:
-                                          "0 2px 5px 0 rgb(213 217 217 / 50%)",
-                                        background: "#FFD814",
-                                        borderColor: "#FCD200",
-                                        borderStyle: "solid",
-                                        borderWidth: "1px",
-                                        cursor: "pointer",
-                                        padding: 0,
-                                        textAlign: "center",
-                                        textDecoration: "none!important",
-                                        verticalAlign: "middle",
-                                        marginBottom: "8px!important",
-                                      }}
-                                    >
-                                      <Box
-                                        component="span"
-                                        sx={{
-                                          borderRadius: "19px",
-                                          background: "0 0",
-                                          boxShadow: "none",
-                                          display: "block",
-                                          position: "relative",
-                                          overflow: "hidden",
-                                          height: "29px",
-                                          cursor: "pointer",
-                                          textAlign: "center",
-                                        }}
-                                      >
-                                        <Box
-                                          component="span"
-                                          aria-hidden="true"
-                                          sx={{
-                                            color: "#0F1111",
-                                            backgroundColor: "transparent",
-                                            border: 0,
-                                            display: "block",
-                                            fontSize: "13px",
-                                            lineHeight: "29px",
-                                            margin: 0,
-                                            outline: 0,
-                                            padding: "0 10px 0 11px",
-                                            textAlign: "center",
-                                            whiteSpace: "nowrap",
-                                          }}
-                                        >
-                                          Ajouter au panier
-                                        </Box>
-                                      </Box>
-                                    </Box>
-                                  </Box>
-                                </Box>
-                              </Box>
-                              <Box>
-                                <Box>
-                                  <Box
-                                    // component="a"
-                                    component="button"
-                                    onClick={clickOpenBuyNow}
-                                    disabled={
-                                      isLoading ||
-                                      isNavCheckout ||
-                                      isNavOpenCart ||
-                                      isNavSignIn
-                                    }
-                                    sx={{
-                                      backgroundColor: "transparent",
-                                      border: "none",
-                                      outline: 0,
-                                      textAlign: "center!important",
-                                      width: "100%!important",
-                                    }}
-                                  >
-                                    <Box
-                                      sx={{
-                                        marginBottom: "12px!important",
-                                      }}
-                                    >
-                                      <Box
-                                        component="span"
-                                        sx={{
-                                          "&:last-child": {
-                                            marginBottom: 0,
-                                          },
-                                          display: "block",
-                                          borderRadius: "20px",
-                                          boxShadow:
-                                            "0 2px 5px 0 rgb(213 217 217 / 50%)",
-                                          background: "#FFA41C",
-                                          borderColor: "#FF8F00",
-                                          borderStyle: "solid",
-                                          borderWidth: "1px",
-                                          cursor: "pointer",
-                                          padding: 0,
-                                          textAlign: "center",
-                                          textDecoration: "none!important",
-                                          verticalAlign: "middle",
-                                        }}
-                                      >
-                                        <Box
-                                          component="span"
-                                          sx={{
-                                            borderRadius: "19px",
-
-                                            background: "0 0",
-                                            boxShadow: "none",
-
-                                            display: "block",
-                                            position: "relative",
-                                            overflow: "hidden",
-                                            height: "29px",
-                                            cursor: "pointer",
-                                            textAlign: "center",
-                                          }}
-                                        >
-                                          <Box
-                                            component="span"
-                                            aria-hidden="true"
-                                            sx={{
-                                              color: "#0F1111",
-                                              backgroundColor: "transparent",
-                                              border: 0,
-                                              display: "block",
-                                              fontSize: "13px",
-                                              lineHeight: "29px",
-                                              margin: 0,
-                                              outline: 0,
-                                              padding: "0 10px 0 11px",
-                                              textAlign: "center",
-                                              whiteSpace: "nowrap",
-                                            }}
-                                          >
-                                            Acheter maintenant
-                                          </Box>
-                                        </Box>
-                                      </Box>
-                                    </Box>
-                                  </Box>
-                                </Box>
-                              </Box>
-                              */}
-                              <>
-                                {/*
-                                {(!session || !session.user) && (
-                                  <ClickAchatMtnt />
-                                )}
-                                */}
-                              </>
                               <Box>
                                 <Box
                                   component="section"
@@ -1263,7 +405,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                                     component="h2"
                                     sx={{
                                       fontSize: ".875rem",
-                                      //textTransform: "uppercase",
                                       fontWeight: 500,
                                       padding: "8px",
                                       margin: 0,
@@ -1326,7 +467,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                                               fontSize: ".75rem",
                                               WebkitFontSmoothing:
                                                 "antialiased",
-                                              //  color: "#282828",
                                               WebkitTextSizeAdjust: "100%",
                                             }}
                                           >
@@ -1579,28 +719,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                                         >
                                           Retours acceptés dans un délai de 15
                                           jours
-                                          {/*<Box
-                                            // component="a"
-                                            sx={{
-                                              marginLeft: "4px",
-                                              display: "inline",
-                                              color: "#264996",
-                                              textDecoration: "none",
-                                              backgroundColor: "transparent",
-                                              cursor: "pointer",
-
-                                              ":-webkit-any-link": {
-                                                cursor: "pointer",
-                                              },
-
-                                              fontSize: ".75rem",
-                                              WebkitFontSmoothing:
-                                                "antialiased",
-                                              WebkitTextSizeAdjust: "100%",
-                                            }}
-                                          >
-                                            En savoir plus
-                                          </Box> */}
                                         </Box>
                                       </Box>
                                     </Box>
@@ -1957,7 +1075,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
           height: "1px",
           lineHeight: "19px",
           marginBottom: "14px",
-          // marginTop: 0,
           marginTop: "14px",
         }}
       ></Box>
@@ -2005,10 +1122,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                 <Box
                   component="span"
                   sx={{
-                    // fontSize: "28px",
-                    // color: "#0F1111",
-                    // lineHeight: "normal",
-
                     fontWeight: 700,
                     fontSize: "24px",
                     fontStyle: "normal",
@@ -2026,7 +1139,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
               <Box
                 sx={{
                   marginBottom: "8px",
-                  // padding: "5px 0px 5px 0px",
                 }}
               >
                 <Box
@@ -2782,11 +1894,7 @@ export const ProdViewUpSm = ({ selectedprd }) => {
         <Box
           component="h2"
           sx={{
-            // fontWeight: 700,
-            // fontSize: "24px",
-            // lineHeight: "32px",
             paddingBottom: "8px",
-            //  textRendering: "optimizeLegibility",
             marginBottom: "0!important",
           }}
         >
@@ -3013,7 +2121,7 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                 marginBottom: "-18px",
                 zIndex: 0,
                 zoom: 1,
-                // Add
+
                 marginTop: "24px",
 
                 "&::after": {
@@ -3057,7 +2165,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
             }}
           >
             <Box
-              //
               component="p"
               sx={{
                 margin: "0em 0 1em 1em",
@@ -3153,7 +2260,7 @@ export const ProdViewUpSm = ({ selectedprd }) => {
         color: "#282828",
         WebkitFontSmoothing: "antialiased",
         WebkitTextSizeAdjust: "100%",
-        //
+
         backgroundColor: "#f5f5f5",
       }}
     >
@@ -3280,8 +2387,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                       padding: "0px",
                       boxSizing: "border-box",
                       border: "0px",
-                      // fontVariantNumeric: 'inherit',
-                      //fontVariantEastAsian: 'inherit',
                       fontStretch: "inherit",
                       lineHeight: "1.3em",
                       verticalAlign: "baseline",
@@ -3293,7 +2398,7 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                     sx={{
                       paddingLeft: "16px",
                       margin: 0,
-                      //  padding: 0,
+
                       fontSize: "1rem",
                       color: "#282828",
                     }}
@@ -3308,7 +2413,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                           textAlign: "-webkit-match-parent",
                           fontSize: "1rem",
                           color: "#282828",
-                          // Add
 
                           "::marker": {
                             unicodeBidi: "isolate",
@@ -3333,7 +2437,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                           textAlign: "-webkit-match-parent",
                           fontSize: "1rem",
                           color: "#282828",
-                          // Add
 
                           "::marker": {
                             unicodeBidi: "isolate",
@@ -3358,7 +2461,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                           textAlign: "-webkit-match-parent",
                           fontSize: "1rem",
                           color: "#282828",
-                          // Add
 
                           "::marker": {
                             unicodeBidi: "isolate",
@@ -3383,7 +2485,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                           textAlign: "-webkit-match-parent",
                           fontSize: "1rem",
                           color: "#282828",
-                          // Add
 
                           "::marker": {
                             unicodeBidi: "isolate",
@@ -3408,7 +2509,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                           textAlign: "-webkit-match-parent",
                           fontSize: "1rem",
                           color: "#282828",
-                          // Add
 
                           "::marker": {
                             unicodeBidi: "isolate",
@@ -3433,7 +2533,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                           textAlign: "-webkit-match-parent",
                           fontSize: "1rem",
                           color: "#282828",
-                          // Add
 
                           "::marker": {
                             unicodeBidi: "isolate",
@@ -3458,7 +2557,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                           textAlign: "-webkit-match-parent",
                           fontSize: "1rem",
                           color: "#282828",
-                          // Add
 
                           "::marker": {
                             unicodeBidi: "isolate",
@@ -3483,7 +2581,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                           textAlign: "-webkit-match-parent",
                           fontSize: "1rem",
                           color: "#282828",
-                          // Add
 
                           "::marker": {
                             unicodeBidi: "isolate",
@@ -3508,7 +2605,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                           textAlign: "-webkit-match-parent",
                           fontSize: "1rem",
                           color: "#282828",
-                          // Add
 
                           "::marker": {
                             unicodeBidi: "isolate",
@@ -3533,7 +2629,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                           textAlign: "-webkit-match-parent",
                           fontSize: "1rem",
                           color: "#282828",
-                          // Add
 
                           "::marker": {
                             unicodeBidi: "isolate",
@@ -3596,16 +2691,12 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                   sx={{
                     marginBottom: "4px",
                     marginTop: "4px",
-
                     paddingLeft: "16px",
                     paddingBottom: "8px",
-
                     paddingRight: "16px",
                     paddingTop: "8px",
                     listStyle: "none",
                     fontSize: "1rem",
-                    // margin: 0,
-                    //  padding: 0,
                     fontSize: "1rem",
                     color: "#282828",
                   }}

@@ -1,19 +1,11 @@
 "use client";
 
-import React, {
-  useState,
-  useEffect,
-  // useRef,
-  // forwardRef,
-  //useCallback,
-  //  Suspense,
-} from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useGetPrdtsByTermQuery } from "../../redux/features/api/apiSlice";
-//import ProdLinkMobile from "../ShowProductList/ProductListMobile/ProdLinkMobile";
-import CircularProgress from "@mui/material/CircularProgress";
+import ShowLoading from "../Loading/ShowLoading";
 
 export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
   const router = useRouter();
@@ -26,45 +18,7 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
     error: searchProductsError,
   } = useGetPrdtsByTermQuery(allSearchProducts);
 
-  const removeDuplicates = (results) => {
-    const seen = new Set();
-    return results?.filter((result) => {
-      if (!seen.has(result?.productName)) {
-        seen.add(result?.productName);
-        return true;
-      }
-      return false;
-    });
-  };
-
-  //const uniqueSearchResults = removeDuplicates(searchProducts);
-  // const uniqueProductName = uniqueSearchResults[0]?.productName || "";
-  /* const uniqueProductName = uniqueSearchResults
-    ? uniqueSearchResults[0]?.productName
-    : "";*/
-
   const [navProduct, setNavProduct] = useState(false);
-
-  const ShowLoading = () => {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          //position: "fixed",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: "9999",
-        }}
-      >
-        <CircularProgress size={40} />
-      </Box>
-    );
-  };
 
   const handleNavProduct = async (productNum) => {
     try {
@@ -72,15 +26,10 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
       router.push(`/product/productById/${encodeURIComponent(productNum)}`);
       setNavProduct(true);
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavProduct(true);
     }
   };
-
-  ///////////////////////////////////////////////////////////////////////////////////////
-
-  // const vRenderImgXsButt = "renderImgXsButt";
 
   const renderedImg = searchProducts?.map((product, i) => {
     const itemPrixAct = parseFloat(
@@ -98,7 +47,6 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
           width: "100%",
           padding: "8px 0",
           borderBottom: "1px solid #e5e5e5",
-
           position: "relative",
           fontWeight: 400,
           background: "#fff",
@@ -107,7 +55,6 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
           transition: "all .2s ease-out",
           WebkitTransitionProperty: "margin,padding,border",
           TransitionProperty: "margin,padding,border",
-
           display: "list-item",
           textAlign: "-webkit-match-parent",
         }}
@@ -128,9 +75,6 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
             },
           }}
         >
-          {/* <Suspense fallback={<ShowLoading />}> */}
-          {/* <ProdLinkMobile buttonName={vRenderImgXsButt}> */}
-          {/* Add  */}
           {navProduct && <ShowLoading />}
           <Box
             component="a"
@@ -141,10 +85,8 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
               display: "inline-block",
               width: "100%",
               background: "#fff",
-              //textDecoration: "none",
               textDecoration: "none!important",
               cursor: "pointer",
-
               ":-webkit-any-link": {
                 cursor: "pointer",
               },
@@ -160,27 +102,21 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
               <Box
                 sx={{
                   position: "relative",
-
                   "&::before": {
                     content: '""',
                     display: "block",
                     paddingTop: "100%",
                   },
-
-                  //
-
                   top: 0,
                   left: 0,
                   right: 0,
                   bottom: 0,
                   textAlign: "center",
-                  //
                   width: "auto",
                   height: "auto",
                   maxWidth: "100%",
                   maxHeight: "100%",
                   verticalAlign: "middle",
-                  // display: "inline-block",
                 }}
               >
                 <Box
@@ -191,14 +127,12 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
                     right: 0,
                     bottom: 0,
                     textAlign: "center",
-                    //
                     width: "auto",
                     height: "auto",
                     maxWidth: "100%",
                     maxHeight: "100%",
                     verticalAlign: "middle",
                     display: "inline-block",
-
                     boxSizing: "border-box",
                     display: "block",
                     overflow: "hidden",
@@ -207,13 +141,10 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
                   <Image
                     src={product.imgJpg}
                     alt="Image"
-                    // sizes="180px"
                     fill
-                    //sizes="100vw"
                     sizes="142px"
-                    // priority={true}
                     style={{
-                      objectFit: "contain", // cover, contain, none
+                      objectFit: "contain",
                     }}
                   />
                 </Box>
@@ -226,21 +157,15 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
                 float: "left",
                 padding: "0 0 0 12px",
                 color: "#707070",
-
                 "&::before,&::after": {
                   content: '""',
                   display: "table",
                   lineHeight: 0,
                 },
-
                 "&::after": {
                   clear: "both",
                 },
-
-                //
                 paddingTop: "28px",
-                //
-                //height: "140px",
               }}
             >
               <Box
@@ -268,7 +193,6 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
               <Box
                 sx={{
                   fontSize: "12px",
-                  //  marginTop: "16px",
                   marginTop: "0px",
 
                   "&::before,&::after": {
@@ -401,11 +325,8 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
               </Box>
             </Box>
           </Box>
-          {/* </ProdLinkMobile> */}
-          {/* </Suspense> */}
         </Box>
       </Box>
-      //  ));
     );
   });
 

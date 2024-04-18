@@ -2,8 +2,6 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
 import ProdLinkMobile from "./ProdLinkMobile";
-import { Suspense } from "react";
-import ShowLoading from "../../Loading/ShowLoading";
 
 export const AllPrdtsxs1 = ({ imgmrv }) => {
   const vRenderImgXsButt = "renderImgXsButt";
@@ -45,16 +43,13 @@ export const AllPrdtsxs1 = ({ imgmrv }) => {
           },
         }}
       >
-        {/* <Suspense fallback={<ShowLoading />}> */}
         <ProdLinkMobile buttonName={vRenderImgXsButt}>
           <Box
-            // component="a"
             sx={{
               color: "#111820",
               display: "inline-block",
               width: "100%",
               background: "#fff",
-              //textDecoration: "none",
               textDecoration: "none!important",
               cursor: "pointer",
 
@@ -79,21 +74,16 @@ export const AllPrdtsxs1 = ({ imgmrv }) => {
                     display: "block",
                     paddingTop: "100%",
                   },
-
-                  //
-
                   top: 0,
                   left: 0,
                   right: 0,
                   bottom: 0,
                   textAlign: "center",
-                  //
                   width: "auto",
                   height: "auto",
                   maxWidth: "100%",
                   maxHeight: "100%",
                   verticalAlign: "middle",
-                  // display: "inline-block",
                 }}
               >
                 <Box
@@ -104,14 +94,12 @@ export const AllPrdtsxs1 = ({ imgmrv }) => {
                     right: 0,
                     bottom: 0,
                     textAlign: "center",
-                    //
                     width: "auto",
                     height: "auto",
                     maxWidth: "100%",
                     maxHeight: "100%",
                     verticalAlign: "middle",
                     display: "inline-block",
-
                     boxSizing: "border-box",
                     display: "block",
                     overflow: "hidden",
@@ -120,13 +108,10 @@ export const AllPrdtsxs1 = ({ imgmrv }) => {
                   <Image
                     src={image.imgJpg}
                     alt="Image"
-                    // sizes="180px"
                     fill
-                    //sizes="100vw"
                     sizes="142px"
-                    // priority={true}
                     style={{
-                      objectFit: "contain", // cover, contain, none
+                      objectFit: "contain",
                     }}
                   />
                 </Box>
@@ -150,10 +135,7 @@ export const AllPrdtsxs1 = ({ imgmrv }) => {
                   clear: "both",
                 },
 
-                //
                 paddingTop: "28px",
-                //
-                //height: "140px",
               }}
             >
               <Box
@@ -181,7 +163,6 @@ export const AllPrdtsxs1 = ({ imgmrv }) => {
               <Box
                 sx={{
                   fontSize: "12px",
-                  //  marginTop: "16px",
                   marginTop: "0px",
 
                   "&::before,&::after": {
@@ -315,7 +296,6 @@ export const AllPrdtsxs1 = ({ imgmrv }) => {
             </Box>
           </Box>
         </ProdLinkMobile>
-        {/* </Suspense> */}
       </Box>
     </Box>
   ));

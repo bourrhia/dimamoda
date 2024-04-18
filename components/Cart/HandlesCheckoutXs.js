@@ -7,11 +7,9 @@ import { useSelector, useDispatch } from "react-redux";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import SvgIcon from "@mui/material/SvgIcon";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-//
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-//import CheckoutLinkUpSm from "../../../../components/Cart/CheckoutLinkUpSm";
 import { useAddOrdersMutation } from "../../redux/features/api/apiSlice";
 import { setOrderNumber } from "../../redux/features/cart/cartSlice";
 import { useGetOrderShipAdrQuery } from "../../redux/features/api/apiSlice";
@@ -19,9 +17,9 @@ import { useUpdateOrderMutation } from "../../redux/features/api/apiSlice";
 import { useRouter } from "next/navigation";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useSearchParams } from "next/navigation";
-
 import { cartSpinnerAsync } from "../../redux/features/cart/cartSlice";
 import { productRemoved } from "../../redux/features/cart/cartSlice";
+import ShowLoading from "../Loading/ShowLoading";
 
 const useGetShipAdr = (orderId) => {
   const [shipAdr, setShipAdr] = useState(null);
@@ -41,11 +39,6 @@ const useGetShipAdr = (orderId) => {
       setShipAdr(null);
     }
   }, [shipAdrData]);
-
-  /* if (shipAdrIsError) {
-    // console.error("Error fetching order number", shipAdrError);
-    console.log("Error fetching order number", shipAdrError);
-  }*/
 
   return shipAdr;
 };
@@ -92,27 +85,6 @@ export const HandlesCheckoutXs = () => {
     );
   }
 
-  const ShowLoading = () => {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          //position: "fixed",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: "99999",
-        }}
-      >
-        <CircularProgress size={40} />
-      </Box>
-    );
-  };
-
   const [navHome, setNavHome] = useState(false);
 
   const handleNavHome = () => {
@@ -122,7 +94,6 @@ export const HandlesCheckoutXs = () => {
     } catch (err) {
       console.error("An error occurred while navigating to home: ", err);
     } finally {
-      // setNavHome(false);
       setNavHome(true);
     }
   };
@@ -132,18 +103,13 @@ export const HandlesCheckoutXs = () => {
   const handleNavConfirmOrder = (orderId) => {
     try {
       setNavConfirmOrder(true);
-      /* router.push(
-        `/confirmOrderXs/${encodeURIComponent(
-          orderId
-        )}/?cartProdId=${encodeURIComponent(cartItemId)}`
-      );*/
+
       router.push(
         `/confirmOrderXs/${encodeURIComponent(orderId)}/${encodeURIComponent(
           cartItemId
         )}`
       );
     } catch (err) {
-      // Handle any errors that might occur during navigation
       console.error(
         "An error occurred while navigating to confirm an order: ",
         err
@@ -166,7 +132,6 @@ export const HandlesCheckoutXs = () => {
       )
     ) || null;
 
-  //const cart = cartItemId ? Object.values(oneItemCart) : allCart?.products;
   const cart = cartItemId ? oneItemCart : allCart?.products;
   const orderId = allCart?.orderId;
 
@@ -190,8 +155,6 @@ export const HandlesCheckoutXs = () => {
   let vemail = "";
 
   const fetchedShipAdr = useGetShipAdr(orderId);
-
-  //const fetchedShipAdr = orderId ? useGetShipAdr(orderId) : null;
 
   if (fetchedShipAdr) {
     ({
@@ -240,7 +203,6 @@ export const HandlesCheckoutXs = () => {
         .nullable(),
       region: yup
         .string("La région doit être une chaîne de caractères")
-        //.required("Veuillez choisir la région")
         .nullable(),
       codepostal: yup
         .string("Le code postal doit être une chaîne de caractères")
@@ -262,10 +224,6 @@ export const HandlesCheckoutXs = () => {
     const {
       register,
       handleSubmit,
-      //reset,
-      // getValues,
-      // setValue,
-      // watch,
       formState: { isSubmitting, errors },
     } = useForm({
       resolver: yupResolver(adrLivSchema),
@@ -280,11 +238,6 @@ export const HandlesCheckoutXs = () => {
         numerotel: vtel,
         email: vemail,
       },
-
-      //mode: "onChange",
-      // reValidateMode: "onBlur",
-      // reValidateMode: "onChange",
-      //shouldFocusError: true,
     });
 
     const [
@@ -308,54 +261,6 @@ export const HandlesCheckoutXs = () => {
         isError: updateOrderIsError,
       },
     ] = useUpdateOrderMutation();
-
-    const NoticeAdrLiv = ({
-      errAdrLivPrenom,
-      errAdrLivNom,
-      errAdrLivAdresse1,
-      errAdrLivVille,
-      errAdrLivNumerotel,
-      errAdrLivEmail,
-    }) => {
-      let errAdrLiv = "test";
-
-      if (errAdrLivPrenom) {
-        errAdrLiv = errAdrLivPrenom;
-      } else if (errAdrLivNom) {
-        errAdrLiv = errAdrLivNom;
-      } else if (errAdrLivAdresse1) {
-        errAdrLiv = errAdrLivAdresse1;
-      } else if (errAdrLivVille) {
-        errAdrLiv = errAdrLivVille;
-      } else if (errAdrLivEmail) {
-        errAdrLiv = errAdrLivEmail;
-      } else if (errAdrLivNumerotel) {
-        errAdrLiv = errAdrLivNumerotel;
-      }
-
-      return (
-        <Box
-          sx={{
-            WebkitTextSizeAdjust: "100%",
-            color: "#191919",
-            fontSize: "0.875rem",
-          }}
-        >
-          <Box
-            sx={{
-              color: "#dd1e31",
-              textAlign: "center!important",
-              marginBottom: "1rem!important",
-              marginTop: "1rem!important",
-              WebkitTextSizeAdjust: "100%",
-              fontSize: "0.875rem",
-            }}
-          >
-            &nbsp;{errAdrLiv}
-          </Box>
-        </Box>
-      );
-    };
 
     const cartOrder = () => {
       if (cartItemId) {
@@ -411,12 +316,8 @@ export const HandlesCheckoutXs = () => {
       }
     };
 
-    ///////////////////////////////////////////
-
     const onSubmitAdrLiv = async (data, event) => {
       event.preventDefault();
-
-      // alert(JSON.stringify(data));
 
       let totalOrders = carttotalCommande;
       let mtLivOrder = mtLiv;
@@ -458,9 +359,6 @@ export const HandlesCheckoutXs = () => {
           }).unwrap();
 
           if (orderUpdated.successUpd === "ok") {
-            //clickOpenOrder();
-
-            // router.push(`/confirmOrderUpSm/${encodeURIComponent(orderId)}`);
             handleNavConfirmOrder(orderId);
           }
         } else if (cart && notEmptyCart) {
@@ -483,9 +381,6 @@ export const HandlesCheckoutXs = () => {
 
             if (order_Id) {
               dispatch(setOrderNumber(order_Id));
-              // clickOpenOrder();
-
-              // router.push(`/confirmOrderUpSm/${encodeURIComponent(order_Id)}`);
               handleNavConfirmOrder(order_Id);
             }
           } catch (err) {
@@ -502,15 +397,7 @@ export const HandlesCheckoutXs = () => {
       }
     };
 
-    //////////////////////////////////////////
-
-    //let isLoading = item?.status === "loading";
-
     const onDeleteCartItem = async (prodId, prodQuantity) => {
-      // const prodQuantity = parseInt(
-      //  getValues(`cartItemsArray.[${index}].itemQteeUpd`)
-      // );
-
       try {
         await dispatch(
           cartSpinnerAsync({
@@ -526,10 +413,6 @@ export const HandlesCheckoutXs = () => {
         );
       }
     };
-
-    ///////////////////////////////////////////
-
-    // let isLoading = item?.status === "loading";
 
     const HandlesCartItem = ({
       cartItemProdId,
@@ -552,7 +435,6 @@ export const HandlesCheckoutXs = () => {
               fontSize: ".875rem",
               WebkitTextSizeAdjust: "100%",
               color: "#191919",
-              //
               borderBottom: "1px solid #e5e5e5",
             }}
           >
@@ -568,7 +450,6 @@ export const HandlesCheckoutXs = () => {
                 fontSize: ".875rem",
                 WebkitTextSizeAdjust: "100%",
                 color: "#191919",
-                //
               }}
             >
               <Box
@@ -597,22 +478,18 @@ export const HandlesCheckoutXs = () => {
                       marginRight: "1rem",
                       display: "flex",
                       justifyContent: "center",
-                      //
                       position: "relative",
-
                       height: "80px",
-
                       width: "80px",
                     }}
                   >
                     <Image
                       src={cartItemProdImage}
                       alt="Image"
-                      // sizes="100vw"
                       sizes="80px"
                       fill
                       style={{
-                        objectFit: "contain", // cover, contain, none
+                        objectFit: "contain",
                       }}
                     />
                   </Box>
@@ -872,16 +749,11 @@ export const HandlesCheckoutXs = () => {
                         color: "#3665f3",
                         position: "relative",
                         display: "block",
-                        // height: "27px",
-                        // width: "66px",
                         whiteSpace: "nowrap",
-                        //  textIndent: "-9999px",
-
                         cursor: "pointer",
                         ":WebkitAnyLink": {
                           cursor: "pointer",
                         },
-                        //
                         height: "34px",
                         width: "75px",
                         top: "0.75rem",
@@ -892,18 +764,14 @@ export const HandlesCheckoutXs = () => {
                         src="/logopic.svg"
                         alt="logo"
                         sizes="100vw"
-                        //sizes="66px"
                         style={{
                           width: "100%",
                           height: "auto",
-                          //
                           position: "absolute",
                           left: 0,
                         }}
                         width={75}
                         height={34}
-                        // width={66}
-                        // height={27}
                       />
                     </Box>
                   </Box>
@@ -935,25 +803,9 @@ export const HandlesCheckoutXs = () => {
                 position: "absolute",
                 top: "0.1rem",
                 width: "100%",
-
-                //  fontSize: "1.125rem",
-                //  fontWeight: 700,
-                //  pointerEvents: "none",
-                //  position: "absolute",
-                //   textAlign: "center",
-                //   top: "0.1rem",
-                //   width: "100%",
                 display: "block",
-                //  marginBlockStart: "0.67em",
-                //  marginBlockEnd: "0.67em",
-                //  marginInlineStart: "0px",
-                //  marginInlineEnd: "0px",
                 WebkitTextSizeAdjust: "100%",
                 color: "#191919",
-                // marginBlockStart: "1em",
-                // marginBlockEnd: "1em",
-                // marginInlineStart: "50px",
-                // marginInlineEnd: "50px",
               }}
             >
               Passer la commande
@@ -967,9 +819,7 @@ export const HandlesCheckoutXs = () => {
                 fontSize: ".875rem",
                 WebkitTextSizeAdjust: "100%",
                 color: "#191919",
-                //
                 border: "1px solid #e5e5e5",
-
                 "&:last-child": {
                   borderBottom: "none",
                 },
@@ -983,7 +833,6 @@ export const HandlesCheckoutXs = () => {
                 <Box
                   component="section"
                   sx={{
-                    // border: "none",
                     padding: 0,
                     marginTop: "1rem",
                     backgroundColor: "#fff",
@@ -992,8 +841,6 @@ export const HandlesCheckoutXs = () => {
                     WebkitTextSizeAdjust: "100%",
                     color: "#191919",
                     fontSize: ".875rem",
-                    //
-
                     marginBottom: "2rem",
                   }}
                 >
@@ -1024,7 +871,6 @@ export const HandlesCheckoutXs = () => {
                             <Box>
                               {cart.map((cartitem, index) => (
                                 <HandlesCartItem
-                                  // key={cartitem?.id}
                                   key={index}
                                   cartItemProdId={cartitem?.prodId}
                                   cartItemProdImage={cartitem?.prodImage}
@@ -1167,9 +1013,6 @@ export const HandlesCheckoutXs = () => {
                                       }}
                                     >
                                       <Box
-                                        // component="form"
-                                        //  name="addresse-liv-form"
-                                        //  onSubmit={handleSubmit(onSubmitAdrLiv)}
                                         sx={{
                                           background: "#fff",
                                         }}
@@ -1211,17 +1054,14 @@ export const HandlesCheckoutXs = () => {
                                                   component="label"
                                                   htmlFor="prenom"
                                                   sx={{
-                                                    // transform: "translateY(16px)",
                                                     transform:
                                                       "scale(.75) translateY(3px)",
-                                                    // transform:"scale(.75) translateY(2px)",
                                                     pointerEvents: "none",
                                                     transition:
                                                       "transform .3s ease,bottom .3s ease",
                                                     fontSize: "0.875rem",
                                                     backgroundColor:
                                                       "transparent",
-                                                    //  color: "#191919",
                                                     color: errors.prenom
                                                       ? "#e0103a"
                                                       : "#191919",
@@ -1257,8 +1097,6 @@ export const HandlesCheckoutXs = () => {
                                                     aria-describedby="prenom-label"
                                                     id="prenom"
                                                     type="text"
-                                                    // name="prenom"
-                                                    // data-validations="REQUIRED_FIELD"
                                                     placeholder="Prénom"
                                                     {...register("prenom")}
                                                     sx={{
@@ -1276,7 +1114,6 @@ export const HandlesCheckoutXs = () => {
                                                       appearance: "none",
                                                       backgroundColor:
                                                         "#f7f7f7",
-                                                      //borderColor: "#8f8f8f",
                                                       borderColor: errors.prenom
                                                         ? "#e0103a"
                                                         : "#8f8f8f",
@@ -1284,7 +1121,6 @@ export const HandlesCheckoutXs = () => {
                                                       borderStyle: "solid",
                                                       borderWidth: "1px",
                                                       boxSizing: "border-box",
-                                                      //color: "#191919",
                                                       color: errors.prenom
                                                         ? "#e0103a"
                                                         : "#191919",
@@ -1296,17 +1132,14 @@ export const HandlesCheckoutXs = () => {
                                                         outline: errors.prenom
                                                           ? "none"
                                                           : null,
-
                                                         backgroundColor:
                                                           errors.prenom
                                                             ? "none"
                                                             : "#F7FEFF",
-
                                                         borderColor:
                                                           errors.prenom
                                                             ? "none"
                                                             : "#007185",
-
                                                         boxShadow: errors.prenom
                                                           ? "none"
                                                           : "0 0 0 3px #C8F3FA,0 1px 2px rgba(15,17,17,.15) inset",
@@ -1346,10 +1179,8 @@ export const HandlesCheckoutXs = () => {
                                                   component="label"
                                                   htmlFor="nom"
                                                   sx={{
-                                                    // transform: "translateY(16px)",
                                                     transform:
                                                       "scale(.75) translateY(3px)",
-                                                    // transform:"scale(.75) translateY(2px)",
                                                     pointerEvents: "none",
                                                     transition:
                                                       "transform .3s ease,bottom .3s ease",
@@ -1392,8 +1223,6 @@ export const HandlesCheckoutXs = () => {
                                                     aria-describedby="nom-label"
                                                     id="nom"
                                                     type="text"
-                                                    // name="nom"
-                                                    // data-validations="REQUIRED_FIELD"
                                                     placeholder="Nom"
                                                     {...register("nom")}
                                                     sx={{
@@ -1411,7 +1240,6 @@ export const HandlesCheckoutXs = () => {
                                                       appearance: "none",
                                                       backgroundColor:
                                                         "#f7f7f7",
-                                                      // borderColor: "#8f8f8f",
                                                       borderColor: errors.nom
                                                         ? "#e0103a"
                                                         : "#8f8f8f",
@@ -1419,7 +1247,6 @@ export const HandlesCheckoutXs = () => {
                                                       borderStyle: "solid",
                                                       borderWidth: "1px",
                                                       boxSizing: "border-box",
-                                                      //color: "#191919",
                                                       color: errors.nom
                                                         ? "#e0103a"
                                                         : "#191919",
@@ -1431,16 +1258,13 @@ export const HandlesCheckoutXs = () => {
                                                         outline: errors.nom
                                                           ? "none"
                                                           : null,
-
                                                         backgroundColor:
                                                           errors.nom
                                                             ? "none"
                                                             : "#F7FEFF",
-
                                                         borderColor: errors.nom
                                                           ? "none"
                                                           : "#007185",
-
                                                         boxShadow: errors.nom
                                                           ? "none"
                                                           : "0 0 0 3px #C8F3FA,0 1px 2px rgba(15,17,17,.15) inset",
@@ -1480,10 +1304,8 @@ export const HandlesCheckoutXs = () => {
                                                   component="label"
                                                   htmlFor="adresse1"
                                                   sx={{
-                                                    // transform: "translateY(16px)",
                                                     transform:
                                                       "scale(.75) translateY(3px)",
-                                                    // transform:"scale(.75) translateY(2px)",
                                                     pointerEvents: "none",
                                                     transition:
                                                       "transform .3s ease,bottom .3s ease",
@@ -1526,8 +1348,6 @@ export const HandlesCheckoutXs = () => {
                                                     aria-describedby="adresse1-label"
                                                     id="adresse1"
                                                     type="text"
-                                                    //  name="adresse1"
-                                                    //data-validations="REQUIRED_FIELD"
                                                     placeholder="Adresse"
                                                     {...register("adresse1")}
                                                     sx={{
@@ -1545,7 +1365,6 @@ export const HandlesCheckoutXs = () => {
                                                       appearance: "none",
                                                       backgroundColor:
                                                         "#f7f7f7",
-                                                      //borderColor: "#8f8f8f",
                                                       borderColor:
                                                         errors.adresse1
                                                           ? "#e0103a"
@@ -1554,7 +1373,6 @@ export const HandlesCheckoutXs = () => {
                                                       borderStyle: "solid",
                                                       borderWidth: "1px",
                                                       boxSizing: "border-box",
-                                                      //color: "#191919",
                                                       color: errors.adresse1
                                                         ? "#e0103a"
                                                         : "#191919",
@@ -1562,22 +1380,18 @@ export const HandlesCheckoutXs = () => {
                                                       fontFamily: "inherit",
                                                       verticalAlign: "middle",
                                                       margin: 0,
-
                                                       "&:focus": {
                                                         outline: errors.adresse1
                                                           ? "none"
                                                           : null,
-
                                                         backgroundColor:
                                                           errors.adresse1
                                                             ? "none"
                                                             : "#F7FEFF",
-
                                                         borderColor:
                                                           errors.adresse1
                                                             ? "none"
                                                             : "#007185",
-
                                                         boxShadow:
                                                           errors.adresse1
                                                             ? "none"
@@ -1618,17 +1432,14 @@ export const HandlesCheckoutXs = () => {
                                                   component="label"
                                                   htmlFor="adresse2"
                                                   sx={{
-                                                    // transform: "translateY(16px)",
                                                     transform:
                                                       "scale(.75) translateY(3px)",
-                                                    // transform:"scale(.75) translateY(2px)",
                                                     pointerEvents: "none",
                                                     transition:
                                                       "transform .3s ease,bottom .3s ease",
                                                     fontSize: "0.875rem",
                                                     backgroundColor:
                                                       "transparent",
-                                                    //color: "#191919",
                                                     color: errors.adresse2
                                                       ? "#e0103a"
                                                       : "#191919",
@@ -1664,8 +1475,6 @@ export const HandlesCheckoutXs = () => {
                                                     aria-describedby="adresse2-label"
                                                     id="adresse2"
                                                     type="text"
-                                                    // name="adresse2"
-                                                    // data-validations="REQUIRED_FIELD"
                                                     placeholder="Adresse (suite)"
                                                     {...register("adresse2")}
                                                     sx={{
@@ -1683,7 +1492,6 @@ export const HandlesCheckoutXs = () => {
                                                       appearance: "none",
                                                       backgroundColor:
                                                         "#f7f7f7",
-                                                      // borderColor: "#8f8f8f",
                                                       borderColor:
                                                         errors.adresse2
                                                           ? "#e0103a"
@@ -1700,22 +1508,18 @@ export const HandlesCheckoutXs = () => {
                                                       fontFamily: "inherit",
                                                       verticalAlign: "middle",
                                                       margin: 0,
-
                                                       "&:focus": {
                                                         outline: errors.adresse2
                                                           ? "none"
                                                           : null,
-
                                                         backgroundColor:
                                                           errors.adresse2
                                                             ? "none"
                                                             : "#F7FEFF",
-
                                                         borderColor:
                                                           errors.adresse2
                                                             ? "none"
                                                             : "#007185",
-
                                                         boxShadow:
                                                           errors.adresse2
                                                             ? "none"
@@ -1756,17 +1560,14 @@ export const HandlesCheckoutXs = () => {
                                                   component="label"
                                                   htmlFor="ville"
                                                   sx={{
-                                                    // transform: "translateY(16px)",
                                                     transform:
                                                       "scale(.75) translateY(3px)",
-                                                    // transform:"scale(.75) translateY(2px)",
                                                     pointerEvents: "none",
                                                     transition:
                                                       "transform .3s ease,bottom .3s ease",
                                                     fontSize: "0.875rem",
                                                     backgroundColor:
                                                       "transparent",
-                                                    //color: "#191919",
                                                     color: errors.ville
                                                       ? "#e0103a"
                                                       : "#191919",
@@ -1802,8 +1603,6 @@ export const HandlesCheckoutXs = () => {
                                                     aria-describedby="ville-label"
                                                     id="ville"
                                                     type="text"
-                                                    // name="ville"
-                                                    // data-validations="REQUIRED_FIELD"
                                                     placeholder="Ville"
                                                     {...register("ville")}
                                                     sx={{
@@ -1821,7 +1620,6 @@ export const HandlesCheckoutXs = () => {
                                                       appearance: "none",
                                                       backgroundColor:
                                                         "#f7f7f7",
-                                                      //borderColor: "#8f8f8f",
                                                       borderColor: errors.ville
                                                         ? "#e0103a"
                                                         : "#8f8f8f",
@@ -1829,7 +1627,6 @@ export const HandlesCheckoutXs = () => {
                                                       borderStyle: "solid",
                                                       borderWidth: "1px",
                                                       boxSizing: "border-box",
-                                                      //color: "#191919",
                                                       color: errors.ville
                                                         ? "#e0103a"
                                                         : "#191919",
@@ -1841,17 +1638,14 @@ export const HandlesCheckoutXs = () => {
                                                         outline: errors.ville
                                                           ? "none"
                                                           : null,
-
                                                         backgroundColor:
                                                           errors.ville
                                                             ? "none"
                                                             : "#F7FEFF",
-
                                                         borderColor:
                                                           errors.ville
                                                             ? "none"
                                                             : "#007185",
-
                                                         boxShadow: errors.ville
                                                           ? "none"
                                                           : "0 0 0 3px #C8F3FA,0 1px 2px rgba(15,17,17,.15) inset",
@@ -1900,17 +1694,14 @@ export const HandlesCheckoutXs = () => {
                                                     component="label"
                                                     htmlFor="region"
                                                     sx={{
-                                                      // transform: "translateY(16px)",
                                                       transform:
                                                         "scale(.75) translateY(3px)",
-                                                      // transform:"scale(.75) translateY(2px)",
                                                       pointerEvents: "none",
                                                       transition:
                                                         "transform .3s ease,bottom .3s ease",
                                                       fontSize: "0.875rem",
                                                       backgroundColor:
                                                         "transparent",
-                                                      //color: "#191919",
                                                       color: errors.region
                                                         ? "#e0103a"
                                                         : "#191919",
@@ -1922,7 +1713,6 @@ export const HandlesCheckoutXs = () => {
                                                       top: 0,
                                                       transformOrigin: "left",
                                                       whiteSpace: "nowrap",
-                                                      // width: "calc(100% - 40px)",
                                                       width: "100%",
                                                       zIndex: 1,
                                                       WebkitTextSizeAdjust:
@@ -1960,7 +1750,6 @@ export const HandlesCheckoutXs = () => {
                                                         appearance: "none",
                                                         backgroundColor:
                                                           "#f7f7f7",
-                                                        // borderColor: "#8f8f8f",
                                                         borderColor:
                                                           errors.region
                                                             ? "#e0103a"
@@ -1968,7 +1757,6 @@ export const HandlesCheckoutXs = () => {
                                                         borderRadius: "8px",
                                                         borderStyle: "solid",
                                                         borderWidth: "1px",
-                                                        // color: "inherit",
                                                         color: errors.region
                                                           ? "#e0103a"
                                                           : "inherit",
@@ -1985,17 +1773,14 @@ export const HandlesCheckoutXs = () => {
                                                           outline: errors.region
                                                             ? "none"
                                                             : null,
-
                                                           backgroundColor:
                                                             errors.region
                                                               ? "none"
                                                               : "#F7FEFF",
-
                                                           borderColor:
                                                             errors.region
                                                               ? "none"
                                                               : "#007185",
-
                                                           boxShadow:
                                                             errors.region
                                                               ? "none"
@@ -2011,18 +1796,13 @@ export const HandlesCheckoutXs = () => {
                                                         pointerEvents: "none",
                                                         position: "absolute",
                                                         right: "16px",
-                                                        //right: "8px",
                                                         top: 0,
-
                                                         top: "4px",
-                                                        // width: "12px",
-
                                                         display: "inline-block",
                                                         fill: "currentColor",
                                                         stroke: "currentColor",
                                                         strokeWidth: 0,
                                                         verticalAlign: "middle",
-
                                                         color: "#191919",
                                                       }}
                                                     ></CustExpandMoreIcon>
@@ -2060,17 +1840,14 @@ export const HandlesCheckoutXs = () => {
                                                   component="label"
                                                   htmlFor="codepostal"
                                                   sx={{
-                                                    // transform: "translateY(16px)",
                                                     transform:
                                                       "scale(.75) translateY(3px)",
-                                                    // transform:"scale(.75) translateY(2px)",
                                                     pointerEvents: "none",
                                                     transition:
                                                       "transform .3s ease,bottom .3s ease",
                                                     fontSize: "0.875rem",
                                                     backgroundColor:
                                                       "transparent",
-                                                    //color: "#191919",
                                                     color: errors.codepostal
                                                       ? "#e0103a"
                                                       : "#191919",
@@ -2106,8 +1883,6 @@ export const HandlesCheckoutXs = () => {
                                                     aria-describedby="codepostal-label"
                                                     id="codepostal"
                                                     type="text"
-                                                    // name="codepostal"
-                                                    //  data-validations="REQUIRED_FIELD"
                                                     placeholder="Code postale"
                                                     {...register("codepostal")}
                                                     sx={{
@@ -2125,7 +1900,6 @@ export const HandlesCheckoutXs = () => {
                                                       appearance: "none",
                                                       backgroundColor:
                                                         "#f7f7f7",
-                                                      // borderColor: "#8f8f8f",
                                                       borderColor:
                                                         errors.codepostal
                                                           ? "#e0103a"
@@ -2147,17 +1921,14 @@ export const HandlesCheckoutXs = () => {
                                                           errors.codepostal
                                                             ? "none"
                                                             : null,
-
                                                         backgroundColor:
                                                           errors.codepostal
                                                             ? "none"
                                                             : "#F7FEFF",
-
                                                         borderColor:
                                                           errors.codepostal
                                                             ? "none"
                                                             : "#007185",
-
                                                         boxShadow:
                                                           errors.codepostal
                                                             ? "none"
@@ -2199,17 +1970,14 @@ export const HandlesCheckoutXs = () => {
                                                   component="label"
                                                   htmlFor="email"
                                                   sx={{
-                                                    // transform: "translateY(16px)",
                                                     transform:
                                                       "scale(.75) translateY(3px)",
-                                                    // transform:"scale(.75) translateY(2px)",
                                                     pointerEvents: "none",
                                                     transition:
                                                       "transform .3s ease,bottom .3s ease",
                                                     fontSize: "0.875rem",
                                                     backgroundColor:
                                                       "transparent",
-                                                    //color: "#191919",
                                                     color: errors.email
                                                       ? "#e0103a"
                                                       : "#191919",
@@ -2241,14 +2009,10 @@ export const HandlesCheckoutXs = () => {
                                                   <Box
                                                     component="input"
                                                     autoComplete="email"
-                                                    // autocapitalize="none"
                                                     aria-required="true"
                                                     aria-describedby="email-label"
                                                     id="email"
-                                                    // type="text"
                                                     type="email"
-                                                    //   name="email"
-                                                    // data-validations="REQUIRED_FIELD"
                                                     placeholder="Adresse email"
                                                     {...register("email")}
                                                     sx={{
@@ -2266,7 +2030,6 @@ export const HandlesCheckoutXs = () => {
                                                       appearance: "none",
                                                       backgroundColor:
                                                         "#f7f7f7",
-                                                      // borderColor: "#8f8f8f",
                                                       borderColor: errors.email
                                                         ? "#e0103a"
                                                         : "#8f8f8f",
@@ -2274,7 +2037,6 @@ export const HandlesCheckoutXs = () => {
                                                       borderStyle: "solid",
                                                       borderWidth: "1px",
                                                       boxSizing: "border-box",
-                                                      // color: "#191919",
                                                       color: errors.email
                                                         ? "#e0103a"
                                                         : "#191919",
@@ -2286,17 +2048,14 @@ export const HandlesCheckoutXs = () => {
                                                         outline: errors.email
                                                           ? "none"
                                                           : null,
-
                                                         backgroundColor:
                                                           errors.email
                                                             ? "none"
                                                             : "#F7FEFF",
-
                                                         borderColor:
                                                           errors.email
                                                             ? "none"
                                                             : "#007185",
-
                                                         boxShadow: errors.email
                                                           ? "none"
                                                           : "0 0 0 3px #C8F3FA,0 1px 2px rgba(15,17,17,.15) inset",
@@ -2337,10 +2096,8 @@ export const HandlesCheckoutXs = () => {
                                                   component="label"
                                                   htmlFor="numerotel"
                                                   sx={{
-                                                    // transform: "translateY(16px)",
                                                     transform:
                                                       "scale(.75) translateY(3px)",
-                                                    // transform:"scale(.75) translateY(2px)",
                                                     pointerEvents: "none",
                                                     transition:
                                                       "transform .3s ease,bottom .3s ease",
@@ -2382,9 +2139,7 @@ export const HandlesCheckoutXs = () => {
                                                     aria-invalid="false"
                                                     aria-describedby="numerotel-label"
                                                     id="numerotel"
-                                                    // name="numerotel"
                                                     autoComplete="numerotel"
-                                                    // data-validations="REQUIRED_FIELD"
                                                     data-required="true"
                                                     maxLength="15"
                                                     type="tel"
@@ -2405,7 +2160,6 @@ export const HandlesCheckoutXs = () => {
                                                       appearance: "none",
                                                       backgroundColor:
                                                         "#f7f7f7",
-                                                      // borderColor: "#8f8f8f",
                                                       borderColor:
                                                         errors.numerotel
                                                           ? "#e0103a"
@@ -2414,7 +2168,6 @@ export const HandlesCheckoutXs = () => {
                                                       borderStyle: "solid",
                                                       borderWidth: "1px",
                                                       boxSizing: "border-box",
-                                                      //color: "#191919",
                                                       color: errors.numerotel
                                                         ? "#e0103a"
                                                         : "#191919",
@@ -2427,17 +2180,14 @@ export const HandlesCheckoutXs = () => {
                                                           errors.numerotel
                                                             ? "none"
                                                             : null,
-
                                                         backgroundColor:
                                                           errors.numerotel
                                                             ? "none"
                                                             : "#F7FEFF",
-
                                                         borderColor:
                                                           errors.numerotel
                                                             ? "none"
                                                             : "#007185",
-
                                                         boxShadow:
                                                           errors.numerotel
                                                             ? "none"
@@ -2458,12 +2208,6 @@ export const HandlesCheckoutXs = () => {
                                                 </Box>
                                               </Box>
                                             </Box>
-
-                                            <Box sx={{}}></Box>
-                                            <Box sx={{}}></Box>
-                                            <Box sx={{}}></Box>
-                                            <Box sx={{}}></Box>
-                                            <Box sx={{}}></Box>
                                           </Box>
                                         </Box>
 
@@ -2508,7 +2252,6 @@ export const HandlesCheckoutXs = () => {
                                                   fontSize: "1rem",
                                                   minHeight: "48px",
                                                   padding: "13px 20px",
-                                                  // backgroundColor: "#3665f3",
                                                   backgroundColor:
                                                     addOrdersIsLoading ||
                                                     updateOrderIsLoading ||
@@ -2516,8 +2259,6 @@ export const HandlesCheckoutXs = () => {
                                                     navConfirmOrder
                                                       ? "#e7e9ec"
                                                       : "#3665f3",
-
-                                                  //borderColor: "#3665f3",
                                                   borderColor:
                                                     addOrdersIsLoading ||
                                                     updateOrderIsLoading ||
@@ -2525,7 +2266,6 @@ export const HandlesCheckoutXs = () => {
                                                     navConfirmOrder
                                                       ? "#e7e9ec"
                                                       : "#3665f3",
-                                                  //color: "#fff",
                                                   color:
                                                     addOrdersIsLoading ||
                                                     updateOrderIsLoading ||
@@ -2554,12 +2294,10 @@ export const HandlesCheckoutXs = () => {
                                                     size={20}
                                                     sx={{
                                                       textAlign: "center",
-                                                      //position: "absolute", // Position absolute to overlap the button
-
-                                                      top: "50%", // Center vertically
-                                                      left: "50%", // Center horizontally
-                                                      marginTop: "-10px", // Adjust for half of CircularProgress size
-                                                      marginLeft: "-10px", // Adjust for half of CircularProgress size*/
+                                                      top: "50%",
+                                                      left: "50%",
+                                                      marginTop: "-10px",
+                                                      marginLeft: "-10px",
                                                     }}
                                                   />
                                                 )}
@@ -2580,9 +2318,6 @@ export const HandlesCheckoutXs = () => {
 
                     <Box
                       sx={{
-                        // marginBottom: "1.5rem",
-                        // paddingBottom: "1rem",
-                        //paddingTop: "1rem",
                         borderBottom: "1px solid #e5e5e5",
                       }}
                     ></Box>
@@ -2623,8 +2358,6 @@ export const HandlesCheckoutXs = () => {
                           display: "flex",
                           justifyContent: "space-between",
                           width: "100%",
-                          // margin: 0,
-                          //padding: 0,
                           marginBlockStart: "1em",
                           marginBlockEnd: "1em",
                           marginInlineStart: "0px",
@@ -2708,8 +2441,6 @@ export const HandlesCheckoutXs = () => {
                           display: "flex",
                           justifyContent: "space-between",
                           width: "100%",
-                          //  margin: 0,
-                          //  padding: 0,
                           marginBlockStart: "1em",
                           marginBlockEnd: "1em",
                           marginInlineStart: "0px",
@@ -2747,7 +2478,6 @@ export const HandlesCheckoutXs = () => {
                         <Box
                           component="dd"
                           sx={{
-                            // margin: 0,
                             minWidth: "100px",
                             paddingBottom: "0.25rem",
                             textAlign: "right",
@@ -2926,7 +2656,6 @@ export const HandlesCheckoutXs = () => {
                           sx={{
                             paddingBlock: "1px",
                             paddingInline: "6px",
-                            //backgroundColor: "#767676",
                             backgroundColor:
                               addOrdersIsLoading ||
                               updateOrderIsLoading ||
@@ -2935,7 +2664,6 @@ export const HandlesCheckoutXs = () => {
                                 ? "#e7e9ec"
                                 : "#767676",
                             width: "100%",
-                            // borderColor: "#c7c7c7",
                             borderColor:
                               addOrdersIsLoading ||
                               updateOrderIsLoading ||
@@ -2943,7 +2671,6 @@ export const HandlesCheckoutXs = () => {
                               navConfirmOrder
                                 ? "#e7e9ec"
                                 : "#c7c7c7",
-                            //color: "#fff",
                             color:
                               addOrdersIsLoading ||
                               updateOrderIsLoading ||
@@ -2972,7 +2699,6 @@ export const HandlesCheckoutXs = () => {
                           <Box
                             component="span"
                             sx={{
-                              // color: "#fff",
                               color:
                                 addOrdersIsLoading ||
                                 updateOrderIsLoading ||
@@ -2990,12 +2716,9 @@ export const HandlesCheckoutXs = () => {
                                 sx={{
                                   marginRight: "10px",
                                   marginTop: "-6px",
-                                  // height: "19.25px",
-                                  // width: "15.39px",
                                   display: "inline-block",
                                   verticalAlign: "middle",
                                   textAlign: "center",
-                                  //  color: "#fff",
                                   color:
                                     addOrdersIsLoading ||
                                     updateOrderIsLoading ||
@@ -3015,12 +2738,9 @@ export const HandlesCheckoutXs = () => {
                                 size={20}
                                 sx={{
                                   textAlign: "center",
-                                  //position: "absolute", // Position absolute to overlap the button
-
-                                  top: "50%", // Center vertically
-                                  left: "50%", // Center horizontally
-                                  marginTop: "-10px", // Adjust for half of CircularProgress size
-                                  // marginLeft: "-10px", // Adjust for half of CircularProgress size*/
+                                  top: "50%",
+                                  left: "50%",
+                                  marginTop: "-10px",
                                   marginLeft: "-5px",
                                 }}
                               />
@@ -3031,9 +2751,8 @@ export const HandlesCheckoutXs = () => {
                         <Box
                           component="button"
                           aria-disabled="true"
-                          // type="submit"
-                          //data-test-id="CONFIRM_AND_PAY_BUTTON"
                           onClick={handleNavHome}
+                          onTouchEnd={handleNavHome}
                           sx={{
                             paddingBlock: "1px",
                             paddingInline: "6px",
@@ -3073,8 +2792,6 @@ export const HandlesCheckoutXs = () => {
                                 sx={{
                                   marginRight: "10px",
                                   marginTop: "-6px",
-                                  // height: "19.25px",
-                                  // width: "15.39px",
                                   display: "inline-block",
                                   verticalAlign: "middle",
                                   textAlign: "center",
@@ -3088,12 +2805,9 @@ export const HandlesCheckoutXs = () => {
                                 size={20}
                                 sx={{
                                   textAlign: "center",
-                                  //position: "absolute", // Position absolute to overlap the button
-
-                                  top: "50%", // Center vertically
-                                  left: "50%", // Center horizontally
-                                  marginTop: "-10px", // Adjust for half of CircularProgress size
-                                  // marginLeft: "-10px", // Adjust for half of CircularProgress size*/
+                                  top: "50%",
+                                  left: "50%",
+                                  marginTop: "-10px",
                                   marginLeft: "-5px",
                                   color: "#fff",
                                 }}
@@ -3105,7 +2819,6 @@ export const HandlesCheckoutXs = () => {
                     </Box>
                   </Box>
                 </Box>
-                <Box sx={{}}></Box>
               </Box>
             </Box>
           </Box>

@@ -1,11 +1,8 @@
 "use client";
 
-//import React from "react";
 import React, { useState, useEffect, forwardRef } from "react";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -17,18 +14,14 @@ import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { useRouter } from "next/navigation";
 import { useGetOrderNumberQuery } from "../../redux/features/api/apiSlice";
-
 import { allProductRemoved } from "../../redux/features/cart/cartSlice";
 import { orderRemoved } from "../../redux/features/cart/cartSlice";
 import { productRemoved } from "../../redux/features/cart/cartSlice";
 import { useDispatch } from "react-redux";
-import CircularProgress from "@mui/material/CircularProgress";
-import { useSearchParams } from "next/navigation";
+import ShowLoading from "../Loading/ShowLoading";
 
 const useGetOrderNum = (orderId) => {
-  // const [orderData, setOrderData] = useState(null);
   const [orderNumber, setOrderNumber] = useState(null);
-  // const { data, isError, error } = useGetOrderNumberQuery(orderId);
 
   const {
     data: getOrderNumberData,
@@ -51,11 +44,7 @@ const useGetOrderNum = (orderId) => {
   return orderNumber;
 };
 
-// const HandlesCompleteOrder = ({ params }) => {
-//const orderNum = JSON.parse(JSON.stringify(params));
 const HandlesCompleteOrder = ({ order_Id, cartItemId }) => {
-  // const order_Id = params.orderId;
-
   const router = useRouter();
 
   const [openDialogConfOrder, setOpenDialogConfOrder] = useState(true);
@@ -63,16 +52,11 @@ const HandlesCompleteOrder = ({ order_Id, cartItemId }) => {
 
   const orderNumber = useGetOrderNum(order_Id);
 
-  //const searchParams = useSearchParams();
-
-  // const cartItemId = searchParams.get("cartProdId") || null;
-
   const prodId = parseInt(cartItemId) || null;
 
   const dispatch = useDispatch();
 
   const removeAllItems = () => {
-    // dispatch(allProductRemoved());
     if (prodId) {
       dispatch(productRemoved(prodId));
       dispatch(orderRemoved());
@@ -81,34 +65,9 @@ const HandlesCompleteOrder = ({ order_Id, cartItemId }) => {
     }
   };
 
-  /* const removeOneItem = (prodId) => {
-    dispatch(productRemoved(prodId));
-    dispatch(orderRemoved());
-  };*/
-
-  /* useEffect(
-    () => {
-      if (cartItemId) {
-        removeOneItem(cartItemId);
-      } else {
-        removeAllItems();
-      }
-    },
-    [cartItemId]
-  );*/
-
-  /*useEffect(() => {
-    removeAllItems();
-  }, []);*/
-
   const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
-
-  /* const handleCloseConf = () => {
-    setOpenDialogConfOrder(false);
-    router.push("/");
-  };*/
 
   const handleCloseConf = () => {
     try {
@@ -124,24 +83,7 @@ const HandlesCompleteOrder = ({ order_Id, cartItemId }) => {
 
   return (
     <>
-      {navHome && (
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            //position: "fixed",
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            zIndex: "9999",
-          }}
-        >
-          <CircularProgress size={40} />
-        </Box>
-      )}
+      {navHome && <ShowLoading />}
       {orderNumber ? (
         <Dialog
           fullScreen
@@ -199,24 +141,7 @@ const HandlesCompleteOrder = ({ order_Id, cartItemId }) => {
                 Finalisation de la commande
               </Typography>
             </Toolbar>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                position: "fixed",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-              }}
-            >
-              <CircularProgress size={40} />
-            </Box>
-            {/*<Typography variant="h6" component="div">
-              Désolé, on n'a pas pu finaliser votre commande. Veuillez
-              recommencer de nouveau.
-            </Typography> */}
+            <ShowLoading />
           </AppBar>
         </Dialog>
       )}

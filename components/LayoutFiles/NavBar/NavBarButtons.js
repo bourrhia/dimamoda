@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import { useRouter } from "next/navigation";
-import CircularProgress from "@mui/material/CircularProgress";
-import Link from "next/link";
+import ShowLoading from "../../Loading/ShowLoading";
 
 export default function HeaderButtons({ buttonName, children }) {
   const router = useRouter();
@@ -26,7 +24,6 @@ export default function HeaderButtons({ buttonName, children }) {
       router.prefetch("/shopByCategory/shopByCatUpSm/antiquiteCat/");
       router.push("/shopByCategory/shopByCatUpSm/antiquiteCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavAntiquite(false);
     }
@@ -38,7 +35,6 @@ export default function HeaderButtons({ buttonName, children }) {
       router.prefetch("/shopByCategory/shopByCatUpSm/bebesCat/");
       router.push("/shopByCategory/shopByCatUpSm/bebesCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavBebes(false);
     }
@@ -50,7 +46,6 @@ export default function HeaderButtons({ buttonName, children }) {
       router.prefetch("/shopByCategory/shopByCatUpSm/electromgCat/");
       router.push("/shopByCategory/shopByCatUpSm/electromgCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavElectromg(false);
     }
@@ -62,7 +57,6 @@ export default function HeaderButtons({ buttonName, children }) {
       router.prefetch("/shopByCategory/shopByCatUpSm/hotelsVacCat/");
       router.push("/shopByCategory/shopByCatUpSm/hotelsVacCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavHotelsVac(false);
     }
@@ -74,7 +68,6 @@ export default function HeaderButtons({ buttonName, children }) {
       router.prefetch("/shopByCategory/shopByCatUpSm/jouetJeuxCat/");
       router.push("/shopByCategory/shopByCatUpSm/jouetJeuxCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavJouetJeux(false);
     }
@@ -86,7 +79,6 @@ export default function HeaderButtons({ buttonName, children }) {
       router.prefetch("/shopByCategory/shopByCatUpSm/loisirsCat/");
       router.push("/shopByCategory/shopByCatUpSm/loisirsCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavLoisirs(false);
     }
@@ -98,7 +90,6 @@ export default function HeaderButtons({ buttonName, children }) {
       router.prefetch("/shopByCategory/shopByCatUpSm/maisJardCat/");
       router.push("/shopByCategory/shopByCatUpSm/maisJardCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavMaisJard(false);
     }
@@ -110,7 +101,6 @@ export default function HeaderButtons({ buttonName, children }) {
       router.prefetch("/shopByCategory/shopByCatUpSm/mariageFeteCat/");
       router.push("/shopByCategory/shopByCatUpSm/mariageFeteCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavMariageFete(false);
     }
@@ -122,7 +112,6 @@ export default function HeaderButtons({ buttonName, children }) {
       router.prefetch("/shopByCategory/shopByCatUpSm/occasionCat/");
       router.push("/shopByCategory/shopByCatUpSm/occasionCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavOccasion(false);
     }
@@ -134,31 +123,9 @@ export default function HeaderButtons({ buttonName, children }) {
       router.prefetch("/shopByCategory/shopByCatUpSm/restaurantCat/");
       router.push("/shopByCategory/shopByCatUpSm/restaurantCat/");
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavRestaurant(false);
     }
-  };
-
-  const ShowLoading = () => {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          //position: "fixed",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: "99999",
-        }}
-      >
-        <CircularProgress size={40} />
-      </Box>
-    );
   };
 
   if (buttonName === "RestaurantIconButt") {
@@ -174,9 +141,6 @@ export default function HeaderButtons({ buttonName, children }) {
           handleNavRest();
         }}
         sx={{
-          /* href="/shopByCategory/shopByCatUpSm/restaurantCat/"
-        className="custom-link"
-        style={{*/
           display: "flex",
           alignItems: "center",
           width: "100%",

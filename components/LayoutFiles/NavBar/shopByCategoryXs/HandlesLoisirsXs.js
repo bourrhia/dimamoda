@@ -9,7 +9,6 @@ export const HandlesLoisirsUpSm = ({ fourPrdsImg }) => {
   return (
     <>
       <CategoryTitle cattitle={ctgTitle} />
-      {/*  Breakpoint only xs */}
       <Box
         sx={{
           display: { xs: "block", sm: "none" },

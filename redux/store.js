@@ -11,12 +11,10 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-//import storage from "redux-persist/lib/storage";
 import storage from "./storage";
 import cartReducer from "./features/cart/cartSlice";
 import { apiSlice } from "./features/api/apiSlice";
-//import { createWrapper } from "next-redux-wrapper";
-import { createWrapper, HYDRATE } from "next-redux-wrapper";
+import { HYDRATE } from "next-redux-wrapper";
 
 const combinedReducer = combineReducers({
   cart: cartReducer,
@@ -30,13 +28,11 @@ const persistConfig = {
   blacklist: [apiSlice.reducerPath],
 };
 
-//const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 const rootReducer = (state, action) => {
   if (action.type === HYDRATE) {
     const nextState = {
-      ...state, // use previous state
-      ...action.payload, // apply delta from hydration
+      ...state,
+      ...action.payload,
     };
     return nextState;
   } else {
@@ -50,7 +46,6 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      // Redux persist
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
@@ -58,8 +53,4 @@ export const store = configureStore({
   devTools: process.env.NEXT_PUBLIC_NODE_ENV !== "production",
 });
 
-//const makeStore = () => store;
-
 export let persistor = persistStore(store);
-
-//export const wrapper = createWrapper(makeStore);

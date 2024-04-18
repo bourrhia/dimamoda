@@ -18,7 +18,6 @@ import { useUpdateOrderMutation } from "../../redux/features/api/apiSlice";
 import { useRouter } from "next/navigation";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useSearchParams } from "next/navigation";
-import useScrollY from "../../lib/useScrollY";
 
 const useGetShipAdr = (orderId) => {
   const [shipAdr, setShipAdr] = useState(null);
@@ -37,10 +36,6 @@ const useGetShipAdr = (orderId) => {
     }
   }, [shipAdrData]);
 
-  /* if (shipAdrIsError) {
-    console.error("Error fetching order number", shipAdrError);
-  }*/
-
   return shipAdr;
 };
 
@@ -56,28 +51,32 @@ export const HandlesCheckoutUpSm = () => {
 
   const cartItemId = searchParams.get("cartProdId") || null;
 
-  //const scrollY = useScrollY();
+  const [navHome, setNavHome] = useState(false);
+
+  const handleNavHome = () => {
+    try {
+      setNavHome(true);
+      router.push("/");
+    } catch (err) {
+      console.error("An error occurred while navigating to home: ", err);
+    } finally {
+      setNavHome(true);
+    }
+  };
 
   const handleNavConfirmOrder = (orderId) => {
     try {
-      /* router.push(
-        `/confirmOrderUpSm/${encodeURIComponent(
-          orderId
-        )}/?cartProdId=${encodeURIComponent(cartItemId)}`
-      );*/
       router.push(
         `/confirmOrderUpSm/${encodeURIComponent(orderId)}/${encodeURIComponent(
           cartItemId
         )}`
       );
     } catch (err) {
-      // Handle any errors that might occur during navigation
       console.error(
         "An error occurred while navigating to confirm an order: ",
         err
       );
     } finally {
-      // setNavConfirmOrder(false);
       setNavConfirmOrder(true);
     }
   };
@@ -134,7 +133,7 @@ export const HandlesCheckoutUpSm = () => {
   const orderId = allCart?.orderId;
 
   const existOneItemCart = cartItemId
-    ? oneItemCart.prodId
+    ? oneItemCart?.prodId
       ? true
       : false
     : false;
@@ -201,7 +200,6 @@ export const HandlesCheckoutUpSm = () => {
         .nullable(),
       region: yup
         .string("La région doit être une chaîne de caractères")
-        //.required("Veuillez choisir la région")
         .nullable(),
       codepostal: yup
         .string("Le code postal doit être une chaîne de caractères")
@@ -237,11 +235,6 @@ export const HandlesCheckoutUpSm = () => {
         numerotel: vtel,
         email: vemail,
       },
-
-      // mode: "onChange",
-      // reValidateMode: "onBlur",
-      // reValidateMode: "onChange",
-      //shouldFocusError: true,
     });
 
     const [
@@ -347,13 +340,6 @@ export const HandlesCheckoutUpSm = () => {
       }
     };
 
-    /* const getTotalPrice = () => {
-      return cart.reduce(
-        (accumulator, item) => accumulator + item.prodQtee * item.prodPrix,
-        0
-      );
-    };*/
-
     const TotalCartPrice = parseFloat(
       Math.round(getTotalPrice() * 100) / 100
     ).toFixed(2);
@@ -374,10 +360,6 @@ export const HandlesCheckoutUpSm = () => {
         );
       }
     };
-
-    /* const getItemsCount = () => {
-      return cart.reduce((accumulator, item) => accumulator + item.prodQtee, 0);
-    };*/
 
     const onSubmitAdrLiv = async (data, event) => {
       event.preventDefault();
@@ -522,24 +504,18 @@ export const HandlesCheckoutUpSm = () => {
                         marginRight: "1.5rem",
                         display: "flex",
                         justifyContent: "center",
-                        //
                         position: "relative",
-                        //height: "180px",
-                        // height: "100%",
-                        //height: "180px",
                         height: "160px",
-                        //width: "100%",
                         width: "95px",
                       }}
                     >
                       <Image
                         src={cartItemProdImage}
                         alt="Image"
-                        // sizes="100vw"
                         sizes="95px"
                         fill
                         style={{
-                          objectFit: "contain", // cover, contain, none
+                          objectFit: "contain",
                         }}
                       />
                     </Box>
@@ -643,17 +619,7 @@ export const HandlesCheckoutUpSm = () => {
                             Quantitée : &nbsp;{cartItemProdQtee}
                           </Box>
                         </Box>
-                        {/* <Box
-                          component="a"
-                          sx={{
-                            textDecoration: "underline",
-                            color: "#3665f3",
 
-                            ":-webkit-any-link": {
-                              cursor: "pointer",
-                            },
-                          }}
-                        > */}
                         <CheckoutLinkUpSm
                           buttonName={vRemoveCartItemButt}
                           cartItemId={cartItemProdId}
@@ -671,14 +637,12 @@ export const HandlesCheckoutUpSm = () => {
                           }}
                         >
                           <Box
-                            // component="fieldset"
                             role="none"
                             sx={{
                               marginLeft: 0,
                             }}
                           >
                             <Box
-                              // component="legend"
                               sx={{
                                 clip: "rect(1px,1px,1px,1px)",
                                 border: 0,
@@ -780,7 +744,6 @@ export const HandlesCheckoutUpSm = () => {
 
     return (
       <Box
-        // component="section"
         sx={{
           margin: "0 auto!important",
           maxWidth: "980px",
@@ -826,36 +789,8 @@ export const HandlesCheckoutUpSm = () => {
                       padding: 0,
                     }}
                   >
-                    <Box
-                      // component="a"
-                      sx={
-                        {
-                          //display: "block",
-                          /*  overflow: "hidden",
-                        position: "relative",
-                        textIndent: "-9999px",
-                        width: "117px",
-                        height: "48px",
-                        color: "#3665f3",
-                        textDecoration: "underline",
-                        ":-webkit-any-link": {
-                          cursor: "pointer",
-                        },
-                        cursor: "pointer",
-                        // Add
-                        //clip: "rect(47px, 118px, 95px, 0px)",
-                        //position: "absolute",
-                        //top: "-47px",
-                        top: "14px",
-                        left: 0,
-                        border: 0,*/
-                        }
-                      }
-                    >
-                      <CheckoutLinkUpSm
-                        buttonName={vNavHomeButt}
-                        // cartItemId={vcartItemProdId}
-                      >
+                    <Box>
+                      <CheckoutLinkUpSm buttonName={vNavHomeButt}>
                         <Image
                           src="/logopic.svg"
                           alt="logo"
@@ -934,8 +869,6 @@ export const HandlesCheckoutUpSm = () => {
               component="h1"
               sx={{
                 fontSize: "1.5rem",
-                // marginLeft: "125px",
-                //marginLeft: "175px !important",
                 marginLeft: "175px",
                 paddingTop: 0,
                 position: "absolute",
@@ -961,30 +894,11 @@ export const HandlesCheckoutUpSm = () => {
                   "@media min-width: 576px)": {
                     maxWidth: "540px",
                   },
-                  //
-                  /* marginLeft: 'auto',
-                      marginRight: 'auto',
-                      paddingLeft: '15px',
-                     paddingRight: '15px',*/
-                  //
+
                   width: "100%",
                 }}
               >
-                <Box
-                  sx={
-                    {
-                      /*  marginLeft: 0,
-                    marginRight: 0,
-                    display: "flex",
-                    flexWrap: "wrap",*/
-                      //
-                      /*marginLeft: '-15px',
-                         marginRight: '-15px',*/
-                    }
-                  }
-                >
-                  {/*   Add form */}
-
+                <Box>
                   <Box
                     component="form"
                     name="addresse-livraison-form"
@@ -1059,7 +973,6 @@ export const HandlesCheckoutUpSm = () => {
                                 <Box>
                                   {cart.map((cartitem, index) => (
                                     <HandlesCartItem
-                                      // key={cartitem?.id}
                                       key={index}
                                       cartItemProdId={cartitem?.prodId}
                                       cartItemProdImage={cartitem?.prodImage}
@@ -1073,24 +986,8 @@ export const HandlesCheckoutUpSm = () => {
                             </>
                           )}
                         </>
-
-                        {/*  {cart && cart.length > 0 ? (
-                          <Box>
-                            {cart.map((cartitem, index) => (
-                              <HandlesCartItem
-                                // key={cartitem?.id}
-                                key={index}
-                                cartItemProdId={cartitem?.prodId}
-                                cartItemProdImage={cartitem?.prodImage}
-                                cartItemProdDesc={cartitem?.prodDesc}
-                                cartItemProdQtee={cartitem?.prodQtee}
-                                cartItemProdPrix={cartitem?.prodPrix}
-                              />
-                            ))}
-                          </Box>
-                        ) : null} */}
                       </Box>
-                      {/*  {cart && ( */}
+
                       {cart && notEmptyCart && (
                         <Box
                           component="section"
@@ -1101,7 +998,6 @@ export const HandlesCheckoutUpSm = () => {
                             marginBottom: "1rem",
                             background: "#fff",
                             border: "1px solid #e5e5e5",
-                            //padding: "1rem",
                             position: "relative",
                             paddingLeft: 0,
                             paddingRight: 0,
@@ -1133,7 +1029,6 @@ export const HandlesCheckoutUpSm = () => {
                                 sx={{
                                   transition: "height 0ms ease-in-out 0s",
                                   height: "512px",
-                                  // height: "462px",
                                   overflow: "visible",
                                 }}
                               >
@@ -1158,9 +1053,6 @@ export const HandlesCheckoutUpSm = () => {
                                       }}
                                     >
                                       <Box
-                                        /*component="form"
-                                      name="addresse-livraison-form"
-                                      onSubmit={handleSubmit(onSubmitAdrLiv)}*/
                                         sx={{
                                           background: "#fff",
                                           marginTop: "1rem",
@@ -1210,7 +1102,6 @@ export const HandlesCheckoutUpSm = () => {
                                                     component="label"
                                                     htmlFor="prenom"
                                                     sx={{
-                                                      //transform: "translateY(16px)",
                                                       WebkitTransform:
                                                         "scale(.75) translateY(3px)",
                                                       transform:
@@ -1221,7 +1112,6 @@ export const HandlesCheckoutUpSm = () => {
                                                       fontSize: "0.875rem",
                                                       backgroundColor:
                                                         "transparent",
-                                                      //color: "#191919",
                                                       color: errors.prenom
                                                         ? "#e0103a"
                                                         : "#191919",
@@ -1264,7 +1154,7 @@ export const HandlesCheckoutUpSm = () => {
                                                         appearance: "none",
                                                         backgroundColor:
                                                           "#f7f7f7",
-                                                        //borderColor: "#8f8f8f",
+
                                                         borderColor:
                                                           errors.prenom
                                                             ? "#e0103a"
@@ -1273,28 +1163,22 @@ export const HandlesCheckoutUpSm = () => {
                                                         borderStyle: "solid",
                                                         borderWidth: "1px",
                                                         boxSizing: "border-box",
-                                                        // color: "#191919",
                                                         color: errors.prenom
                                                           ? "#e0103a"
                                                           : "#191919",
-
                                                         fontSize: "1em",
                                                         margin: 0,
                                                         fontFamily: "inherit",
-
                                                         padding: "0 16px",
                                                         verticalAlign: "middle",
-
                                                         "&:focus": {
                                                           outline: errors.prenom
                                                             ? "none"
                                                             : null,
-
                                                           backgroundColor:
                                                             errors.prenom
                                                               ? "none"
                                                               : "#F7FEFF",
-
                                                           borderColor:
                                                             errors.prenom
                                                               ? "none"
@@ -1304,7 +1188,6 @@ export const HandlesCheckoutUpSm = () => {
                                                               ? "none"
                                                               : "0 0 0 3px #C8F3FA,0 1px 2px rgba(15,17,17,.15) inset",
                                                         },
-
                                                         paddingBottom: "5px",
                                                         paddingTop: "23px",
                                                       }}
@@ -1342,7 +1225,6 @@ export const HandlesCheckoutUpSm = () => {
                                                     component="label"
                                                     htmlFor="nom"
                                                     sx={{
-                                                      //transform: "translateY(16px)",
                                                       WebkitTransform:
                                                         "scale(.75) translateY(3px)",
                                                       transform:
@@ -1353,7 +1235,6 @@ export const HandlesCheckoutUpSm = () => {
                                                       fontSize: "0.875rem",
                                                       backgroundColor:
                                                         "transparent",
-                                                      //color: "#191919",
                                                       color: errors.nom
                                                         ? "#e0103a"
                                                         : "#191919",
@@ -1396,11 +1277,9 @@ export const HandlesCheckoutUpSm = () => {
                                                         appearance: "none",
                                                         backgroundColor:
                                                           "#f7f7f7",
-                                                        // borderColor: "#8f8f8f",
                                                         borderColor: errors.nom
                                                           ? "#e0103a"
                                                           : "#8f8f8f",
-                                                        //color: "#191919",
                                                         color: errors.nom
                                                           ? "#e0103a"
                                                           : "#191919",
@@ -1419,12 +1298,10 @@ export const HandlesCheckoutUpSm = () => {
                                                           outline: errors.nom
                                                             ? "none"
                                                             : null,
-
                                                           backgroundColor:
                                                             errors.nom
                                                               ? "none"
                                                               : "#F7FEFF",
-
                                                           borderColor:
                                                             errors.nom
                                                               ? "none"
@@ -1479,7 +1356,6 @@ export const HandlesCheckoutUpSm = () => {
                                                     component="label"
                                                     htmlFor="adresse1"
                                                     sx={{
-                                                      //transform: "translateY(16px)",
                                                       WebkitTransform:
                                                         "scale(.75) translateY(3px)",
                                                       transform:
@@ -1490,7 +1366,6 @@ export const HandlesCheckoutUpSm = () => {
                                                       fontSize: "0.875rem",
                                                       backgroundColor:
                                                         "transparent",
-                                                      // color: "#191919",
                                                       color: errors.adresse1
                                                         ? "#e0103a"
                                                         : "#191919",
@@ -1533,12 +1408,12 @@ export const HandlesCheckoutUpSm = () => {
                                                         appearance: "none",
                                                         backgroundColor:
                                                           "#f7f7f7",
-                                                        // borderColor: "#8f8f8f",
+
                                                         borderColor:
                                                           errors.adresse1
                                                             ? "#e0103a"
                                                             : "#8f8f8f",
-                                                        //color: "#191919",
+
                                                         color: errors.adresse1
                                                           ? "#e0103a"
                                                           : "#191919",
@@ -1613,14 +1488,12 @@ export const HandlesCheckoutUpSm = () => {
                                                         "scale(.75) translateY(3px)",
                                                       transform:
                                                         "scale(.75) translateY(3px)",
-                                                      //transform: "translateY(16px)",
                                                       pointerEvents: "none",
                                                       transition:
                                                         "transform .3s ease,bottom .3s ease",
                                                       fontSize: "0.875rem",
                                                       backgroundColor:
                                                         "transparent",
-                                                      //color: "#191919",
                                                       color: errors.adresse2
                                                         ? "#e0103a"
                                                         : "#191919",
@@ -1663,7 +1536,6 @@ export const HandlesCheckoutUpSm = () => {
                                                         appearance: "none",
                                                         backgroundColor:
                                                           "#f7f7f7",
-                                                        // borderColor: "#8f8f8f",
                                                         borderColor:
                                                           errors.adresse2
                                                             ? "#e0103a"
@@ -1672,7 +1544,6 @@ export const HandlesCheckoutUpSm = () => {
                                                         borderStyle: "solid",
                                                         borderWidth: "1px",
                                                         boxSizing: "border-box",
-                                                        //color: "#191919",
                                                         color: errors.adresse2
                                                           ? "#e0103a"
                                                           : "#191919",
@@ -1688,12 +1559,10 @@ export const HandlesCheckoutUpSm = () => {
                                                             errors.adresse2
                                                               ? "none"
                                                               : null,
-
                                                           backgroundColor:
                                                             errors.adresse2
                                                               ? "none"
                                                               : "#F7FEFF",
-
                                                           borderColor:
                                                             errors.adresse2
                                                               ? "none"
@@ -1753,14 +1622,12 @@ export const HandlesCheckoutUpSm = () => {
                                                         "scale(.75) translateY(3px)",
                                                       transform:
                                                         "scale(.75) translateY(3px)",
-                                                      //transform: "translateY(16px)",
                                                       pointerEvents: "none",
                                                       transition:
                                                         "transform .3s ease,bottom .3s ease",
                                                       fontSize: "0.875rem",
                                                       backgroundColor:
                                                         "transparent",
-                                                      //color: "#191919",
                                                       color: errors.ville
                                                         ? "#e0103a"
                                                         : "#191919",
@@ -1803,12 +1670,10 @@ export const HandlesCheckoutUpSm = () => {
                                                         appearance: "none",
                                                         backgroundColor:
                                                           "#f7f7f7",
-                                                        // borderColor: "#8f8f8f",
                                                         borderColor:
                                                           errors.ville
                                                             ? "#e0103a"
                                                             : "#8f8f8f",
-                                                        //color: "#191919",
                                                         color: errors.ville
                                                           ? "#e0103a"
                                                           : "#191919",
@@ -1816,7 +1681,6 @@ export const HandlesCheckoutUpSm = () => {
                                                         borderStyle: "solid",
                                                         borderWidth: "1px",
                                                         boxSizing: "border-box",
-                                                        // color: "#191919",
                                                         fontSize: "1em",
                                                         margin: 0,
                                                         fontFamily: "inherit",
@@ -1828,12 +1692,10 @@ export const HandlesCheckoutUpSm = () => {
                                                           outline: errors.ville
                                                             ? "none"
                                                             : null,
-
                                                           backgroundColor:
                                                             errors.ville
                                                               ? "none"
                                                               : "#F7FEFF",
-
                                                           borderColor:
                                                             errors.ville
                                                               ? "none"
@@ -1885,21 +1747,14 @@ export const HandlesCheckoutUpSm = () => {
                                                       component="label"
                                                       htmlFor="region"
                                                       sx={{
-                                                        //
                                                         WebkitTransform:
                                                           "scale(.75) translateY(3px)",
                                                         transform:
                                                           "scale(.75) translateY(3px)",
-                                                        //
-                                                        //  transform:
-                                                        //   "translateY(16px)",
                                                         pointerEvents: "none",
-                                                        // transition:
-                                                        //   "transform .3s ease,bottom .3s ease",
                                                         fontSize: "0.875rem",
                                                         backgroundColor:
                                                           "transparent",
-                                                        //color: "#191919",
                                                         color: errors.region
                                                           ? "#e0103a"
                                                           : "#191919",
@@ -1918,7 +1773,6 @@ export const HandlesCheckoutUpSm = () => {
                                                         "&:focus": {
                                                           backgroundColor:
                                                             "#F7FEFF",
-
                                                           borderColor:
                                                             "#007185",
                                                           boxShadow:
@@ -1943,7 +1797,6 @@ export const HandlesCheckoutUpSm = () => {
                                                         id="region"
                                                         {...register("region")}
                                                         sx={{
-                                                          //fontSize: "1em",
                                                           fontWeight: 400,
                                                           height: "3rem",
                                                           width:
@@ -1955,8 +1808,6 @@ export const HandlesCheckoutUpSm = () => {
                                                           appearance: "none",
                                                           backgroundColor:
                                                             "#f7f7f7",
-                                                          // borderColor:
-                                                          //  "#8f8f8f",
                                                           borderColor:
                                                             errors.region
                                                               ? "#e0103a"
@@ -1964,7 +1815,6 @@ export const HandlesCheckoutUpSm = () => {
                                                           borderRadius: "8px",
                                                           borderStyle: "solid",
                                                           borderWidth: "1px",
-                                                          // color: "inherit",
                                                           color: errors.region
                                                             ? "#e0103a"
                                                             : "inherit",
@@ -1973,24 +1823,20 @@ export const HandlesCheckoutUpSm = () => {
                                                             "0 32px 0 16px",
                                                           verticalAlign:
                                                             "middle",
-                                                          // overflow: 'visible !important',
                                                           fontSize: "0.875rem",
                                                           "&:focus": {
                                                             outline:
                                                               errors.region
                                                                 ? "none"
                                                                 : null,
-
                                                             backgroundColor:
                                                               errors.region
                                                                 ? "none"
                                                                 : "#F7FEFF",
-
                                                             borderColor:
                                                               errors.region
                                                                 ? "none"
                                                                 : "#007185",
-
                                                             boxShadow:
                                                               errors.region
                                                                 ? "none"
@@ -2005,13 +1851,9 @@ export const HandlesCheckoutUpSm = () => {
                                                           height: "100%",
                                                           pointerEvents: "none",
                                                           position: "absolute",
-                                                          //right: "16px",
                                                           right: "8px",
                                                           top: 0,
-
                                                           top: "4px",
-                                                          // width: "12px",
-                                                          //
                                                           display:
                                                             "inline-block",
                                                           fill: "currentColor",
@@ -2056,7 +1898,6 @@ export const HandlesCheckoutUpSm = () => {
                                                     component="label"
                                                     htmlFor="codepostal"
                                                     sx={{
-                                                      // transform: "translateY(16px)",
                                                       WebkitTransform:
                                                         "scale(.75) translateY(3px)",
                                                       transform:
@@ -2067,7 +1908,6 @@ export const HandlesCheckoutUpSm = () => {
                                                       fontSize: "0.875rem",
                                                       backgroundColor:
                                                         "transparent",
-                                                      //color: "#191919",
                                                       color: errors.codepostal
                                                         ? "#e0103a"
                                                         : "#191919",
@@ -2112,7 +1952,6 @@ export const HandlesCheckoutUpSm = () => {
                                                         appearance: "none",
                                                         backgroundColor:
                                                           "#f7f7f7",
-                                                        // borderColor: "#8f8f8f",
                                                         borderColor:
                                                           errors.codepostal
                                                             ? "#e0103a"
@@ -2121,7 +1960,6 @@ export const HandlesCheckoutUpSm = () => {
                                                         borderStyle: "solid",
                                                         borderWidth: "1px",
                                                         boxSizing: "border-box",
-                                                        //color: "#191919",
                                                         color: errors.codepostal
                                                           ? "#e0103a"
                                                           : "#191919",
@@ -2137,20 +1975,14 @@ export const HandlesCheckoutUpSm = () => {
                                                             errors.codepostal
                                                               ? "none"
                                                               : null,
-                                                          // backgroundColor:
-                                                          //   "#F7FEFF",
                                                           backgroundColor:
                                                             errors.codepostal
                                                               ? "none"
                                                               : "#F7FEFF",
-                                                          // borderColor:
-                                                          //  "#007185",
                                                           borderColor:
                                                             errors.codepostal
                                                               ? "none"
                                                               : "#007185",
-                                                          // boxShadow:
-                                                          //   "0 0 0 3px #C8F3FA,0 1px 2px rgba(15,17,17,.15) inset",
                                                           boxShadow:
                                                             errors.codepostal
                                                               ? "none"
@@ -2203,7 +2035,6 @@ export const HandlesCheckoutUpSm = () => {
                                                     htmlFor="email"
                                                     sx={{
                                                       color: "#3665f3",
-                                                      //transform: "translateY(16px)",
                                                       WebkitTransform:
                                                         "scale(.75) translateY(3px)",
                                                       transform:
@@ -2214,7 +2045,6 @@ export const HandlesCheckoutUpSm = () => {
                                                       fontSize: "0.875rem",
                                                       backgroundColor:
                                                         "transparent",
-                                                      //color: "#191919",
                                                       color: errors.email
                                                         ? "#e0103a"
                                                         : "#191919",
@@ -2259,12 +2089,10 @@ export const HandlesCheckoutUpSm = () => {
                                                         appearance: "none",
                                                         backgroundColor:
                                                           "#f7f7f7",
-                                                        //borderColor: "#8f8f8f",
                                                         borderColor:
                                                           errors.email
                                                             ? "#e0103a"
                                                             : "#8f8f8f",
-                                                        //color: "#191919",
                                                         color: errors.email
                                                           ? "#e0103a"
                                                           : "#191919",
@@ -2272,7 +2100,6 @@ export const HandlesCheckoutUpSm = () => {
                                                         borderStyle: "solid",
                                                         borderWidth: "1px",
                                                         boxSizing: "border-box",
-                                                        //color: "#191919",
                                                         fontSize: "1em",
                                                         margin: 0,
                                                         fontFamily: "inherit",
@@ -2284,12 +2111,10 @@ export const HandlesCheckoutUpSm = () => {
                                                           outline: errors.email
                                                             ? "none"
                                                             : null,
-
                                                           backgroundColor:
                                                             errors.email
                                                               ? "none"
                                                               : "#F7FEFF",
-
                                                           borderColor:
                                                             errors.email
                                                               ? "none"
@@ -2335,7 +2160,6 @@ export const HandlesCheckoutUpSm = () => {
                                                     htmlFor="numerotel"
                                                     sx={{
                                                       color: "#3665f3",
-                                                      // transform: "translateY(16px)",
                                                       WebkitTransform:
                                                         "scale(.75) translateY(3px)",
                                                       transform:
@@ -2346,7 +2170,6 @@ export const HandlesCheckoutUpSm = () => {
                                                       fontSize: "0.875rem",
                                                       backgroundColor:
                                                         "transparent",
-                                                      //color: "#191919",
                                                       color: errors.numerotel
                                                         ? "#e0103a"
                                                         : "#191919",
@@ -2389,8 +2212,6 @@ export const HandlesCheckoutUpSm = () => {
                                                       sx={{
                                                         minWidth: "240px",
                                                         width: "45%",
-
-                                                        // width: "100%",
                                                         height: "48px",
                                                         WebkitAppearance:
                                                           "none",
@@ -2398,12 +2219,10 @@ export const HandlesCheckoutUpSm = () => {
                                                         appearance: "none",
                                                         backgroundColor:
                                                           "#f7f7f7",
-                                                        //borderColor: "#8f8f8f",
                                                         borderColor:
                                                           errors.numerotel
                                                             ? "#e0103a"
                                                             : "#8f8f8f",
-                                                        //color: "#191919",
                                                         color: errors.numerotel
                                                           ? "#e0103a"
                                                           : "#191919",
@@ -2423,12 +2242,10 @@ export const HandlesCheckoutUpSm = () => {
                                                             errors.numerotel
                                                               ? "none"
                                                               : null,
-
                                                           backgroundColor:
                                                             errors.numerotel
                                                               ? "none"
                                                               : "#F7FEFF",
-
                                                           borderColor:
                                                             errors.numerotel
                                                               ? "none"
@@ -2486,7 +2303,6 @@ export const HandlesCheckoutUpSm = () => {
                                                 sx={{
                                                   marginRight: "1rem",
                                                   minWidth: "128px",
-                                                  // backgroundColor: "#3665f3",
                                                   backgroundColor:
                                                     addOrdersIsLoading ||
                                                     updateOrderIsLoading ||
@@ -2501,7 +2317,6 @@ export const HandlesCheckoutUpSm = () => {
                                                     navConfirmOrder
                                                       ? "#e7e9ec"
                                                       : "#3665f3",
-                                                  // color: "#fff",
                                                   color:
                                                     addOrdersIsLoading ||
                                                     updateOrderIsLoading ||
@@ -2534,12 +2349,10 @@ export const HandlesCheckoutUpSm = () => {
                                                     size={20}
                                                     sx={{
                                                       textAlign: "center",
-                                                      //position: "absolute", // Position absolute to overlap the button
-
-                                                      top: "50%", // Center vertically
-                                                      left: "50%", // Center horizontally
-                                                      marginTop: "-10px", // Adjust for half of CircularProgress size
-                                                      marginLeft: "-10px", // Adjust for half of CircularProgress size*/
+                                                      top: "50%",
+                                                      left: "50%",
+                                                      marginTop: "-10px",
+                                                      marginLeft: "-10px",
                                                     }}
                                                   />
                                                 )}
@@ -2556,8 +2369,6 @@ export const HandlesCheckoutUpSm = () => {
                           </Box>
                         </Box>
                       )}
-
-                      {/* {openCompleteOrder ? <CompleteOrderUpSm /> : null} */}
 
                       <Box
                         component="section"
@@ -2621,15 +2432,11 @@ export const HandlesCheckoutUpSm = () => {
                                     fontSize: "medium",
                                     display: "inline-block",
                                     fontWeight: 700,
-                                    //
+
                                     padding: "1rem",
                                   }}
                                 >
-                                  <Box
-                                  //component="h3"
-                                  >
-                                    Paiement à la livraison
-                                  </Box>
+                                  <Box>Paiement à la livraison</Box>
                                 </Box>
                               </Box>
                             </Box>
@@ -2639,8 +2446,6 @@ export const HandlesCheckoutUpSm = () => {
                     </Box>
 
                     <Box
-                      // Summary
-
                       sx={{
                         paddingLeft: 0,
                         paddingRight: 0,
@@ -2648,8 +2453,6 @@ export const HandlesCheckoutUpSm = () => {
                         flex: "0 0 41.6666666667%",
                         maxWidth: "41.6666666667%",
                         width: "100%",
-                        // Added
-                        //width: scrollY >= 107 ? "315.992px" : "100%",
                       }}
                     >
                       <Box
@@ -2657,9 +2460,6 @@ export const HandlesCheckoutUpSm = () => {
                           position: "sticky",
                           position: "-webkit-sticky",
                           top: "1rem",
-                          // Added
-                          //  position: scrollY >= 107 ? "fixed" : "sticky",
-                          // top: "0px",
                         }}
                       >
                         <Box
@@ -2729,7 +2529,6 @@ export const HandlesCheckoutUpSm = () => {
                                           textAlign: "left",
                                           color: "#191919",
                                           fontSize: "0.875rem",
-                                          //
                                           fontWeight: 500,
                                         }}
                                       >
@@ -2752,7 +2551,6 @@ export const HandlesCheckoutUpSm = () => {
                                           textAlign: "right",
                                           color: "#191919",
                                           fontSize: "0.875rem",
-                                          //
                                           fontWeight: 500,
                                         }}
                                       >
@@ -2779,7 +2577,6 @@ export const HandlesCheckoutUpSm = () => {
                                           WebkitTextSizeAdjust: "100%",
                                           color: "#191919",
                                           fontSize: "0.875rem",
-                                          //
                                           fontWeight: 500,
                                         }}
                                       >
@@ -2803,7 +2600,6 @@ export const HandlesCheckoutUpSm = () => {
                                           textAlign: "right",
                                           color: "#191919",
                                           fontSize: "0.875rem",
-                                          //
                                           fontWeight: 500,
                                         }}
                                       >
@@ -2880,14 +2676,8 @@ export const HandlesCheckoutUpSm = () => {
                               fontSize: "0.875rem",
                             }}
                           >
-                            <Box
-                            //  component="form"
-                            // method="post"
-                            // id="confirm-and-pay-form"
-                            //sx={{}}
-                            >
+                            <Box>
                               <Box
-                                // component="input"
                                 type="hidden"
                                 name="confirm-and-pay-input"
                                 sx={{
@@ -2900,7 +2690,6 @@ export const HandlesCheckoutUpSm = () => {
                                 }}
                               ></Box>
 
-                              {/*  {cart ? ( */}
                               {cart && notEmptyCart ? (
                                 <Box>
                                   <Box
@@ -2915,7 +2704,6 @@ export const HandlesCheckoutUpSm = () => {
                                       navConfirmOrder
                                     }
                                     sx={{
-                                      //backgroundColor: "#767676",
                                       backgroundColor:
                                         addOrdersIsLoading ||
                                         updateOrderIsLoading ||
@@ -2925,7 +2713,6 @@ export const HandlesCheckoutUpSm = () => {
                                           : "#767676",
                                       marginLeft: 0,
                                       marginRight: 0,
-                                      // borderColor: "#c7c7c7",
                                       borderColor:
                                         addOrdersIsLoading ||
                                         updateOrderIsLoading ||
@@ -2933,7 +2720,6 @@ export const HandlesCheckoutUpSm = () => {
                                         navConfirmOrder
                                           ? "#e7e9ec"
                                           : "#c7c7c7",
-                                      // color: "#fff",
                                       color:
                                         addOrdersIsLoading ||
                                         updateOrderIsLoading ||
@@ -2966,12 +2752,9 @@ export const HandlesCheckoutUpSm = () => {
                                         sx={{
                                           marginRight: "10px",
                                           marginTop: "-6px",
-                                          // height: "19.25px",
-                                          // width: "15.39px",
                                           display: "inline-block",
                                           verticalAlign: "middle",
                                           textAlign: "center",
-                                          //fontWeight: 200,
                                         }}
                                       ></CustLockOutlinedIcon>
                                       Confirmer votre commande
@@ -2983,39 +2766,16 @@ export const HandlesCheckoutUpSm = () => {
                                           size={20}
                                           sx={{
                                             textAlign: "center",
-                                            //position: "absolute", // Position absolute to overlap the button
-
-                                            top: "50%", // Center vertically
-                                            left: "50%", // Center horizontally
-                                            marginTop: "-10px", // Adjust for half of CircularProgress size
-                                            marginLeft: "-10px", // Adjust for half of CircularProgress size*/
+                                            top: "50%",
+                                            left: "50%",
+                                            marginTop: "-10px",
+                                            marginLeft: "-10px",
                                           }}
                                         />
                                       )}
                                     </Box>
                                   </Box>
 
-                                  {/*
-                                <Box
-                                  sx={{
-                                    WebkitTextSizeAdjust: "100%",
-                                    color: "#191919",
-                                    fontSize: "0.875rem",
-                                  }}
-                                >
-                                  <Box
-                                    sx={{
-                                      color: "#dd1e31",
-                                      textAlign: "center!important",
-                                      marginBottom: "1rem!important",
-                                      marginTop: "1rem!important",
-                                      WebkitTextSizeAdjust: "100%",
-                                      fontSize: "0.875rem",
-                                    }}
-                                  >
-                                    Saisissez l'adresse de livraison
-                                  </Box>
-                                </Box> */}
                                   {(errors.prenom?.message ||
                                     errors.nom?.message ||
                                     errors.adresse1?.message ||
@@ -3039,12 +2799,8 @@ export const HandlesCheckoutUpSm = () => {
                               ) : (
                                 <Box
                                   aria-disabled="true"
-                                  // type="submit"
-                                  // data-test-id="CONFIRM_AND_PAY_BUTTON"
                                   component="button"
-                                  onClick={() => {
-                                    console.log("submit");
-                                  }}
+                                  onClick={handleNavHome}
                                   sx={{
                                     backgroundColor: "#767676",
                                     marginLeft: 0,
@@ -3076,15 +2832,26 @@ export const HandlesCheckoutUpSm = () => {
                                       sx={{
                                         marginRight: "10px",
                                         marginTop: "-6px",
-                                        // height: "19.25px",
-                                        // width: "15.39px",
                                         display: "inline-block",
                                         verticalAlign: "middle",
                                         textAlign: "center",
-                                        //fontWeight: 200,
                                       }}
                                     ></CustLockOutlinedIcon>
-                                    Revenir à la page principale
+                                    Revenir à la page
+                                    principale&nbsp;&nbsp;&nbsp;&nbsp;
+                                    {navHome && (
+                                      <CircularProgress
+                                        size={20}
+                                        sx={{
+                                          textAlign: "center",
+                                          top: "50%",
+                                          left: "50%",
+                                          marginTop: "-10px",
+                                          marginLeft: "-5px",
+                                          color: "#fff",
+                                        }}
+                                      />
+                                    )}
                                   </Box>
                                 </Box>
                               )}
@@ -3093,8 +2860,6 @@ export const HandlesCheckoutUpSm = () => {
                         </Box>
                       </Box>
                     </Box>
-
-                    {/* End add form */}
                   </Box>
                 </Box>
               </Box>

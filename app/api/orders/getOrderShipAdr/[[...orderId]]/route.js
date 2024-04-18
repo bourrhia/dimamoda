@@ -13,7 +13,6 @@ export async function GET(request, { params }) {
 
     if (!orderId || orderId === "null") {
       return new Response(JSON.stringify({ error: "order Id is null" }), {
-        // status: 400,
         status: 200,
         headers: {
           "Content-Type": "application/json",

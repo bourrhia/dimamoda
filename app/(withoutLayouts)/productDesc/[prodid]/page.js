@@ -14,7 +14,6 @@ function CustArrowBackIosNewIcon(props) {
 }
 
 export const dynamicParams = true;
-//export const revalidate = 200;
 
 async function generateAllPrds() {
   const client = await clientPromise;
@@ -25,11 +24,9 @@ async function generateAllPrds() {
   return allPrdsImg;
 }
 
-// Return a list of `params` to populate the [pid] dynamic segment
 export async function generateStaticParams() {
   const allPrdsMrventes = JSON.parse(JSON.stringify(await generateAllPrds()));
 
-  // Get the paths we want to pre-render
   return allPrdsMrventes.map((prod) => ({
     pid: prod.productId.toString(),
   }));
@@ -131,9 +128,6 @@ const ProdDesc = async ({ params }) => {
         >
           <ProdLinkMobile buttonName={vProdDescButt}>
             <Box
-              //component="a"
-              // onClick={handleClick}
-              //onTouchEnd={handleTouchEnd}
               sx={{
                 marginRight: "16px",
                 fontSize: 0,

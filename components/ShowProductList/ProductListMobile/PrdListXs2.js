@@ -1,11 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
-//import ShowCatTitle from "../ProductListUpSm/ShowCatTitle";
 import ShowCatTitle from "../ProductListAllDevices/ShowCatTitle";
 import ProdLinkMobile from "./ProdLinkMobile";
-import { Suspense } from "react";
-import ShowLoading from "../../Loading/ShowLoading";
 
 export const PrdListXs2 = ({ imgmrv }) => {
   const filteredImg = imgmrv.filter((image, i) => i < 3);
@@ -21,13 +18,11 @@ export const PrdListXs2 = ({ imgmrv }) => {
         marginBottom: "1.3rem",
       }}
     >
-      {/* <Suspense fallback={<ShowLoading />}> */}
       <ProdLinkMobile
         buttonName={vRenderedImgXsButt}
         productNum={image.productId}
       >
         <Box
-          //component="a"
           sx={{
             cursor: "pointer",
             textDecoration: "none!important",
@@ -98,12 +93,9 @@ export const PrdListXs2 = ({ imgmrv }) => {
                     src={image.imgJpg}
                     alt="Image"
                     fill
-                    //sizes="100vw"
                     sizes="120px"
-                    //priority={true}
                     style={{
-                      objectFit: "contain", // cover, contain, none
-                      //objectPosition: "50% 50%",
+                      objectFit: "contain",
                     }}
                   />
                 </Box>
@@ -340,7 +332,6 @@ export const PrdListXs2 = ({ imgmrv }) => {
                               MozUserSelect: "none",
                               MsUserSelect: "none",
                               userSelect: "none",
-
                               position: "absolute!important",
                               left: "0rem!important",
                               bottom: "-0.1rem!important",
@@ -380,7 +371,6 @@ export const PrdListXs2 = ({ imgmrv }) => {
                           component="span"
                           aria-hidden="true"
                           sx={{
-                            // fontSize: '2.2rem',
                             fontSize: ".75rem",
                             color: "#0F1111",
                             textDecoration: "none",
@@ -432,7 +422,6 @@ export const PrdListXs2 = ({ imgmrv }) => {
           </Box>
         </Box>
       </ProdLinkMobile>
-      {/* </Suspense> */}
     </Box>
   ));
 
@@ -526,7 +515,6 @@ export const PrdListXs2 = ({ imgmrv }) => {
           <Box>
             <ProdLinkMobile buttonName={vVoirePlusXsButt}>
               <Box
-                //component="a"
                 sx={{
                   cursor: "pointer",
                   color: "#007185",

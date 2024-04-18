@@ -1,14 +1,11 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
-//import ShowCatTitle from "./ShowCatTitle";
 import ShowCatTitle from "../ProductListAllDevices/ShowCatTitle";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import HandlesSlider from "../../Slider/HandlesSlider";
 import ProdLinkUpsm from "./ProdLinkUpSm";
-import { Suspense } from "react";
-import ShowLoading from "../../Loading/ShowLoading";
 
 export const PrdListUpMd2 = ({ imgmrv }) => {
   const vCatTitle = "Meilleures ventes";
@@ -86,7 +83,6 @@ export const PrdListUpMd2 = ({ imgmrv }) => {
     >
       <Box>
         <Box
-          // component="a"
           sx={{
             padding: "20px 10px",
 
@@ -107,7 +103,6 @@ export const PrdListUpMd2 = ({ imgmrv }) => {
             },
           }}
         >
-          {/* <Suspense fallback={<ShowLoading />}> */}
           <ProdLinkUpsm
             buttonName={vImgClickUpMd2}
             productNum={image.productId}
@@ -136,18 +131,14 @@ export const PrdListUpMd2 = ({ imgmrv }) => {
                   src={image.imgJpg}
                   alt="Image"
                   fill
-                  // sizes="100vw"
                   sizes="(min-width: 1083px) 16vw, (min-width: 960px) 20vw, (min-width: 768px) 25vw,(min-width: 600px) 33vw"
-                  //sizes="130px"
-                  // priority={true}
                   style={{
-                    objectFit: "contain", // cover, contain, none
+                    objectFit: "contain",
                   }}
                 />
               </Box>
             </Box>
           </ProdLinkUpsm>
-          {/* </Suspense> */}
         </Box>
       </Box>
     </Box>
@@ -191,7 +182,6 @@ export const PrdListUpMd2 = ({ imgmrv }) => {
             <Box
               sx={{
                 overflowX: "hidden",
-                // overflowX: "scroll",
                 paddingBottom: "64px",
                 marginBottom: "-64px",
                 width: "100%",
@@ -208,7 +198,6 @@ export const PrdListUpMd2 = ({ imgmrv }) => {
             >
               <Box
                 sx={{
-                  //width: "1570px",
                   width: "100%",
                   WebkitFlex: "none",
                   MsFlex: "none",
@@ -225,15 +214,12 @@ export const PrdListUpMd2 = ({ imgmrv }) => {
                       "transform .4s ease-in-out,-webkit-transform .4s ease-in-out",
                     display: "-webkit-flex",
                     display: "-ms-flexbox",
-                    //display: "flex",
                     WebkitFlexDirection: "row",
                     MsFlexDirection: "row",
                     flexDirection: "row",
                     WebkitAlignItems: "stretch",
                     MsFlexAlign: "stretch",
                     alignItems: "stretch",
-
-                    ////
                   }}
                 >
                   <HandlesSlider

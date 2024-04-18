@@ -2,26 +2,17 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
 import Typography from "@mui/material/Typography";
-//import ProdLinkAllDevices from "../ProductListUpSm/ProdLinkAllDevices";
 import ProdLinkAllDevices from "./ProdLinkAllDevices";
-import { Suspense } from "react";
-import ShowLoading from "../../Loading/ShowLoading";
 
 export const Allprds1 = ({ imgmrv }) => {
   const vAllPrdtsButt = "allPrdtsButt";
-
-  const vDealButt = "dealButt";
-  const vPriceButt = "priceButt";
-  const vDescButt = "descButt";
 
   const RenderProduct = ({ image }) => {
     return (
       <>
         <Box
           sx={{
-            // paddingBottom: "10px",
             height: "auto",
-            //height: "478px",
 
             width: "100%",
 
@@ -144,7 +135,6 @@ export const Allprds1 = ({ imgmrv }) => {
             display: "flex",
           }}
         >
-          {/* <Suspense fallback={<ShowLoading />}> */}
           <ProdLinkAllDevices
             buttonName={vAllPrdtsButt}
             productNum={image.productId}
@@ -168,29 +158,7 @@ export const Allprds1 = ({ imgmrv }) => {
                   height: "100%",
                 }}
               >
-                <Box
-                  //component="a"
-                  sx={
-                    {
-                      /*   textDecoration: "none!important",
-                      color: "#007185",
-                      cursor: "pointer",
-
-                      ":link": {
-                        textDecoration: "none",
-                        color: "#007185",
-                      },
-
-                      ":visited": {
-                        textDecoration: "none",
-                        color: "#007185",
-                      },
-                      ":-webkit-any-link": {
-                        cursor: "pointer",
-                      },*/
-                    }
-                  }
-                >
+                <Box>
                   <Box
                     sx={{
                       marginBottom: "8px!important",
@@ -241,7 +209,7 @@ export const Allprds1 = ({ imgmrv }) => {
                             position: "block",
                             width: "100%",
                             height: "100%",
-                            //
+
                             position: "relative",
                             boxSizing: "border-box",
                             display: "block",
@@ -252,15 +220,11 @@ export const Allprds1 = ({ imgmrv }) => {
                             src={image.imgJpg}
                             alt="Image"
                             fill
-                            // sizes="100vw"
-                            // sizes="130px"
                             sizes="(min-width: 3043px) 10vw, (min-width: 2763px) 11vw, ((min-width: 2483px) 12vw,(min-width: 2203px) 14vw,
                                    (min-width: 1923px) 16vw, (min-width: 1643px) 20vw, (min-width: 1363px) 20vw,(min-width: 1083px) 25vw,(min-width: 960px) 25vw, 
                                    (min-width: 768px) 33vw,(min-width: 600px) 50vw"
-                            //  priority={true}
                             style={{
-                              objectFit: "contain", // cover, contain, none
-                              //objectPosition: "50% 50%",
+                              objectFit: "contain",
                             }}
                           />
                         </Box>
@@ -270,7 +234,6 @@ export const Allprds1 = ({ imgmrv }) => {
                 </Box>
 
                 <Box
-                  // component="a"
                   sx={{
                     color: "#C7511F!important",
                     cursor: "pointer",
@@ -411,7 +374,7 @@ export const Allprds1 = ({ imgmrv }) => {
                           fontSize: "17px",
                           color: "#0F1111",
                           lineHeight: "normal",
-                          //
+
                           fontWeight: "bold",
                         }}
                       >
@@ -423,7 +386,7 @@ export const Allprds1 = ({ imgmrv }) => {
                           position: "relative",
                           top: "-0.3em",
                           fontSize: "11px",
-                          //
+
                           fontWeight: "bold",
                         }}
                       >
@@ -512,7 +475,6 @@ export const Allprds1 = ({ imgmrv }) => {
                   )}
                 </Box>
                 <Box
-                  //component="a"
                   sx={{
                     color: "#0F1111!important",
                     fontWeight: "400!important",
@@ -538,7 +500,6 @@ export const Allprds1 = ({ imgmrv }) => {
                     <Box
                       sx={{
                         fontSize: "1em",
-                        // fontSize: "12px",
                         textOverflow: "ellipsis",
                         maxHeight: "2.8em",
                         overflow: "hidden",
@@ -562,7 +523,6 @@ export const Allprds1 = ({ imgmrv }) => {
               </Box>
             </Box>
           </ProdLinkAllDevices>
-          {/*  </Suspense> */}
         </Box>
       </>
     );

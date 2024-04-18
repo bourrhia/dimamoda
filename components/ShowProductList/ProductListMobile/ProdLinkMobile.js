@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import CircularProgress from "@mui/material/CircularProgress";
+import ShowLoading from "../../Loading/ShowLoading";
 
 export default function PrdLinkMobile({
   buttonName,
@@ -22,36 +22,13 @@ export default function PrdLinkMobile({
       router.push(`/product/productById/${encodeURIComponent(productNum)}`);
       setNavProduct(true);
     } catch (error) {
-      // Handle any errors that might occur during navigation
     } finally {
       setNavProduct(true);
     }
   };
 
-  const ShowLoading = () => {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          //position: "fixed",
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: "99999",
-        }}
-      >
-        <CircularProgress size={40} />
-      </Box>
-    );
-  };
-
   const handleClick = (e) => {
     e.preventDefault();
-
     router.back();
   };
 
@@ -60,14 +37,6 @@ export default function PrdLinkMobile({
     e.preventDefault();
     router.back();
   };
-
-  if (buttonName === "renderImgXsButt") {
-    return (
-      <Link href="/" className="custom-link">
-        {children}
-      </Link>
-    );
-  }
 
   if (buttonName === "renderedImgXsButt") {
     return (
@@ -106,40 +75,6 @@ export default function PrdLinkMobile({
   if (buttonName === "showMoreXsButt") {
     return (
       <Link href={"/product/showMoreProducts"} className="custom-link">
-        {children}
-      </Link>
-    );
-  }
-
-  /* if (buttonName === "achatImmédiatButt") {
-    return (
-      <Link
-        href="/"
-        style={{
-          textDecoration: "none!important",
-          cursor: "pointer",
-          ":WebkitAnyLink": {
-            cursor: "pointer",
-          },
-        }}
-      >
-        {children}
-      </Link>
-    );
-  }*/
-
-  if (buttonName === "ajouterPanierButt") {
-    return (
-      <Link
-        href="/"
-        style={{
-          textDecoration: "none!important",
-          cursor: "pointer",
-          ":WebkitAnyLink": {
-            cursor: "pointer",
-          },
-        }}
-      >
         {children}
       </Link>
     );

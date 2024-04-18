@@ -1,17 +1,12 @@
 "use client";
 
 import { Provider } from "react-redux";
-//import store from "./store";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store";
-//import { wrapper } from "./store";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
 const MyStoreProvider = ({ children, ...rest }) => {
-  // const { store, props } = wrapper.useWrappedStore(rest);
-  // const { store } = wrapper.useWrappedStore(rest);
-  // const persistedStore = persistStore(store);
   const ShowLoading = () => {
     return (
       <Box
@@ -19,7 +14,6 @@ const MyStoreProvider = ({ children, ...rest }) => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          //position: "fixed",
           position: "absolute",
           top: 0,
           left: 0,

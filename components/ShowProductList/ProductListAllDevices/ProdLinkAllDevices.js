@@ -2,9 +2,8 @@
 
 import React, { useState } from "react";
 import Box from "@mui/material/Box";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import CircularProgress from "@mui/material/CircularProgress";
+import ShowLoading from "../../Loading/ShowLoading";
 
 export default function ProdLinkAllDevices({
   buttonName,
@@ -21,7 +20,6 @@ export default function ProdLinkAllDevices({
       setNavProduct(true);
       router.push(`/product/productById/${encodeURIComponent(productNum)}`);
     } catch (err) {
-      // Handle any errors that might occur during navigation
       console.error("An error occurred while navigating to product: ", err);
     } finally {
       setNavProduct(true);
@@ -33,7 +31,6 @@ export default function ProdLinkAllDevices({
       setNavShowMore(true);
       router.push("/product/showMoreProducts");
     } catch (err) {
-      // Handle any errors that might occur during navigation
       console.error(
         "An error occurred while navigating to show more product: ",
         err
@@ -68,24 +65,7 @@ export default function ProdLinkAllDevices({
         }}
       >
         {children}
-        {navProduct && (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              //position: "fixed",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              zIndex: "99999",
-            }}
-          >
-            <CircularProgress size={40} />
-          </Box>
-        )}
+        {navProduct && <ShowLoading />}
       </Box>
     );
   }
@@ -115,24 +95,7 @@ export default function ProdLinkAllDevices({
         }}
       >
         {children}
-        {navShowMore && (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              //position: "fixed",
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              zIndex: "99999",
-            }}
-          >
-            <CircularProgress size={40} />
-          </Box>
-        )}
+        {navShowMore && <ShowLoading />}
       </Box>
     );
   }

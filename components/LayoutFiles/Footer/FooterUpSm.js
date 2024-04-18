@@ -22,11 +22,9 @@ function FouterUpsm() {
           sx={{
             background: "#0000",
             borderTop: 0,
-
             maxWidth: "1248px",
             margin: "10px 0 0",
             padding: "20px 10px 40px 10px",
-            //padding: "20px 10px 40px 80px",
             marginLeft: "32px",
             marginRight: "32px",
             lineHeight: 1,
@@ -133,7 +131,6 @@ function FouterUpsm() {
                         float: "unset",
                         height: "initial",
                         paddingRight: "10px",
-
                         listStyle: "none",
                         minWidth: "177px",
                         marginBlockStart: "1em",
@@ -437,7 +434,6 @@ function FouterUpsm() {
                         float: "unset",
                         height: "initial",
                         paddingRight: "10px",
-
                         listStyle: "none",
                         minWidth: "177px",
                         marginBlockStart: "1em",
@@ -487,7 +483,6 @@ function FouterUpsm() {
                       </Box>
                     </Box>
                   </Box>
-                  <Box component="td" sx={{}}></Box>
                 </Box>
               </Box>
             </Box>

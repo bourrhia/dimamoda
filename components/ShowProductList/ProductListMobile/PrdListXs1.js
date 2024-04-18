@@ -11,13 +11,11 @@ export const PrdListXs1 = ({ imgmrv }) => {
 
   const renderedImg = imgmrv.map((image) => (
     <Box key={image.productId}>
-      {/* <Suspense fallback={<ShowLoading />}> */}
       <ProdLinkMobile
         buttonName={vRenderImageXsButt}
         productNum={image.productId}
       >
         <Box
-          // component="a"
           sx={{
             cursor: "pointer",
             textDecoration: "none!important",
@@ -51,8 +49,6 @@ export const PrdListXs1 = ({ imgmrv }) => {
                 position: "absolute",
                 top: 0,
                 width: "100%",
-                //
-                // maxHeight: "90%",
                 maxHeight: "100%",
                 maxWidth: "90%",
                 margin: "auto",
@@ -82,42 +78,21 @@ export const PrdListXs1 = ({ imgmrv }) => {
               <Box
                 sx={{
                   position: "relative",
-                  //
-                  // height: "230px",
                   width: "100%",
                   height: "100%",
                   boxSizing: "border-box",
                   display: "block",
                   overflow: "hidden",
-                  //
-                  //  height: "160px",
-                  // width: "140px",
-                  //height: "230px",
                 }}
               >
                 <Image
                   src={image.imgJpg}
                   alt="Image"
-                  // sizes="180px"
                   fill
-                  // sizes="100vw"
-                  // sizes="120px"
-                  // sizes="120px"
                   sizes="142px"
-                  // priority={true}
                   style={{
-                    objectFit: "contain", // cover, contain, none
+                    objectFit: "contain",
                   }}
-                  //
-                  /*  sizes="100vw"
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                  }}
-
-                 
-                  width={130}
-                  height={110}*/
                 />
               </Box>
             </Box>
@@ -137,7 +112,6 @@ export const PrdListXs1 = ({ imgmrv }) => {
               }}
             >
               <Box
-                // component="a"
                 sx={{
                   fontWeight: "400!important",
                   fontStyle: "normal!important",
@@ -272,7 +246,6 @@ export const PrdListXs1 = ({ imgmrv }) => {
                       sx={{
                         fontWeight: "400!important",
                         fontStyle: "normal!important",
-                        //
                         color: "#0F1111!important",
                       }}
                     >
@@ -309,7 +282,6 @@ export const PrdListXs1 = ({ imgmrv }) => {
           </Box>
         </Box>
       </ProdLinkMobile>
-      {/* </Suspense> */}
     </Box>
   ));
 
@@ -413,7 +385,6 @@ export const PrdListXs1 = ({ imgmrv }) => {
           >
             <ProdLinkMobile buttonName={vVoirePlusXsButt}>
               <Box
-                // component="a"
                 sx={{
                   cursor: "pointer",
                   textDecoration: "none!important",

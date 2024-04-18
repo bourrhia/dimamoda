@@ -4,8 +4,6 @@ import Image from "next/image";
 import Typography from "@mui/material/Typography";
 import ShowCatTitle from "../ProductListAllDevices/ShowCatTitle";
 import ProdLinkUpsm from "./ProdLinkUpSm";
-import { Suspense } from "react";
-import ShowLoading from "../../Loading/ShowLoading";
 
 export const PrdListSmMod1 = ({ imgmrv }) => {
   const vCatTitle = "Meilleures ventes";
@@ -42,7 +40,6 @@ export const PrdListSmMod1 = ({ imgmrv }) => {
       }}
     >
       <Box
-        // component="a"
         sx={{
           display: "block",
           marginLeft: "3px",
@@ -68,7 +65,6 @@ export const PrdListSmMod1 = ({ imgmrv }) => {
           whiteSpace: "initial",
         }}
       >
-        {/* <Suspense fallback={<ShowLoading />}> */}
         <ProdLinkUpsm buttonName={vImgClickSm1} productNum={image.productId}>
           <Box
             sx={{
@@ -96,14 +92,10 @@ export const PrdListSmMod1 = ({ imgmrv }) => {
             <Image
               src={image.imgJpg}
               alt="Image"
-              // sizes="130px"
-              //sizes="100vw"
               sizes="(min-width: 1083px) 16vw, (min-width: 960px) 20vw, (min-width: 768px) 25vw,(min-width: 600px) 33vw"
-              // priority={true}
               fill
               style={{
                 objectFit: "contain",
-                //
                 padding: "10px 10px 10px 10px",
               }}
             />
@@ -198,7 +190,6 @@ export const PrdListSmMod1 = ({ imgmrv }) => {
             )}
           </Box>
         </ProdLinkUpsm>
-        {/*</Suspense> */}
       </Box>
     </Box>
   ));
@@ -217,7 +208,6 @@ export const PrdListSmMod1 = ({ imgmrv }) => {
               marginBottom: 0,
 
               "@media screen and (min-width: 601px)": {
-                //  margin: "16px 0",
                 margin: "16px 0 32px",
               },
               position: "relative",
@@ -256,12 +246,9 @@ export const PrdListSmMod1 = ({ imgmrv }) => {
                     display: "flex",
 
                     margin: 0,
-                    // padding: 0,
                     position: "relative",
                     transform: "translate3d(0,0,0)",
                     width: "100%",
-                    //
-
                     willChange: "transform",
 
                     " :-webkit-scrollbar": {

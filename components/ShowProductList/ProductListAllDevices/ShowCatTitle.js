@@ -2,8 +2,6 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ProdLinkAllDevices from "./ProdLinkAllDevices";
-import { Suspense } from "react";
-import ShowLoading from "../../Loading/ShowLoading";
 
 export const ShowCatTitle = ({ catTitle }) => {
   const vVoirePlusButt = "voirePlusButt";
@@ -23,15 +21,12 @@ export const ShowCatTitle = ({ catTitle }) => {
           "&::after": {
             clear: "both",
           },
-          //
           marginBottom: "0 !important",
         }}
       >
         <Box
           sx={{
-            // paddingRight: "20px",
             paddingRight: "10px",
-
             flex: "0 1 auto",
           }}
         >
@@ -46,7 +41,6 @@ export const ShowCatTitle = ({ catTitle }) => {
             }}
           >
             <Box
-              // component="a"
               sx={{
                 color: "inherit",
 
@@ -96,7 +90,6 @@ export const ShowCatTitle = ({ catTitle }) => {
               textDecoration: "none!important",
 
               display: "inline-block",
-              // paddingLeft: "17px",
               borderLeft: "solid 2px #f7f7f7",
               lineHeight: "1.125rem",
               color: "#007185",

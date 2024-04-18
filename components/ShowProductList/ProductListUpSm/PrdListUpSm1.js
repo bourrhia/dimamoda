@@ -2,10 +2,7 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
 import ProdLinkUpsm from "./ProdLinkUpSm";
-//import ShowCatTitle from "./ShowCatTitle";
 import ShowCatTitle from "../ProductListAllDevices/ShowCatTitle";
-import { Suspense } from "react";
-import ShowLoading from "../../Loading/ShowLoading";
 
 export const PrdlistUpSm1 = ({ imgmrv }) => {
   const vCatTitle = "Meilleures ventes";
@@ -67,10 +64,8 @@ export const PrdlistUpSm1 = ({ imgmrv }) => {
               marginBottom: "0!important",
             }}
           >
-            {/* <Suspense fallback={<ShowLoading />}> */}
             <ProdLinkUpsm buttonName={vPrdImgButt} productNum={image.productId}>
               <Box
-                //component="a"
                 sx={{
                   textDecoration: "none !important",
                   color: "#007185",
@@ -124,7 +119,7 @@ export const PrdlistUpSm1 = ({ imgmrv }) => {
                       verticalAlign: "top",
                       maxWidth: "100%",
                       border: 0,
-                      //
+
                       boxSizing: "border-box",
                       overflow: "hidden",
                       display: "block",
@@ -134,13 +129,9 @@ export const PrdlistUpSm1 = ({ imgmrv }) => {
                       src={image.imgJpg}
                       alt="Image"
                       fill
-                      // sizes="100vw"
-                      // sizes="130px"
-                      //priority={true}
                       sizes="(min-width: 1200px) 16vw, (min-width: 1083px) 20vw, (min-width: 900px) 25vw,(min-width: 600px) 33vw"
                       style={{
-                        objectFit: "contain", // cover, contain, none
-
+                        objectFit: "contain",
                         padding: "10px 10px 10px 10px",
                       }}
                     />
@@ -162,13 +153,11 @@ export const PrdlistUpSm1 = ({ imgmrv }) => {
                       width: "100%",
                       padding: "0 20px 0 20px",
                       textAlign: "left",
-
                       overflow: "hidden",
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: "vertical",
                       marginTop: "4px",
                       marginBottom: "0px !important",
-                      //
                       height: "3em",
                     }}
                   >
@@ -237,9 +226,7 @@ export const PrdlistUpSm1 = ({ imgmrv }) => {
                               color: "#0F1111",
                               lineHeight: "normal",
                               textAlign: "left",
-
                               fontSize: "1rem",
-
                               fontWeight: 700,
                             }}
                           >
@@ -284,7 +271,6 @@ export const PrdlistUpSm1 = ({ imgmrv }) => {
                 </Box>
               </Box>
             </ProdLinkUpsm>
-            {/*</Suspense> */}
           </Box>
         </Box>
       </Box>

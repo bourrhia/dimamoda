@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
-//import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { productAdded } from "../../../redux/features/cart/cartSlice";
@@ -13,12 +12,10 @@ export default function HandlesCartItemUpSm({
   prodId,
   prodImage,
   prodDesc,
-  // prodQtee,
   prodPrix,
   prodEtat,
   status,
   prodQteeDisp,
-  // children,
 }) {
   const router = useRouter();
 
@@ -44,15 +41,11 @@ export default function HandlesCartItemUpSm({
   };
 
   const handleNavOpenCart = async () => {
-    // setIsNavOpenCart(true);
     try {
       router.push("/cart/showCart");
     } catch (err) {
-      // Handle any errors that might occur during navigation
       console.error("An error occurred while navigating to showCart: ", err);
     } finally {
-      // setIsNavOpenCart(false);
-
       setIsNavOpenCart(true);
     }
   };
@@ -75,22 +68,13 @@ export default function HandlesCartItemUpSm({
     await handleNavOpenCart();
   };
 
-  //////////////////////////////////////////////////////////////////////////////////
   const handleNavCheckout = () => {
-    // setIsNavOpenCart(true);
+    setIsNavCheckout(true);
     try {
-      // router.push("/checkout/checkoutUpSm");
       router.push(
         `/checkout/checkoutUpSm/?cartProdId=${encodeURIComponent(prodId)}`
       );
-      /*router.push({
-        pathname: "/checkout/checkoutUpSm",
-        query: {
-          cartProdId: prodId,
-        },
-      });*/
     } catch (err) {
-      // Handle any errors that might occur during navigation
       console.error("An error occurred while navigating to checkout : ", err);
     } finally {
       setIsNavCheckout(true);
@@ -111,32 +95,8 @@ export default function HandlesCartItemUpSm({
         prodQteeDisp,
       })
     );
-    // setIsNavOpenCart(true);
     handleNavCheckout();
   };
-
-  ///////////////////////////////////////////////////////////////////////////////////
-
-  //Add
-  /*if (buttonName === "ajouterPanierButt") {
-    return (
-      <Box
-        //component="a"
-        component="button"
-        onClick={clickOpenCart}
-        // disabled={isLoading || isNavCheckout || isNavOpenCart || isNavSignIn}
-        sx={{
-          backgroundColor: "transparent",
-          border: "none",
-          outline: 0,
-          textAlign: "center!important",
-          width: "100%!important",
-        }}
-      >
-        {children}
-      </Box>
-    );
-  }*/
 
   return (
     <>
@@ -217,7 +177,6 @@ export default function HandlesCartItemUpSm({
                       autoComplete="off"
                       id="quantité"
                       tabIndex="0"
-                      //
                       value={prodQtee}
                       onChange={handleChange}
                       sx={{
@@ -257,7 +216,6 @@ export default function HandlesCartItemUpSm({
 
       <Box>
         <Box
-          //component="a"
           component="button"
           onClick={clickOpenCart}
           disabled={isNavOpenCart}
@@ -276,9 +234,7 @@ export default function HandlesCartItemUpSm({
                 display: "block",
                 borderRadius: "20px",
                 boxShadow: "0 2px 5px 0 rgb(213 217 217 / 50%)",
-                // background: "#FFD814",
                 background: isNavOpenCart ? "#e7e9ec" : "#FFD814",
-                // borderColor: "#FCD200",
                 borderColor: isNavOpenCart ? "#8d9096" : "#FCD200",
                 borderStyle: "solid",
                 borderWidth: "1px",
@@ -327,10 +283,8 @@ export default function HandlesCartItemUpSm({
                       size={20}
                       sx={{
                         textAlign: "center",
-                        top: "50%", // Center vertically
-                        left: "50%", // Center horizontally
-                        // marginTop: "-10px", // Adjust for half of CircularProgress size
-                        // marginLeft: "-10px", // Adjust for half of CircularProgress size
+                        top: "50%",
+                        left: "50%",
                       }}
                     />
                   )}
@@ -344,7 +298,6 @@ export default function HandlesCartItemUpSm({
       <Box>
         <Box>
           <Box
-            // component="a"
             component="button"
             onClick={clickBuyNow}
             disabled={isNavCheckout}
@@ -385,10 +338,8 @@ export default function HandlesCartItemUpSm({
                   component="span"
                   sx={{
                     borderRadius: "19px",
-
                     background: "0 0",
                     boxShadow: "none",
-
                     display: "block",
                     position: "relative",
                     overflow: "hidden",
@@ -420,8 +371,8 @@ export default function HandlesCartItemUpSm({
                         size={20}
                         sx={{
                           textAlign: "center",
-                          top: "50%", // Center vertically
-                          left: "50%", // Center horizontally
+                          top: "50%",
+                          left: "50%",
                         }}
                       />
                     )}

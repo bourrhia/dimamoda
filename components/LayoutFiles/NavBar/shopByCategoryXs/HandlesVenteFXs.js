@@ -3,14 +3,13 @@ import Box from "@mui/material/Box";
 import PrdListXs1 from "../../../ShowProductList/ProductListMobile/PrdListXs1";
 import PrdListXs2 from "../../../ShowProductList/ProductListMobile/PrdListXs2";
 import CategoryTitle from "../CategoryTitle";
-//import PrdListUpSm1 from "../../../components/ShowProductList/ProductListUpSm/PrdListUpSm1";
 
 export const HandlesVenteFUpSm = ({ fourPrdsImg }) => {
   const ctgTitle = "Ventes Flash";
   return (
     <>
       <CategoryTitle cattitle={ctgTitle} />
-      {/*  Breakpoint only xs */}
+
       <Box
         sx={{
           display: { xs: "block", sm: "none" },

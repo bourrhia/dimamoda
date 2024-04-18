@@ -1,4 +1,3 @@
-//import { Inter } from "next/font/google";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
 import Box from "@mui/material/Box";
 import Header from "@/components/LayoutFiles/Header/Header";
@@ -6,10 +5,6 @@ import Footer from "@/components/LayoutFiles/Footer/Footer";
 import NavBar from "@/components/LayoutFiles/NavBar/NavBar";
 import "../globals.css";
 import MyStoreProvider from "../../redux/provider";
-//import { RouteChangeListener } from "../../components/RouteChangeListener";
-import { Suspense } from "react";
-//import ShowLoading from "../../components/Loading/ShowLoading";
-//const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -25,27 +20,16 @@ export default function RootLayout({ children }) {
             <Box
               sx={{
                 minHeight: "100vh",
-
-                /* "@media screen and (min-width: 600px)": {
-                minWidth: "600px",
-                margin: 0,
-              },*/
-
                 overflow: "-moz-scrollbars-non",
-
-                margin: 0 /* remove default margin */,
-                scrollbarWidth:
-                  "none" /* Also needed to disable scrollbar Firefox */,
-                msOverflowStyle: "none" /* Disable scrollbar IE 10+ */,
+                margin: 0,
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
                 overflowY: "scroll",
-
                 "&::-webkit-scrollbar": {
                   width: "0px",
-                  background:
-                    "transparent" /* Disable scrollbar Chrome/Safari/Webkit */,
+                  background: "transparent",
                   display: "none",
                 },
-                // fontFamily: inter,
               }}
             >
               <Header />
@@ -55,7 +39,6 @@ export default function RootLayout({ children }) {
                 tabIndex="-1"
                 sx={{
                   outline: 0,
-                  //
                   maxWidth: "1312px",
                 }}
               >

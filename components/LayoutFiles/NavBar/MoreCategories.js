@@ -1,6 +1,3 @@
-//"use client";
-
-//import React, { useState } from "react";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import CelebrationIcon from "@mui/icons-material/Celebration";
@@ -39,17 +36,13 @@ export default function MoreCategories() {
             opacity: "1",
           },
         },
-
         right: "50%",
-        //transform: "translateX(50%)",
         transform: "translateX(9%)",
         boxShadow: "0 4px 16px 0 rgb(0 0 0 / 20%)",
-        // top: "32px",
         top: "22px",
         opacity: 1,
         visibility: "visible",
         pointerEvents: "auto",
-        // animation: "animplus .3s ease forwards",
         animation: "animateplus .3s ease forwards",
         borderRadius: "3px",
         maxWidth: "240px",
@@ -62,18 +55,13 @@ export default function MoreCategories() {
         fontWeight: 400,
         borderColor: "#f0f0f0",
         textAlign: "left",
-        // zIndex: 19,
         zIndex: 40,
         transition: "opacity .3s ease-in-out",
-        //
-        // marginRight: "64px",
-        //marginRight: "auto",
       }}
     >
       <Box
         sx={{
           left: "50%",
-          //  transform: "translateX(-10px)",
           transform: "translateX(89px)",
           bottom: "100%",
           borderBottomColor: "#f0f0f0",
@@ -90,16 +78,13 @@ export default function MoreCategories() {
             position: "absolute",
             borderBottomColor: "#fff",
             borderWidth: "8px",
-            //transform: "translateX(-8px)",
             transform: "translateX(112px)",
-            // bottom: "-10px",
             bottom: "0px",
             left: 0,
             width: 0,
             height: 0,
             border: "solid transparent",
             position: "absolute",
-            //
             borderLeft: "10px solid transparent",
             borderRight: "10px solid transparent",
             borderBottom: "10px solid #fff",
@@ -125,7 +110,6 @@ export default function MoreCategories() {
               lineHeight: "18px",
               fontWeight: "400",
               color: "#212121",
-              //
               margin: 0,
               padding: 0,
             }}
@@ -140,9 +124,6 @@ export default function MoreCategories() {
                 boxSizing: "border-box",
                 margin: 0,
                 padding: 0,
-                /* [theme.breakpoints.up(751)]: {
-                  display: "none",
-                },*/
                 "@media screen and (min-width: 751px)": {
                   display: "none",
                 },
@@ -151,26 +132,7 @@ export default function MoreCategories() {
                 },
               }}
             >
-              <Box
-                // component="a"
-                sx={
-                  {
-                    /* display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  padding: "16px 12px",
-                  textDecoration: "none",
-                  color: "inherit",
-                  border: "none",
-                  outline: "none",
-                  boxSizing: "border-box",
-                  margin: 0,
-                  ":-webkit-any-link": {
-                    cursor: "pointer",
-                  },*/
-                  }
-                }
-              >
+              <Box>
                 <NavBarButtons buttonName={vRestaurantIcon}>
                   <RestaurantIcon
                     fontSize="small"
@@ -200,9 +162,7 @@ export default function MoreCategories() {
                 boxSizing: "border-box",
                 margin: 0,
                 padding: 0,
-                /* [theme.breakpoints.up(827)]: {
-                  display: "none",
-                },*/
+
                 "@media screen and (min-width: 827px)": {
                   display: "none",
                 },
@@ -211,26 +171,7 @@ export default function MoreCategories() {
                 },
               }}
             >
-              <Box
-                // component="a"
-                sx={
-                  {
-                    /*display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  padding: "16px 12px",
-                  textDecoration: "none",
-                  color: "inherit",
-                  border: "none",
-                  outline: "none",
-                  boxSizing: "border-box",
-                  margin: 0,
-                  ":-webkit-any-link": {
-                    cursor: "pointer",
-                  },*/
-                  }
-                }
-              >
+              <Box>
                 <NavBarButtons buttonName={vLuggageIcon}>
                   <LuggageIcon
                     fontSize="small"
@@ -262,9 +203,7 @@ export default function MoreCategories() {
                 boxSizing: "border-box",
                 margin: 0,
                 padding: 0,
-                /*[theme.breakpoints.up(975)]: {
-                  display: "none",
-                },*/
+
                 "@media screen and (min-width: 975px)": {
                   display: "none",
                 },
@@ -273,26 +212,7 @@ export default function MoreCategories() {
                 },
               }}
             >
-              <Box
-                // component="a"
-                sx={
-                  {
-                    /*display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  padding: "16px 12px",
-                  textDecoration: "none",
-                  color: "inherit",
-                  border: "none",
-                  outline: "none",
-                  boxSizing: "border-box",
-                  margin: 0,
-                  ":-webkit-any-link": {
-                    cursor: "pointer",
-                  }, */
-                  }
-                }
-              >
+              <Box>
                 <NavBarButtons buttonName={vBlenderIcon}>
                   <BlenderIcon
                     fontSize="small"
@@ -322,9 +242,7 @@ export default function MoreCategories() {
                 boxSizing: "border-box",
                 margin: 0,
                 padding: 0,
-                /*[theme.breakpoints.up(1120)]: {
-                  display: "none",
-                },*/
+
                 "@media screen and (min-width: 1120px)": {
                   display: "none",
                 },
@@ -333,26 +251,7 @@ export default function MoreCategories() {
                 },
               }}
             >
-              <Box
-                // component="a"
-                sx={
-                  {
-                    /*display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  padding: "16px 12px",
-                  textDecoration: "none",
-                  color: "inherit",
-                  border: "none",
-                  outline: "none",
-                  boxSizing: "border-box",
-                  margin: 0,
-                  ":-webkit-any-link": {
-                    cursor: "pointer",
-                  },*/
-                  }
-                }
-              >
+              <Box>
                 <NavBarButtons buttonName={vSportsEsportsIcon}>
                   <SportsEsportsIcon
                     fontSize="small"
@@ -382,9 +281,7 @@ export default function MoreCategories() {
                 boxSizing: "border-box",
                 margin: 0,
                 padding: 0,
-                /* [theme.breakpoints.up(1200)]: {
-                  display: "none",
-                },*/
+
                 "@media screen and (min-width: 1200px)": {
                   display: "none",
                 },
@@ -393,26 +290,7 @@ export default function MoreCategories() {
                 },
               }}
             >
-              <Box
-                //component="a"
-                sx={
-                  {
-                    /* display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  padding: "16px 12px",
-                  textDecoration: "none",
-                  color: "inherit",
-                  border: "none",
-                  outline: "none",
-                  boxSizing: "border-box",
-                  margin: 0,
-                  ":-webkit-any-link": {
-                    cursor: "pointer",
-                  },*/
-                  }
-                }
-              >
+              <Box>
                 <NavBarButtons buttonName={vChildFriendlyIcon}>
                   <ChildFriendlyIcon
                     fontSize="small"
@@ -442,9 +320,7 @@ export default function MoreCategories() {
                 boxSizing: "border-box",
                 margin: 0,
                 padding: 0,
-                /* [theme.breakpoints.up(1200)]: {
-                  display: "none",
-                },*/
+
                 "@media screen and (min-width: 1200px)": {
                   display: "none",
                 },
@@ -453,26 +329,7 @@ export default function MoreCategories() {
                 },
               }}
             >
-              <Box
-                //component="a"
-                sx={
-                  {
-                    /* display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  padding: "16px 12px",
-                  textDecoration: "none",
-                  color: "inherit",
-                  border: "none",
-                  outline: "none",
-                  boxSizing: "border-box",
-                  margin: 0,
-                  ":-webkit-any-link": {
-                    cursor: "pointer",
-                  },*/
-                  }
-                }
-              >
+              <Box>
                 <NavBarButtons buttonName={vHouseIcon}>
                   <HouseIcon
                     fontSize="small"
@@ -509,26 +366,7 @@ export default function MoreCategories() {
                 },
               }}
             >
-              <Box
-                // component="a"
-                sx={
-                  {
-                    /* display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  padding: "16px 12px",
-                  textDecoration: "none",
-                  color: "inherit",
-                  border: "none",
-                  outline: "none",
-                  boxSizing: "border-box",
-                  margin: 0,
-                  ":-webkit-any-link": {
-                    cursor: "pointer",
-                  },*/
-                  }
-                }
-              >
+              <Box>
                 <NavBarButtons buttonName={vDirectionsBikeIcon}>
                   <DirectionsBikeIcon
                     fontSize="small"
@@ -563,26 +401,7 @@ export default function MoreCategories() {
                 },
               }}
             >
-              <Box
-                //component="a"
-                sx={
-                  {
-                    /* display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  padding: "16px 12px",
-                  textDecoration: "none",
-                  color: "inherit",
-                  border: "none",
-                  outline: "none",
-                  boxSizing: "border-box",
-                  margin: 0,
-                  ":-webkit-any-link": {
-                    cursor: "pointer",
-                  },*/
-                  }
-                }
-              >
+              <Box>
                 <NavBarButtons buttonName={vCelebrationIcon}>
                   <CelebrationIcon
                     fontSize="small"
@@ -619,26 +438,7 @@ export default function MoreCategories() {
                 },
               }}
             >
-              <Box
-                // component="a"
-                sx={
-                  {
-                    /* display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  padding: "16px 12px",
-                  textDecoration: "none",
-                  color: "inherit",
-                  border: "none",
-                  outline: "none",
-                  boxSizing: "border-box",
-                  margin: 0,
-                  ":-webkit-any-link": {
-                    cursor: "pointer",
-                  },*/
-                  }
-                }
-              >
+              <Box>
                 <NavBarButtons buttonName={vCastleIcon}>
                   <CastleIcon
                     fontSize="small"
@@ -673,26 +473,7 @@ export default function MoreCategories() {
                 },
               }}
             >
-              <Box
-                // component="a"
-                sx={
-                  {
-                    /* display: "flex",
-                  alignItems: "center",
-                  width: "100%",
-                  padding: "16px 12px",
-                  textDecoration: "none",
-                  color: "inherit",
-                  border: "none",
-                  outline: "none",
-                  boxSizing: "border-box",
-                  margin: 0,
-                  ":-webkit-any-link": {
-                    cursor: "pointer",
-                  },*/
-                  }
-                }
-              >
+              <Box>
                 <NavBarButtons buttonName={vCardGiftcardIcon}>
                   <CardGiftcardIcon
                     fontSize="small"

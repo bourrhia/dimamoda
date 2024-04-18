@@ -28,37 +28,6 @@ function FouterXs() {
           color: "#0F1111",
         }}
       >
-        {/*
-        <Box
-          component="a"
-          aria-label="Haut de la page"
-          sx={{
-            height: "50px",
-            paddingTop: "5px",
-            background: "#37475A",
-            WebkitBoxShadow: "none",
-            MozBoxShadow: "none",
-            boxShadow: "none",
-            display: "block",
-            textAlign: "center",
-            borderBottom: "#cdcdcd",
-            WebkitBoxSizing: "border-box",
-            fontFamily: "inherit",
-            textDecoration: "none",
-
-            ":hover": {
-              color: "#007185",
-            },
-
-            ":-webkit-any-link": {
-              cursor: "pointer",
-            },
-
-            cursor: "pointer",
-            fontSize: "12px",
-            lineHeight: "1em",
-          }}
-        > */}
         <FooterButtons buttonName={vTopOfPageButt}>
           <Box
             component="i"
@@ -96,14 +65,13 @@ function FouterXs() {
               },
 
               cursor: "pointer",
-              //
               fontWeight: "bold",
             }}
           >
             Haut de la page
           </Box>
         </FooterButtons>
-        {/* </Box> */}
+
         <Box
           component="ul"
           sx={{
@@ -116,15 +84,9 @@ function FouterXs() {
             WebkitBorderRadius: 0,
             MozBorderRadius: 0,
             borderRadius: 0,
-
             MozBoxSizing: "border-box",
             WebkitBoxSizing: "border-box",
             color: "#0F1111",
-            /* marginBlockStart: "1em",
-            marginBlockEnd: "1em",
-            marginInlineStart: "0px",
-            marginInlineEnd: "0px",
-            paddingInlineStart: "40px",*/
             unicodeBidi: "isolate",
             fontFamily: "inherit",
             fontSize: "12px",
@@ -147,11 +109,9 @@ function FouterXs() {
               borderBottom: 0,
               listStyle: "none",
               wordWrap: "break-word",
-              // color: "#0F1111",
               fontFamily: "inherit",
               fontSize: "12px",
               lineHeight: "1em",
-              //
               fontWeight: "bold",
             }}
           >
@@ -169,7 +129,6 @@ function FouterXs() {
                   cursor: "pointer",
                 },
                 cursor: "pointer",
-                // listStyle: "none",
                 wordWrap: "break-word",
               }}
             >
@@ -192,7 +151,6 @@ function FouterXs() {
               >
                 Mode de paiement
               </Box>
-              <Box component="i" sx={{}}></Box>
             </Box>
           </Box>
           <Box
@@ -211,11 +169,9 @@ function FouterXs() {
               borderBottom: 0,
               listStyle: "none",
               wordWrap: "break-word",
-              // color: "#0F1111",
               fontFamily: "inherit",
               fontSize: "12px",
               lineHeight: "1em",
-              //
               fontWeight: "bold",
             }}
           >
@@ -233,7 +189,6 @@ function FouterXs() {
                   cursor: "pointer",
                 },
                 cursor: "pointer",
-                // listStyle: "none",
                 wordWrap: "break-word",
               }}
             >
@@ -256,7 +211,6 @@ function FouterXs() {
               >
                 Mode de livraison
               </Box>
-              <Box component="i" sx={{}}></Box>
             </Box>
           </Box>
 
@@ -277,27 +231,9 @@ function FouterXs() {
               fontFamily: "inherit",
               fontSize: "12px",
               lineHeight: "1em",
-              //
               fontWeight: "bold",
             }}
           >
-            {/*  
-            <Box
-              //  component="a"
-              sx={{
-                padding: 0,
-                display: "block",
-                color: "#111",
-                fontSize: "15px",
-                lineHeight: "16px",
-                fontFamily: "inherit",
-                textDecoration: "none",
-                ":-webkit-any-link": {
-                  cursor: "pointer",
-                },
-                cursor: "pointer",
-              }}
-            > */}
             <FooterButtons buttonName={vHomePageButt}>
               <Box
                 component="span"
@@ -318,7 +254,6 @@ function FouterXs() {
                 Acceuil
               </Box>
             </FooterButtons>
-            {/*</Box> */}
           </Box>
           <Box
             component="li"
@@ -337,7 +272,7 @@ function FouterXs() {
               fontFamily: "inherit",
               fontSize: "12px",
               lineHeight: "1em",
-              //
+
               fontWeight: "bold",
             }}
           >
@@ -394,7 +329,6 @@ function FouterXs() {
               fontFamily: "inherit",
               fontSize: "12px",
               lineHeight: "1em",
-              //
               fontWeight: "bold",
             }}
           >
@@ -452,7 +386,6 @@ function FouterXs() {
               fontFamily: "inherit",
               fontSize: "12px",
               lineHeight: "1em",
-              //
               fontWeight: "bold",
             }}
           >
@@ -510,7 +443,6 @@ function FouterXs() {
               fontFamily: "inherit",
               fontSize: "12px",
               lineHeight: "1em",
-              //
               fontWeight: "bold",
             }}
           >

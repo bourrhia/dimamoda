@@ -26,7 +26,6 @@ export async function POST(request) {
       nbrItems: order.nbrItems,
       cartItems: order.cartItems,
       dateCreation: new Date(),
-      // dateModification: new Date(),
     });
 
     const order_Id = new ObjectId(result.insertedId);

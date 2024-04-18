@@ -18,24 +18,12 @@ export default function CategoryTitle({ cattitle }) {
       })}
     >
       <Box
-        // component="h1"
         sx={{
-          /* fontWeight: 500,
-          fontSize: "18px",
-          boxSizing: "border-box",
-          margin: 0,
-          padding: 0,
-          color: "#212121",
-          lineHeight: 1.4,*/
           minWidth: "568px",
         }}
       >
         <Box
           sx={{
-            /* "@media screen and (max-width: 769px)": {
-              // width: "63%",
-              //float: "left",
-            },*/
             position: "relative",
             background: "transparent",
           }}

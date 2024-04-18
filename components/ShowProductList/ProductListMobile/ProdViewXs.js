@@ -1,15 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
-//import Image from "next/image";
-//import Typography from "@mui/material/Typography";
-//import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
-//import CircularProgress from "@mui/material/CircularProgress";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import SvgIcon from "@mui/material/SvgIcon";
-//import QteeSelectXs from "../ProductListAllDevices/QteeSelectXs";
 import ProdLinkMobile from "./ProdLinkMobile";
-//import { Suspense } from "react";
-//import ShowLoading from "../../Loading/ShowLoading";
 import ImageCartItemXs from "./ImageCartItemXs";
 import HandlesCartItemXs from "./HandlesCartItemXs";
 
@@ -21,8 +14,6 @@ function CustChevronRightIcon(props) {
   );
 }
 export const ProdViewXs = ({ selectedprd }) => {
-  //const vAchatImmédiatButt = "achatImmédiatButt";
-  //const vAjouterPanierButt = "ajouterPanierButt";
   const vDescArticleButt = "descArticleButt";
   const vDescCompleteButt = "descCompleteButt";
 
@@ -30,12 +21,9 @@ export const ProdViewXs = ({ selectedprd }) => {
   const vProdImage = selectedprd[0]?.imgJpg;
   const vDescPrd = selectedprd[0]?.descPrd;
   const vPrixAct = selectedprd[0]?.prixAct;
-  //const vPrixSymbol = selectedprd[0]?.prixSymbol;
   const vProdEtat = selectedprd[0]?.etatprd;
   const vProdQteeDisp = selectedprd[0]?.qteedisp || 0;
   const vstatus = "idle";
-
-  //let qteemax = selectedprd[0]?.qteedisp || 0;
 
   const info_article_1 = (
     <Box
@@ -409,7 +397,6 @@ export const ProdViewXs = ({ selectedprd }) => {
       >
         <Box
           sx={{
-            //livraison
             width: "42%",
             color: "#767676",
             display: "inline-block",
@@ -652,18 +639,15 @@ export const ProdViewXs = ({ selectedprd }) => {
     <Box
       sx={{
         outline: 0,
-
         boxSizing: "border-box",
         margin: 0,
         padding: 0,
         lineHeight: "20px",
-
         letterSpacing: "normal",
         WebkitFontSmoothing: "antialiased",
         MozFontSmoothing: "antialiased",
         MsFontSmoothing: "antialiased",
         fontSmoothing: "antialiased",
-
         WebkitTextSizeAdjust: "none",
         MozTextSizeAdjust: "none",
         MsTextSizeAdjust: "none",
@@ -689,13 +673,11 @@ export const ProdViewXs = ({ selectedprd }) => {
           margin: 0,
           padding: 0,
           lineHeight: "20px",
-
           letterSpacing: "normal",
           WebkitFontSmoothing: "antialiased",
           MozFontSmoothing: "antialiased",
           MsFontSmoothing: "antialiased",
           fontSmoothing: "antialiased",
-
           WebkitTextSizeAdjust: "none",
           MozTextSizeAdjust: "none",
           MsTextSizeAdjust: "none",
@@ -803,7 +785,6 @@ export const ProdViewXs = ({ selectedprd }) => {
                             productNum={vProductNum}
                           >
                             <Box
-                              // component="a"
                               sx={{
                                 alignItems: "center",
                                 display: "flex",
@@ -908,9 +889,6 @@ export const ProdViewXs = ({ selectedprd }) => {
                                   productNum={vProductNum}
                                 >
                                   <Box
-                                    // component="a"
-                                    // onClick={handleClick}
-                                    //  onTouchEnd={handleTouchEnd}
                                     sx={{
                                       textDecoration: "underline",
                                       color: "#3665f3",

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -39,24 +39,7 @@ export const HandlesShowCartXs = () => {
 
   const cart = useSelector((state) => state.cart.products);
 
-  /*const onSubmit = async (data, event) => {
-    event.preventDefault();
-    //  setIsCheckoutUpSm(true);
-    try {
-      //   router.push("/checkout/checkoutUpSm");
-    } catch (err) {
-      console.error(
-        "Un probleme est survenu pour faire passer une commande: ",
-        err
-      );
-    } finally {
-      //  setIsCheckoutUpSm(true);
-    }
-  };*/
-
   const HandlesCart = ({ cart }) => {
-    //const dispatch = useDispatch();
-
     const [isCheckoutXs, setIsCheckoutXs] = useState(false);
 
     const {
@@ -93,11 +76,6 @@ export const HandlesShowCartXs = () => {
       name: "cartItemsArray",
     });
 
-    const removeCartItem = (prodId) => {
-      dispatch(productRemoved({ prodId }));
-    };
-
-    // Getting the count of items
     const getItemsCount = () => {
       return cart.reduce((accumulator, item) => accumulator + item.prodQtee, 0);
     };
@@ -122,14 +100,6 @@ export const HandlesShowCartXs = () => {
     const carttotalCommande = parseFloat(
       Math.round(totalCommande * 100) / 100
     ).toFixed(2);
-
-    function CustExpandMoreIcon(props) {
-      return (
-        <SvgIcon {...props}>
-          <KeyboardArrowDownOutlinedIcon />
-        </SvgIcon>
-      );
-    }
 
     const onSubmit = async (data, event) => {
       event.preventDefault();
@@ -159,7 +129,6 @@ export const HandlesShowCartXs = () => {
           marginBlockEnd: "1em",
           marginInlineStart: "0px",
           marginInlineEnd: "0px",
-          // paddingInlineStart: "40px",
         }}
       >
         {fields.map((item, index) => {
@@ -227,7 +196,6 @@ export const HandlesShowCartXs = () => {
               {item && (
                 <Box
                   component="li"
-                  // key={index}
                   sx={{
                     borderBottom: "1px solid #e5e5e5",
 
@@ -281,10 +249,7 @@ export const HandlesShowCartXs = () => {
                                 sx={{
                                   display: "inline-block",
                                   position: "relative",
-                                  // width: "100%",
-                                  // width: "84px",
                                   width: "94px",
-
                                   "&::after": {
                                     content: '""',
                                     display: "block",
@@ -305,9 +270,7 @@ export const HandlesShowCartXs = () => {
                                     "&::after": {
                                       content: '""',
                                       display: "initial",
-                                      // height: "100%",
                                       verticalAlign: "middle",
-                                      //height: "59px",
                                       height: "94px",
                                     },
                                   }}
@@ -316,10 +279,9 @@ export const HandlesShowCartXs = () => {
                                     src={item?.prodImage}
                                     alt="Image"
                                     fill
-                                    // sizes="100vw"
                                     sizes="94px"
                                     style={{
-                                      objectFit: "contain", // cover, contain, none
+                                      objectFit: "contain",
                                     }}
                                   />
                                 </Box>
@@ -348,7 +310,6 @@ export const HandlesShowCartXs = () => {
                                     marginBlockEnd: "1em",
                                     marginInlineStart: "0px",
                                     marginInlineEnd: "0px",
-
                                     textAlign: "-webkit-match-parent",
                                     fontWeight: "bold",
                                     color: "#191919",
@@ -573,8 +534,6 @@ export const HandlesShowCartXs = () => {
                                     </Box>
                                   </Box>
                                 </Box>
-                                <Box sx={{}}></Box>
-                                <Box sx={{}}></Box>
                               </Box>
                             </Box>
                           </Box>
@@ -616,7 +575,6 @@ export const HandlesShowCartXs = () => {
                   </Box>
                 </Box>
               )}
-              {/* </> */}
             </Box>
           );
         })}
@@ -644,11 +602,7 @@ export const HandlesShowCartXs = () => {
             >
               Panier
             </Box>
-            <Box
-              component="form"
-              // onSubmit={handleSubmit((data) => alert(JSON.stringify(data)))}
-              onSubmit={handleSubmit(onSubmit)}
-            >
+            <Box component="form" onSubmit={handleSubmit(onSubmit)}>
               <Box
                 sx={{
                   background: "#fff",
@@ -671,12 +625,8 @@ export const HandlesShowCartXs = () => {
                       borderRadius: "24px",
                       fontSize: "1rem",
                       minHeight: "48px",
-                      // backgroundColor: "#3665f3",
-                      //  borderColor: "#3665f3",
                       backgroundColor: isCheckoutXs ? "#e7e9ec" : "#3665f3",
-                      //borderColor: isCheckoutXs ? "#8d9096" : "#3665f3",
                       borderColor: "#3665f3",
-                      // color: "#fff",
                       color: isCheckoutXs ? "#0F1111" : "#fff",
                       fontWeight: 700,
                       border: "1px solid",
@@ -698,7 +648,6 @@ export const HandlesShowCartXs = () => {
                       <CircularProgress
                         size={20}
                         sx={{
-                          //   color: "#fff",
                           color: "#0F1111",
                         }}
                       />
@@ -980,11 +929,8 @@ export const HandlesShowCartXs = () => {
                       borderRadius: "24px",
                       fontSize: "1rem",
                       minHeight: "48px",
-                      // backgroundColor: "#3665f3",
                       borderColor: "#3665f3",
                       backgroundColor: isCheckoutXs ? "#e7e9ec" : "#3665f3",
-                      //borderColor: isCheckoutXs ? "#8d9096" : "#3665f3",
-                      // color: "#fff",
                       color: isCheckoutXs ? "#0F1111" : "#fff",
                       fontWeight: 700,
                       border: "1px solid",
@@ -1006,7 +952,6 @@ export const HandlesShowCartXs = () => {
                       <CircularProgress
                         size={20}
                         sx={{
-                          // color: "#fff",
                           color: "#0F1111",
                         }}
                       />
@@ -1015,7 +960,6 @@ export const HandlesShowCartXs = () => {
                 </Box>
               </Box>
             </Box>
-            <Box sx={{}}></Box>
           </Box>
         </Box>
       </Box>

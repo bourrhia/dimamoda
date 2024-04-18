@@ -111,12 +111,9 @@ export const HandlesSlider = ({
 
   const sliderSettings = {
     dots: false,
-    // arrows: true,
     infinite: false,
     initialSlide: 0,
     slidesToShow: slidesToShow,
-    // slidesToShow: 5,
-    //slidesToScroll: 1,
     slidesToScroll: slidesToShow,
     speed: 500,
     rows: 1,
@@ -137,7 +134,6 @@ export const HandlesSlider = ({
         }
       />
     ),
-    // arrows: false,
 
     afterChange: (currentSlide) => {
       setArrowDisplay(currentSlide);

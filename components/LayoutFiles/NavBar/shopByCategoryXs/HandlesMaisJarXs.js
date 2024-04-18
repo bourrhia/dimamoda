@@ -9,7 +9,7 @@ export const HandlesMaisJarUpSm = ({ fourPrdsImg }) => {
   return (
     <>
       <CategoryTitle cattitle={ctgTitle} />
-      {/*  Breakpoint only xs */}
+
       <Box
         sx={{
           display: { xs: "block", sm: "none" },

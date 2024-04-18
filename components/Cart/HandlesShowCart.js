@@ -1,35 +1,19 @@
 "use client";
 
-//import React from "react";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import TextField from "@mui/material/TextField";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import SvgIcon from "@mui/material/SvgIcon";
-//
-import {
-  useForm,
-  useFieldArray,
-  FormProvider,
-  useFormContext,
-  useWatch,
-  Controller,
-} from "react-hook-form";
+import { useForm, useFieldArray, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
 import { cartSpinnerAsync } from "../../redux/features/cart/cartSlice";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useSelector, useDispatch } from "react-redux";
 import { productUpdated } from "../../redux/features/cart/cartSlice";
 import { productRemoved } from "../../redux/features/cart/cartSlice";
-
-//import useScrollY from "../lib/useScrollY";
 import Backdrop from "@mui/material/Backdrop";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -37,11 +21,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import InfoIcon from "@mui/icons-material/Info";
-//
-
-import CloseIcon from "@mui/icons-material/Close";
-//import { useSession } from "next-auth/react";
 
 export const HandlesShowCart = () => {
   const router = useRouter();
@@ -72,25 +51,7 @@ export const HandlesShowCart = () => {
 
   const cart = useSelector((state) => state.cart.products);
 
-  /*const onSubmit = async (data, event) => {
-    event.preventDefault();
-    //  setIsCheckoutUpSm(true);
-    try {
-      //   router.push("/checkout/checkoutUpSm");
-    } catch (err) {
-      console.error(
-        "Un probleme est survenu pour faire passer une commande: ",
-        err
-      );
-    } finally {
-      //  setIsCheckoutUpSm(true);
-    }
-  };*/
-
   const HandlesCart = ({ cart }) => {
-    //const dispatch = useDispatch();
-
-    // const [isCheckoutXs, setIsCheckoutXs] = useState(false);
     const [isCheckoutUpSm, setIsCheckoutUpSm] = useState(false);
 
     const {
@@ -133,7 +94,6 @@ export const HandlesShowCart = () => {
       dispatch(productRemoved({ prodId }));
     };
 
-    // Getting the count of items
     const getItemsCount = () => {
       return cart.reduce((accumulator, item) => accumulator + item.prodQtee, 0);
     };
@@ -145,21 +105,13 @@ export const HandlesShowCart = () => {
       );
     };
 
-    /////////////////////////////
-
     const mtLiv = 10;
-
-    const cartMtLiv = parseFloat(Math.round(mtLiv * 100) / 100).toFixed(2);
 
     const TotalCartPrice = parseFloat(
       Math.round(getTotalPrice() * 100) / 100
     ).toFixed(2);
 
     let totalCommande = getTotalPrice() + mtLiv;
-
-    const carttotalCommande = parseFloat(
-      Math.round(totalCommande * 100) / 100
-    ).toFixed(2);
 
     function CustExpandMoreIcon(props) {
       return (
@@ -181,7 +133,6 @@ export const HandlesShowCart = () => {
           err
         );
       } finally {
-        // setIsCheckoutUpSm(false);
         setIsCheckoutUpSm(true);
       }
     };
@@ -192,20 +143,12 @@ export const HandlesShowCart = () => {
         sx={{
           marginBottom: "1rem",
           padding: 0,
-
-          "@media screen and (min-width: 576px)": {
-            // border: "1px solid #e5e5e5",
-          },
-
           backgroundColor: "#fff",
           position: "relative",
           background: "#fff",
           color: "#191919",
-
           fontSize: ".875rem",
           WebkitTextSizeAdjust: "100%",
-          //
-
           marginRight: 0,
           marginLeft: 0,
           marginTop: "14px!important",
@@ -253,10 +196,6 @@ export const HandlesShowCart = () => {
                 })
               );
 
-              /*let maxCartQtee =
-                item?.prodQteeDisp < 10 ? item?.prodQteeDisp : 10;
-              let QteeAllowed = [];*/
-
               let maxCartQtee =
                 item?.itemQteeDisp < 10 ? item?.itemQteeDisp : 10;
               let QteeAllowed = [];
@@ -296,8 +235,6 @@ export const HandlesShowCart = () => {
                   prodQuantity = parseInt(
                     getValues(`cartItemsArray.[${index}].itemQtee`)
                   );
-                  //
-                  //router.refresh();
                 } else {
                   prodQuantity = parseInt(
                     getValues(`cartItemsArray.[${index}].itemQteeUpd`)
@@ -332,7 +269,6 @@ export const HandlesShowCart = () => {
               let isLoading = item?.status === "loading";
 
               const onChgCartQtee = async (e) => {
-                //   const onChgCartQtee = (e) => {
                 e.stopPropagation();
                 e.preventDefault();
 
@@ -346,7 +282,6 @@ export const HandlesShowCart = () => {
 
                 if (canSaveAdrLiv && watchItemQtee <= 9) {
                   try {
-                    // const updCartQtee = await
                     if (prodQuantity <= 9) {
                       dispatch(
                         productUpdated({
@@ -355,8 +290,6 @@ export const HandlesShowCart = () => {
                         })
                       );
                     }
-
-                    //  ).unwrap();
                   } catch (err) {
                     console.error(
                       "Un probleme est survenu pour enregistrer la quantité à commander: ",
@@ -381,8 +314,6 @@ export const HandlesShowCart = () => {
                 <Box key={index}>
                   {item && (
                     <Box
-                      //key={it.id}
-                      // key={item.prodId}
                       sx={{
                         "@media screen and (min-width: 576px)": {
                           borderBottom: "1px solid #e5e5e5",
@@ -447,7 +378,6 @@ export const HandlesShowCart = () => {
                             >
                               <Box
                                 sx={{
-                                  //maxWidth: "130px",
                                   maxWidth: "220px",
                                   paddingRight: 0,
                                   paddingLeft: 0,
@@ -479,10 +409,7 @@ export const HandlesShowCart = () => {
                                     aria-hidden="true"
                                     sx={{
                                       display: "block",
-                                      // position: "relative",
-                                      //
-                                      // display: "block",
-                                      //position: "relative",
+
                                       verticalAlign: "top",
                                       maxWidth: "100%",
                                       border: 0,
@@ -490,7 +417,7 @@ export const HandlesShowCart = () => {
                                       aspectRatio: "auto 180 / 180",
                                       height: "180px",
                                       color: "#1B4B79",
-                                      //
+
                                       position: "relative",
                                     }}
                                   >
@@ -498,10 +425,9 @@ export const HandlesShowCart = () => {
                                       src={item?.prodImage}
                                       alt="Image"
                                       fill
-                                      //sizes="100vw"
                                       sizes="180px"
                                       style={{
-                                        objectFit: "contain", // cover, contain, none
+                                        objectFit: "contain",
                                       }}
                                     />
                                   </Box>
@@ -522,13 +448,7 @@ export const HandlesShowCart = () => {
                                   width: "100%",
                                 }}
                               >
-                                <Box
-                                  sx={
-                                    {
-                                      // marginRight: "1rem!important",
-                                    }
-                                  }
-                                >
+                                <Box>
                                   <Box
                                     component="h3"
                                     sx={{
@@ -556,20 +476,15 @@ export const HandlesShowCart = () => {
                                           lineHeight: "20px",
                                           color: "#191919",
                                           WebkitTextSizeAdjust: "100%",
-                                          // ADD
                                           height: "2.6em",
-
-                                          // display: "inline-block",
                                           width: "100%",
                                           whiteSpace: "normal",
                                           lineHeight: "1.3em !important",
                                           wordBreak: "normal",
                                           textRendering: "optimizeLegibility",
                                           fontSize: "18px!important",
-                                          // fontSize: "14px!important",
                                           color: "#0F1111!important",
                                           wordWrap: "break-word",
-
                                           color: "#282828",
                                           fontWeight: 400,
                                           fontWeight: 500,
@@ -578,7 +493,6 @@ export const HandlesShowCart = () => {
                                         {item?.prodDesc}
                                       </Box>
                                       <Box
-                                        // ADD ADD ADD
                                         sx={{
                                           marginRight: "0!important",
                                           float: "right!important",
@@ -613,10 +527,6 @@ export const HandlesShowCart = () => {
                                               lineHeight: "24px!important",
                                               fontWeight: "700!important",
                                               textAlign: "right!important",
-                                              //
-                                              //  padding: "0!important",
-                                              // margin: "0!important",
-                                              //float: "right!important",
                                               marginRight: "0!important",
                                             }}
                                           >
@@ -632,20 +542,16 @@ export const HandlesShowCart = () => {
                                       color: "#767676",
                                       marginBottom: "0.5rem!important",
                                       marginTop: "0.25rem!important",
-                                      // marginBottom: "0.75rem!important",
-                                      // marginTop: "0rem!important",
                                     }}
                                   ></Box>
                                 </Box>
 
                                 <Box
-                                  // component="li"
                                   sx={{
-                                    //  listStyle: "none",
                                     wordWrap: "break-word",
                                     margin: 0,
                                     padding: 0,
-                                    //display: "list-item",
+
                                     textAlign: "-webkit-match-parent",
                                     color: "#0F1111",
                                   }}
@@ -654,7 +560,6 @@ export const HandlesShowCart = () => {
                                     component="span"
                                     sx={{
                                       color: "#0F1111",
-                                      // listStyle: "none",
                                       wordWrap: "break-word",
                                     }}
                                   >
@@ -665,7 +570,6 @@ export const HandlesShowCart = () => {
                                         fontSize: "12px!important",
                                         lineHeight: "16px!important",
                                         wordWrap: "break-word",
-                                        //
                                         margin: 0,
                                         padding: 0,
                                       }}
@@ -725,7 +629,6 @@ export const HandlesShowCart = () => {
                                                 MsFlexAlign: "center",
                                                 alignItems: "center",
                                                 paddingRight: "0.5rem",
-                                                //
                                                 backgroundColor: "transparent",
                                               }}
                                             >
@@ -734,8 +637,6 @@ export const HandlesShowCart = () => {
                                                 sx={{
                                                   display: "inline-block",
                                                   position: "relative",
-                                                  // marginTop: "1rem",
-                                                  // marginTop: "0.5rem!important",
                                                   marginTop:
                                                     "0.25rem!important",
                                                   boxSizing: "inherit",
@@ -794,10 +695,6 @@ export const HandlesShowCart = () => {
                                                     defaultValue={
                                                       item?.prodQtee
                                                     }
-                                                    // defaultValue={item.prodQtee}
-                                                    // {...register("itemQtee")}
-
-                                                    // {...register("itemQtee", {
                                                     {...register(
                                                       `cartItemsArray.${index}.itemQtee`,
                                                       {
@@ -835,7 +732,6 @@ export const HandlesShowCart = () => {
                                                         },
                                                       writingMode:
                                                         "horizontal-tb !important",
-                                                      //
                                                       fontWeight: 700,
                                                     }}
                                                   >
@@ -849,18 +745,13 @@ export const HandlesShowCart = () => {
                                                       pointerEvents: "none",
                                                       position: "absolute",
                                                       right: "16px",
-                                                      //right: "8px",
                                                       top: 0,
-                                                      // width: "8px",
-
                                                       " :not(:root)": {
                                                         overflowClipMargin:
                                                           "content-box",
                                                         overflow: "hidden",
                                                       },
-
                                                       color: "#191919",
-                                                      //fontSize: ".875rem",
                                                       WebkitTextSizeAdjust:
                                                         "100%",
                                                       display: "inline-block",
@@ -887,18 +778,12 @@ export const HandlesShowCart = () => {
                                                 },
                                                 WebkitTextSizeAdjust: "100%",
                                                 fontSize: ".875rem",
-                                                //fontSize: "small",
-                                                //fontWeight: "bold",
-                                                //
-                                                //backgroundColor: "transparent",
                                               }}
                                             >
                                               Supprimer
                                             </Box>
                                             <Box>
                                               <Dialog
-                                                //fullScreen={fullScreen}
-                                                // style={{ backgroundColor: "transparent" }}
                                                 open={openItem}
                                                 onClose={handleCloseItem}
                                                 aria-labelledby="responsive-dialog-title"
@@ -927,7 +812,6 @@ export const HandlesShowCart = () => {
                                                     Non
                                                   </Button>
                                                   <Button
-                                                    //  onClick={removeCartItem}
                                                     onClick={() => {
                                                       removeCartItem(prodId);
                                                     }}
@@ -952,8 +836,6 @@ export const HandlesShowCart = () => {
                                               color: "#191919",
                                               fontSize: ".875rem",
                                               WebkitTextSizeAdjust: "100%",
-                                              //
-                                              // marginTop: "0.5rem!important",
                                               marginTop: "0.25rem!important",
                                             }}
                                           >
@@ -1007,7 +889,6 @@ export const HandlesShowCart = () => {
                                                   id="qtyCartIdUpd"
                                                   min="1"
                                                   max={item?.prodQteeDisp}
-                                                  // {...register("itemQteeUpd")}
                                                   {...register(
                                                     `cartItemsArray.${index}.itemQteeUpd`,
                                                     {
@@ -1029,8 +910,6 @@ export const HandlesShowCart = () => {
                                                     WebkitBoxSizing:
                                                       "border-box",
                                                     boxSizing: "border-box",
-                                                    // color: "#191919",
-                                                    // color: errors.itemQteeUpd
                                                     color: errors
                                                       .cartItemsArray?.[index]
                                                       ?.itemQteeUpd
@@ -1043,8 +922,6 @@ export const HandlesShowCart = () => {
                                                     padding: "0 16px",
                                                     verticalAlign: "middle",
                                                     width: "90px",
-                                                    //
-                                                    // borderColor: errors.itemQteeUpd
                                                     borderColor: errors
                                                       .cartItemsArray?.[index]
                                                       ?.itemQteeUpd
@@ -1052,20 +929,18 @@ export const HandlesShowCart = () => {
                                                       : "#8f8f8f",
 
                                                     "&:focus": {
-                                                      //outline: errors.itemQteeUpd
                                                       outline: errors
                                                         .cartItemsArray?.[index]
                                                         ?.itemQteeUpd
                                                         ? "none"
                                                         : null,
-                                                      // boxShadow: errors.itemQteeUpd
                                                       boxShadow: errors
                                                         .cartItemsArray?.[index]
                                                         ?.itemQteeUpd
                                                         ? "0px 0px 2px #e0103a"
                                                         : null,
                                                     },
-                                                    //
+
                                                     fontWeight: 700,
                                                   }}
                                                 ></Box>
@@ -1099,7 +974,6 @@ export const HandlesShowCart = () => {
                                                   textDecoration:
                                                     "none!important",
                                                   verticalAlign: "middle",
-                                                  //
                                                   marginLeft:
                                                     "0.5rem!important",
                                                 }}
@@ -1144,7 +1018,6 @@ export const HandlesShowCart = () => {
                                                       ":-webkit-any-link": {
                                                         cursor: "pointer",
                                                       },
-                                                      //
                                                       fontWeight: 700,
                                                     }}
                                                   >
@@ -1155,11 +1028,8 @@ export const HandlesShowCart = () => {
                                               <Backdrop
                                                 sx={{
                                                   color: "#fff",
-                                                  //color: "transparent",
-
                                                   zIndex: (theme) =>
                                                     theme.zIndex.drawer + 1,
-                                                  //
                                                   position: "absolute",
                                                 }}
                                                 open={isLoading}
@@ -1184,7 +1054,6 @@ export const HandlesShowCart = () => {
                                               sx={{
                                                 textDecoration: "underline",
                                                 color: "#3665f3",
-                                                //marginLeft: "1rem!important",
                                                 marginLeft: "0.5rem!important",
                                                 cursor: "pointer",
 
@@ -1228,7 +1097,6 @@ export const HandlesShowCart = () => {
                                                     Non
                                                   </Button>
                                                   <Button
-                                                    //onClick={removeCartItem}
                                                     onClick={() => {
                                                       removeCartItem(prodId);
                                                     }}
@@ -1250,8 +1118,6 @@ export const HandlesShowCart = () => {
                                                 errors.cartItemsArray?.[index]
                                                   ?.itemQteeUpd?.message
                                               }
-
-                                              {/* {errors.itemQteeUpd?.message} */}
                                             </Box>
                                           </Box>
                                         </>
@@ -1347,8 +1213,6 @@ export const HandlesShowCart = () => {
                         onSubmit={handleSubmit(onSubmit)}
                         sx={{
                           marginBottom: "14px",
-                          //  display: "block",
-                          //  marginTop: "0em",
                         }}
                       >
                         <Box>
@@ -1363,9 +1227,6 @@ export const HandlesShowCart = () => {
                               sx={{
                                 marginBottom: "4px!important",
                                 width: "100%",
-                                //
-                                // hyphens: "none",
-                                // overflowWrap: "anywhere",
 
                                 "&::before,&::after": {
                                   display: "table",
@@ -1385,10 +1246,6 @@ export const HandlesShowCart = () => {
                                   textRendering: "optimizeLegibility",
                                   fontSize: "18px!important",
                                   lineHeight: "24px!important",
-                                  //
-                                  //  hyphens: "manual",
-
-                                  //  overflowWrap: "anywhere",
                                   fontWeight: 500,
                                 }}
                               >
@@ -1429,11 +1286,9 @@ export const HandlesShowCart = () => {
                                   boxShadow:
                                     "0 2px 5px 0 rgb(213 217 217 / 50%)",
                                   width: "100%!important",
-                                  // background: "#FFD814",
                                   background: isCheckoutUpSm
                                     ? "#e7e9ec"
                                     : "#FFD814",
-                                  //borderColor: "#FCD200",
                                   borderColor: isCheckoutUpSm
                                     ? "#8d9096"
                                     : "#FCD200",
@@ -1445,7 +1300,6 @@ export const HandlesShowCart = () => {
                                   textAlign: "center",
                                   textDecoration: "none!important",
                                   verticalAlign: "middle",
-                                  //
                                   marginTop: "1rem",
                                 }}
                               >
@@ -1465,9 +1319,7 @@ export const HandlesShowCart = () => {
                                 >
                                   <Box
                                     component="input"
-                                    // name="proceedToRetailCheckout"
                                     type="submit"
-                                    // disabled={isLoading}
                                     sx={{
                                       cursor: "pointer",
                                       WebkitAppearance: "button",
@@ -1508,7 +1360,6 @@ export const HandlesShowCart = () => {
                                       textAlign: "center",
                                       whiteSpace: "nowrap",
                                       cursor: "pointer",
-                                      //
                                       fontSize: "14px",
                                       fontWeight: "bold",
                                     }}
@@ -1527,19 +1378,7 @@ export const HandlesShowCart = () => {
                                       <Box>
                                         Passer la commande&nbsp;&nbsp;&nbsp;
                                         {isCheckoutUpSm && (
-                                          <CircularProgress
-                                            size={20}
-                                            sx={
-                                              {
-                                                // textAlign: "center",
-                                                // top: "50%", // Center vertically
-                                                // left: "50%", // Center horizontally
-                                                // marginTop: "-10px", // Adjust for half of CircularProgress size
-                                                // marginLeft: "-10px", // Adjust for half of CircularProgress size
-                                                // zIndex: "9999",
-                                              }
-                                            }
-                                          />
+                                          <CircularProgress size={20} />
                                         )}
                                       </Box>
                                     </Box>
@@ -1622,15 +1461,12 @@ export const HandlesShowCart = () => {
                             component="h1"
                             sx={{
                               margin: 0,
-                              // marginBottom: "1rem",
                               fontSize: "1.875rem",
                               fontWeight: 700,
                               width: "60%",
                               float: "left",
                               display: "block",
-                              // font-size: 2em;
                               marginBlockStart: "0.67em",
-                              //marginBlockEnd: "0.67em",
                               marginInlineStart: "0px",
                               marginInlineEnd: "0px",
                             }}
@@ -1697,7 +1533,6 @@ export const HandlesShowCart = () => {
                         <Box
                           sx={{
                             marginBottom: "4px!important",
-                            //
                             borderBottom: "1px solid #DDD!important",
                           }}
                         >
@@ -1733,12 +1568,7 @@ export const HandlesShowCart = () => {
                               lineHeight: "24px!important",
                               textAlign: "right",
                               color: "#0F1111",
-                              //
-                              // fontSize: '1.25rem',
-                              // fontWeight: 400,
                               fontWeight: 500,
-
-                              // fontFamily: '"Market Sans", Arial, sans-serif',
                             }}
                           >
                             Sous-total&nbsp;({getItemsCount()}&nbsp; articles):
@@ -1749,7 +1579,6 @@ export const HandlesShowCart = () => {
                               color: "#B12704!important",
                               fontWeight: "700!important",
                               textAlign: "right",
-                              // fontFamily: "Arial,sans-serif",
                             }}
                           >
                             &nbsp;

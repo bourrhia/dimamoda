@@ -21,9 +21,7 @@ const theme = createTheme({
     mode: "light",
   },
   typography: {
-    // fontFamily: roboto.style.fontFamily,
     fontFamily: inter ? inter.style.fontFamily : roboto.style.fontFamily,
-    // fontFamily: inter.style.fontFamily,
   },
   components: {
     MuiAlert: {
@@ -35,12 +33,10 @@ const theme = createTheme({
         }),
       },
     },
-    // ADD
+
     MuiAppBar: {
       styleOverrides: {
         colorPrimary: {
-          // backgroundColor: "#0046be",
-          // backgroundColor: "#fff",
           backgroundColor: "#2874f0",
         },
         root: {
@@ -58,7 +54,5 @@ const theme = createTheme({
     },
   },
 });
-
-//theme = responsiveFontSizes(theme);
 
 export default theme;

@@ -14,7 +14,7 @@ import MenuList from "@mui/material/MenuList";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Paper from "@mui/material/Paper";
 import { usePathname, useParams } from "next/navigation";
-import CircularProgress from "@mui/material/CircularProgress";
+import ShowLoading from "../../Loading/ShowLoading";
 
 export default function FuzzySearch({ children }) {
   const router = useRouter();
@@ -25,9 +25,6 @@ export default function FuzzySearch({ children }) {
   const [isSearching, setIsSearching] = useState(false);
   const [isNavSearchResults, setIsNavSearchResults] = useState(false);
   const [isNavFuzzySearch, setIsNavFuzzySearch] = useState(false);
-  /* const [isOnClickSignIn, setIsOnClickSignIn] = useState(false);
-  const [isOnClickSignUp, setIsOnClickSignUp] = useState(false);*/
-  // const [searchItem, setSearchItem] = useState(null);
 
   const menuListRef = useRef(null);
 
@@ -36,9 +33,6 @@ export default function FuzzySearch({ children }) {
       .string("Le mot à rechercher doit être une chaîne de caractères")
       .nullable(),
   });
-
-  //const storedSearchTerm = localStorage.getItem("searchTerm");
-  // console.log("inside UpSm storedSearchTerm : ", storedSearchTerm);
 
   const pathname = usePathname();
   const searchItem = useParams();
@@ -95,9 +89,6 @@ export default function FuzzySearch({ children }) {
       router.push(
         `/fuzzySearch/fuzzySearchUpSm/${encodeURIComponent(searchPrdts)}`
       );
-      /* router.push(
-        `/fuzzySearchUpSm/?searchTerm=${encodeURIComponent(searchPrdts)}`
-      );*/
     } catch (error) {
     } finally {
       setIsNavSearchResults(false);
@@ -105,20 +96,12 @@ export default function FuzzySearch({ children }) {
   };
 
   useEffect(() => {
-    /*if (!isSpecificPage) {
-      setValue("searchInput", ""); // Set the input field value to null or an empty string
-      setIsNavFuzzySearch(false);
-    } else {
-      setValue("searchInput", searchParams); // Set the input field value
-      setIsNavFuzzySearch(true);
-    }*/
-
     try {
       if (!isSpecificPage) {
-        setValue("searchInput", ""); // Set the input field value to null or an empty string
+        setValue("searchInput", "");
         setIsNavFuzzySearch(false);
       } else {
-        setValue("searchInput", searchParams); // Set the input field value
+        setValue("searchInput", searchParams);
         setIsNavFuzzySearch(true);
       }
     } catch (error) {
@@ -141,7 +124,6 @@ export default function FuzzySearch({ children }) {
       try {
         if (searchProductsSuccess && !searchProductsIsError) {
           if (searchProducts) {
-            // localStorage.setItem("searchTerm", uniqueProductNames);
             await handleNavSearchResults(uniqueProductNames);
           }
         }
@@ -163,23 +145,21 @@ export default function FuzzySearch({ children }) {
     setMenuOpen(true);
 
     const options = {
-      keys: ["productName"], // Specify the keys you want to search on
+      keys: ["productName"],
       includeScore: true,
     };
     const fuse = new Fuse(allProducts, options);
 
     const filterResults = (searchTerm) => {
-      // Check if fuse is properly initialized and allProducts data is available
       if (!fuse || !allProducts || allProducts.length === 0) {
-        return []; // Return an empty array when data is missing or fuse is not initialized
+        return [];
       }
-      // Check if searchTerm is undefined or an empty string
+
       if (!searchTerm || searchTerm.trim() === "") {
-        return []; // Return an empty array when searchTerm is invalid
+        return [];
       }
       const results = fuse.search(searchTerm);
 
-      // Filter the results to include only items where the name starts with the search term
       const filteredResults = results.filter((result) =>
         result.item.productName.startsWith(searchTerm)
       );
@@ -191,7 +171,6 @@ export default function FuzzySearch({ children }) {
     setSearchResults(allSearchResults);
   }, [searchTerm]);
 
-  // Function to remove duplicates
   const removeDuplicates = (results) => {
     const seen = new Set();
     return results.filter((result) => {
@@ -215,7 +194,6 @@ export default function FuzzySearch({ children }) {
     const selectedResults = uniqueSearchResults[index];
 
     setValue("searchInput", selectedResults.productName);
-    // setValue('searchTerm', options[index]);
   };
 
   const handleListKeyDown = (event) => {
@@ -230,36 +208,27 @@ export default function FuzzySearch({ children }) {
   const handleResultArrowKeyPress = (e, index) => {
     if (e.key === "ArrowUp") {
       if (index > 0) {
-        // Set the value before changing the selectedResultIndex
         setValue("searchInput", uniqueSearchResults[index - 1].productName);
       } else {
-        // If at the first item, set the value to the last item
         setValue(
           "searchInput",
           uniqueSearchResults[uniqueSearchResults.length - 1].productName
         );
-        // setSelectedResultIndex(searchResults.length - 1);
       }
     } else if (
       e.key === "ArrowDown" &&
       index < uniqueSearchResults.length - 1
     ) {
-      // Set the value before changing the selectedResultIndex
       setValue("searchInput", uniqueSearchResults[index + 1].productName);
-      //setSelectedResultIndex(index + 1);
     } else if (
       e.key === "ArrowDown" &&
       index === uniqueSearchResults.length - 1
     ) {
-      // If at the last item, wrap around to the first item
       setValue("searchInput", uniqueSearchResults[0].productName);
-      //  setSelectedResultIndex(0);
     } else if (e.key === "Enter" && index >= 0) {
-      // Select the result on Enter key press
       const selectedResults = uniqueSearchResults[index];
 
-      setValue("searchInput", selectedResults.productName); // Update the input value
-      //  setSelectedResultIndex(-1); // Reset selection
+      setValue("searchInput", selectedResults.productName);
     }
   };
 
@@ -319,8 +288,8 @@ export default function FuzzySearch({ children }) {
                     aria-expanded="false"
                     size="50"
                     maxLength="300"
-                    aria-label="Rechercher sur Dimapromo"
-                    placeholder="Rechercher sur Dimapromo"
+                    aria-label="Rechercher sur xxxxxxxxxx"
+                    placeholder="Rechercher sur xxxxxxxxxx"
                     autoCapitalize="off"
                     autoCorrect="off"
                     spellCheck="false"
@@ -352,7 +321,6 @@ export default function FuzzySearch({ children }) {
               </Box>
 
               <Box
-                // tabIndex="0"
                 sx={{
                   position: "relative",
                   display: "block",
@@ -372,13 +340,11 @@ export default function FuzzySearch({ children }) {
                   >
                     <MenuList
                       id="simple-menu"
-                      //autoFocusItem={true}
                       onKeyDown={handleListKeyDown}
-                      ref={menuListRef} // Reference to the MenuList
+                      ref={menuListRef}
                       variant="menu"
                       sx={{
                         width: "569px",
-
                         minWidth: "300px",
                         cursor: "default",
                         background: "#fff",
@@ -389,7 +355,6 @@ export default function FuzzySearch({ children }) {
                         WebkitBorderRadius: "3px 0 3px 3px",
                         borderRadius: "3px 0 3px 3px",
                         zIndex: 9999,
-
                         MozTransition:
                           "visibility 0s linear .1s,opacity .1s linear",
                         WebkitTransition:
@@ -406,18 +371,15 @@ export default function FuzzySearch({ children }) {
                         top: "-1px !important",
                         left: "1px !important",
                         margin: 0,
-
                         fontSize: "14px",
                         color: "#333",
                         textAlign: "left",
-                        //
                         display: isMenuOpen ? "block" : "none",
                       }}
                     >
                       {isMenuOpen &&
                         uniqueSearchResults.map((product, i) => (
                           <MenuItem
-                            // tabIndex="0"
                             tabIndex={0}
                             key={i}
                             onClick={() => handleListItemClick(i)}
@@ -474,23 +436,18 @@ export default function FuzzySearch({ children }) {
               }}
             >
               <Box
-                //component="input"
                 component="button"
                 disabled={isNavSearchResults || isSubmitting || isSearching}
                 type="submit"
-                // value="Rechercher"
-                //  defaultValue="Rechercher"
                 sx={(theme) => ({
                   backgroundColor: "#3665f3",
                   textShadow: "none",
                   borderRadius: 0,
-                  //background: 0,
                   padding: "8px 16px",
                   fontSize: "14px",
                   minWidth: "168px",
                   height: "42px",
                   fontWeight: "normal",
-                  //  zoom: 1,
                   margin: "0 0 0 5px",
                   webkitBoxShadow: "none",
                   webkitAppearance: "none",
@@ -520,7 +477,6 @@ export default function FuzzySearch({ children }) {
                     backgroundColor: "#3665f3 !important",
                     textIndent: "-9999px",
                     width: "43px",
-                    // width: "90px",
                   },
                 })}
               >
@@ -530,7 +486,6 @@ export default function FuzzySearch({ children }) {
                     display: { sm: "block", md: "none" },
                     position: "absolute",
                     left: "15px",
-                    //  left: "25px",
                     width: "22px",
                     height: "23px",
                     top: "8px",
@@ -542,25 +497,7 @@ export default function FuzzySearch({ children }) {
               {(isSubmitting ||
                 isSearching ||
                 isNavSearchResults ||
-                isNavFuzzySearch) && (
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    //position: "fixed",
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-
-                    zIndex: "9999",
-                  }}
-                >
-                  <CircularProgress size={40} />
-                </Box>
-              )}
+                isNavFuzzySearch) && <ShowLoading />}
             </Box>
           </Box>
         </Box>

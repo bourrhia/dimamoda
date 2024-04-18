@@ -7,16 +7,10 @@ export async function GET(request, { params }) {
     const client = await clientPromise;
     const db = client.db(process.env.MONGODB_DB);
 
-    /* const results = await db
-      .collection("product")
-      .find({
-        productName: { $regex: new RegExp(searchTerm, "i") }, // Perform case-insensitive search
-      })
-      .toArray();*/
     const results = await db
       .collection("product")
       .find(
-        { productName: { $regex: new RegExp(searchTerm, "i") } }, // Perform case-insensitive search
+        { productName: { $regex: new RegExp(searchTerm, "i") } },
         {
           projection: {
             productId: 1,
@@ -35,7 +29,6 @@ export async function GET(request, { params }) {
 
     if (!results) {
       return new Response(JSON.stringify({ error: "Products not found" }), {
-        // return new Response(JSON.stringify("Products not found"), {
         status: 404,
 
         headers: {
