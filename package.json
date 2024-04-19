@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.3.2",
     "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.17",
+    "@mui/material-nextjs": "^5.15.11",
     "@reduxjs/toolkit": "^1.9.7",
     "fuse.js": "^7.0.0",
     "mongodb": "^6.2.0",

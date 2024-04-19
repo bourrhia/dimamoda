@@ -244,15 +244,14 @@ export default function FuzzySearchMobile({ children }) {
       >
         <Box
           component="input"
-          // id="search_id"
-          maxlength="300"
+          id="searchTerm_id"
+          maxLength="300"
           type="text"
-          spellcheck="false"
-          autocorrect="off"
-          autocapitalize="off"
-          autocomplete="off"
+          spellCheck="false"
+          autoCorrect="off"
+          autoCapitalize="off"
+          autoComplete="off"
           placeholder="Rechercher"
-          name="search_name"
           role="combobox"
           aria-expanded="false"
           aria-haspopup="false"
@@ -293,7 +292,6 @@ export default function FuzzySearchMobile({ children }) {
           <Box
             sx={{
               left: "10px",
-              //position: "absolute",
               position: "relative",
               right: "10px",
               zIndex: 21000,
@@ -307,9 +305,6 @@ export default function FuzzySearchMobile({ children }) {
               fontFamily: "inherit",
               fontSize: "12px",
               lineHeight: "1em",
-              //
-              // padding: "7px 48px 7px 17px",
-              // margin: "8px 16px 16px",
               top: "-13px",
               left: "16px",
               width: "calc(100% - 32px)",
