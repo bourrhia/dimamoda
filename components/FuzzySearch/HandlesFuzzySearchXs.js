@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useGetPrdtsByTermQuery } from "../../redux/features/api/apiSlice";
 import ShowLoading from "../Loading/ShowLoading";
+import FuzzySearchTermTitle from "../../components/LayoutFiles/Header/FuzzySearchTermTitle";
 
 export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
   const router = useRouter();
@@ -330,26 +331,15 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
   });
 
   return (
-    <Box
-      sx={{
-        borderTop: 0,
-        background: "#fff",
-        width: "100%",
-        margin: "0 auto",
-        padding: "0 8px",
-      }}
-    >
+    <>
+      <FuzzySearchTermTitle searchTerm={allSearchProducts} />
       <Box
         sx={{
-          "&::before,&::after": {
-            content: '""',
-            display: "table",
-            lineHeight: 0,
-          },
-
-          "&::after": {
-            clear: "both",
-          },
+          borderTop: 0,
+          background: "#fff",
+          width: "100%",
+          margin: "0 auto",
+          padding: "0 8px",
         }}
       >
         <Box
@@ -366,11 +356,7 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
           }}
         >
           <Box
-            component="ul"
             sx={{
-              margin: "0 -8px",
-              padding: 0,
-
               "&::before,&::after": {
                 content: '""',
                 display: "table",
@@ -382,11 +368,29 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
               },
             }}
           >
-            {renderedImg}
+            <Box
+              component="ul"
+              sx={{
+                margin: "0 -8px",
+                padding: 0,
+
+                "&::before,&::after": {
+                  content: '""',
+                  display: "table",
+                  lineHeight: 0,
+                },
+
+                "&::after": {
+                  clear: "both",
+                },
+              }}
+            >
+              {renderedImg}
+            </Box>
           </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

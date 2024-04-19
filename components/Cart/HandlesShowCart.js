@@ -51,6 +51,19 @@ export const HandlesShowCart = () => {
 
   const cart = useSelector((state) => state.cart.products);
 
+  const [navHome, setNavHome] = useState(false);
+
+  const handleNavHome = () => {
+    try {
+      setNavHome(true);
+      router.push("/");
+    } catch (err) {
+      console.error("An error occurred while navigating to home: ", err);
+    } finally {
+      setNavHome(false);
+    }
+  };
+
   const HandlesCart = ({ cart }) => {
     const [isCheckoutUpSm, setIsCheckoutUpSm] = useState(false);
 
@@ -1303,87 +1316,172 @@ export const HandlesShowCart = () => {
                                   marginTop: "1rem",
                                 }}
                               >
-                                <Box
-                                  component="span"
-                                  sx={{
-                                    borderRadius: "7px",
-                                    background: "0 0",
-                                    boxShadow: "none",
-                                    display: "block",
-                                    position: "relative",
-                                    overflow: "hidden",
-                                    height: "29px",
-                                    cursor: "pointer",
-                                    textAlign: "center",
-                                  }}
-                                >
-                                  <Box
-                                    component="input"
-                                    type="submit"
-                                    sx={{
-                                      cursor: "pointer",
-                                      WebkitAppearance: "button",
-                                      position: "absolute",
-                                      backgroundColor: "transparent",
-                                      color: "transparent",
-                                      border: 0,
-                                      height: "100%",
-                                      width: "100%",
-                                      left: 0,
-                                      top: 0,
-                                      opacity: ".01",
-                                      outline: 0,
-                                      overflow: "visible",
-                                      zIndex: 20,
-                                      WebkitTransition: "all .1s linear",
-                                      transition: "all .1s linear",
-                                      lineHeight: "19px",
-                                      margin: 0,
-                                      fontSize: "100%",
-                                      verticalAlign: "middle",
-                                      visibility: "visible",
-                                    }}
-                                  ></Box>
-
+                                {cart.length > 0 ? (
                                   <Box
                                     component="span"
                                     sx={{
-                                      color: "#0F1111",
-                                      backgroundColor: "transparent",
-                                      border: 0,
+                                      borderRadius: "7px",
+                                      background: "0 0",
+                                      boxShadow: "none",
                                       display: "block",
-                                      fontSize: "13px",
-                                      lineHeight: "29px",
-                                      margin: 0,
-                                      outline: 0,
-                                      padding: "0 10px 0 11px",
-                                      textAlign: "center",
-                                      whiteSpace: "nowrap",
+                                      position: "relative",
+                                      overflow: "hidden",
+                                      height: "29px",
                                       cursor: "pointer",
-                                      fontSize: "14px",
-                                      fontWeight: "bold",
+                                      textAlign: "center",
                                     }}
                                   >
                                     <Box
+                                      component="input"
+                                      type="submit"
                                       sx={{
-                                        marginBottom: "0!important",
+                                        cursor: "pointer",
+                                        WebkitAppearance: "button",
+                                        position: "absolute",
+                                        backgroundColor: "transparent",
+                                        color: "transparent",
+                                        border: 0,
+                                        height: "100%",
+                                        width: "100%",
+                                        left: 0,
+                                        top: 0,
+                                        opacity: ".01",
+                                        outline: 0,
+                                        overflow: "visible",
+                                        zIndex: 20,
+                                        WebkitTransition: "all .1s linear",
+                                        transition: "all .1s linear",
+                                        lineHeight: "19px",
+                                        margin: 0,
+                                        fontSize: "100%",
+                                        verticalAlign: "middle",
+                                        visibility: "visible",
+                                      }}
+                                    ></Box>
+
+                                    <Box
+                                      component="span"
+                                      sx={{
                                         color: "#0F1111",
+                                        backgroundColor: "transparent",
+                                        border: 0,
+                                        display: "block",
                                         fontSize: "13px",
                                         lineHeight: "29px",
+                                        margin: 0,
+                                        outline: 0,
+                                        padding: "0 10px 0 11px",
                                         textAlign: "center",
                                         whiteSpace: "nowrap",
                                         cursor: "pointer",
+                                        fontSize: "14px",
+                                        fontWeight: "bold",
                                       }}
                                     >
-                                      <Box>
-                                        Passer la commande&nbsp;&nbsp;&nbsp;
-                                        {isCheckoutUpSm && (
-                                          <CircularProgress size={20} />
-                                        )}
+                                      <Box
+                                        sx={{
+                                          marginBottom: "0!important",
+                                          color: "#0F1111",
+                                          fontSize: "13px",
+                                          lineHeight: "29px",
+                                          textAlign: "center",
+                                          whiteSpace: "nowrap",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        <Box>
+                                          Passer la commande&nbsp;&nbsp;&nbsp;
+                                          {isCheckoutUpSm && (
+                                            <CircularProgress size={20} />
+                                          )}
+                                        </Box>
                                       </Box>
                                     </Box>
                                   </Box>
-                                </Box>
+                                ) : (
+                                  <Box
+                                    component="span"
+                                    sx={{
+                                      borderRadius: "7px",
+                                      background: "0 0",
+                                      boxShadow: "none",
+                                      display: "block",
+                                      position: "relative",
+                                      overflow: "hidden",
+                                      height: "29px",
+                                      cursor: "pointer",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    <Box
+                                      component="a"
+                                      onClick={handleNavHome}
+                                      sx={{
+                                        cursor: "pointer",
+                                        WebkitAppearance: "button",
+                                        position: "absolute",
+                                        backgroundColor: "transparent",
+                                        color: "transparent",
+                                        border: 0,
+                                        height: "100%",
+                                        width: "100%",
+                                        left: 0,
+                                        top: 0,
+                                        opacity: ".01",
+                                        outline: 0,
+                                        overflow: "visible",
+                                        zIndex: 20,
+                                        WebkitTransition: "all .1s linear",
+                                        transition: "all .1s linear",
+                                        lineHeight: "19px",
+                                        margin: 0,
+                                        fontSize: "100%",
+                                        verticalAlign: "middle",
+                                        visibility: "visible",
+                                      }}
+                                    ></Box>
+
+                                    <Box
+                                      component="span"
+                                      sx={{
+                                        color: "#0F1111",
+                                        backgroundColor: "transparent",
+                                        border: 0,
+                                        display: "block",
+                                        fontSize: "13px",
+                                        lineHeight: "29px",
+                                        margin: 0,
+                                        outline: 0,
+                                        padding: "0 10px 0 11px",
+                                        textAlign: "center",
+                                        whiteSpace: "nowrap",
+                                        cursor: "pointer",
+                                        fontSize: "14px",
+                                        fontWeight: "bold",
+                                      }}
+                                    >
+                                      <Box
+                                        sx={{
+                                          marginBottom: "0!important",
+                                          color: "#0F1111",
+                                          fontSize: "13px",
+                                          lineHeight: "29px",
+                                          textAlign: "center",
+                                          whiteSpace: "nowrap",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        <Box>
+                                          Revenir à la page
+                                          principale&nbsp;&nbsp;&nbsp;
+                                          {navHome && (
+                                            <CircularProgress size={20} />
+                                          )}
+                                        </Box>
+                                      </Box>
+                                    </Box>
+                                  </Box>
+                                )}
                               </Box>
                             </Box>
                           </Box>

@@ -42,6 +42,19 @@ export const HandlesShowCartXs = () => {
   const HandlesCart = ({ cart }) => {
     const [isCheckoutXs, setIsCheckoutXs] = useState(false);
 
+    const [navHome, setNavHome] = useState(false);
+
+    const handleNavHome = () => {
+      try {
+        setNavHome(true);
+        router.push("/");
+      } catch (err) {
+        console.error("An error occurred while navigating to home: ", err);
+      } finally {
+        setNavHome(false);
+      }
+    };
+
     const {
       register,
       control,
@@ -612,48 +625,93 @@ export const HandlesShowCartXs = () => {
                   position: "relative",
                 }}
               >
-                <Box>
-                  <Box
-                    component="button"
-                    aria-disabled="false"
-                    type="submit"
-                    sx={{
-                      overflow: "hidden",
-                      padding: "0 0.625rem",
-                      position: "relative",
-                      width: "100%",
-                      borderRadius: "24px",
-                      fontSize: "1rem",
-                      minHeight: "48px",
-                      backgroundColor: isCheckoutXs ? "#e7e9ec" : "#3665f3",
-                      borderColor: "#3665f3",
-                      color: isCheckoutXs ? "#0F1111" : "#fff",
-                      fontWeight: 700,
-                      border: "1px solid",
-                      boxSizing: "border-box",
-                      display: "inline-block",
-                      fontFamily: "inherit",
-                      margin: 0,
-                      minWidth: "88px",
-                      textAlign: "center",
-                      textDecoration: "none",
-                      verticalAlign: "bottom",
-                      cursor: "pointer",
-                      paddingBlock: "1px",
-                      paddingInline: "6px",
-                    }}
-                  >
-                    Confirmer l'achat&nbsp;&nbsp;&nbsp;
-                    {isCheckoutXs && (
-                      <CircularProgress
-                        size={20}
-                        sx={{
-                          color: "#0F1111",
-                        }}
-                      />
-                    )}
+                {cart.length > 0 ? (
+                  <Box>
+                    <Box
+                      component="button"
+                      aria-disabled="false"
+                      type="submit"
+                      sx={{
+                        overflow: "hidden",
+                        padding: "0 0.625rem",
+                        position: "relative",
+                        width: "100%",
+                        borderRadius: "24px",
+                        fontSize: "1rem",
+                        minHeight: "48px",
+                        backgroundColor: isCheckoutXs ? "#e7e9ec" : "#3665f3",
+                        borderColor: "#3665f3",
+                        color: isCheckoutXs ? "#0F1111" : "#fff",
+                        fontWeight: 700,
+                        border: "1px solid",
+                        boxSizing: "border-box",
+                        display: "inline-block",
+                        fontFamily: "inherit",
+                        margin: 0,
+                        minWidth: "88px",
+                        textAlign: "center",
+                        textDecoration: "none",
+                        verticalAlign: "bottom",
+                        cursor: "pointer",
+                        paddingBlock: "1px",
+                        paddingInline: "6px",
+                      }}
+                    >
+                      Confirmer l'achat&nbsp;&nbsp;&nbsp;
+                      {isCheckoutXs && (
+                        <CircularProgress
+                          size={20}
+                          sx={{
+                            color: "#0F1111",
+                          }}
+                        />
+                      )}
+                    </Box>
                   </Box>
-                </Box>
+                ) : (
+                  <Box>
+                    <Box
+                      component="a"
+                      onClick={handleNavHome}
+                      aria-disabled="false"
+                      sx={{
+                        overflow: "hidden",
+                        padding: "0 0.625rem",
+                        position: "relative",
+                        width: "100%",
+                        borderRadius: "24px",
+                        fontSize: "1rem",
+                        minHeight: "48px",
+                        backgroundColor: isCheckoutXs ? "#e7e9ec" : "#3665f3",
+                        borderColor: "#3665f3",
+                        color: isCheckoutXs ? "#0F1111" : "#fff",
+                        fontWeight: 700,
+                        border: "1px solid",
+                        boxSizing: "border-box",
+                        display: "inline-block",
+                        fontFamily: "inherit",
+                        margin: 0,
+                        minWidth: "88px",
+                        textAlign: "center",
+                        textDecoration: "none",
+                        verticalAlign: "bottom",
+                        cursor: "pointer",
+                        paddingBlock: "1px",
+                        paddingInline: "6px",
+                      }}
+                    >
+                      Revenir à la page principale&nbsp;&nbsp;&nbsp;
+                      {navHome && (
+                        <CircularProgress
+                          size={20}
+                          sx={{
+                            color: "#0F1111",
+                          }}
+                        />
+                      )}
+                    </Box>
+                  </Box>
+                )}
                 <Box
                   sx={{
                     marginBottom: "1rem",
@@ -910,54 +968,105 @@ export const HandlesShowCartXs = () => {
                     </Box>
                   </Box>
                 </Box>
-                <Box
-                  sx={{
-                    WebkitTextSizeAdjust: "100%",
-                    color: "#191919",
-                    fontSize: "0.875rem",
-                  }}
-                >
+                {cart.length > 0 ? (
                   <Box
-                    component="button"
-                    aria-disabled="false"
-                    type="submit"
                     sx={{
-                      overflow: "hidden",
-                      padding: "0 0.625rem",
-                      position: "relative",
-                      width: "100%",
-                      borderRadius: "24px",
-                      fontSize: "1rem",
-                      minHeight: "48px",
-                      borderColor: "#3665f3",
-                      backgroundColor: isCheckoutXs ? "#e7e9ec" : "#3665f3",
-                      color: isCheckoutXs ? "#0F1111" : "#fff",
-                      fontWeight: 700,
-                      border: "1px solid",
-                      boxSizing: "border-box",
-                      display: "inline-block",
-                      fontFamily: "inherit",
-                      margin: 0,
-                      minWidth: "88px",
-                      textAlign: "center",
-                      textDecoration: "none",
-                      verticalAlign: "bottom",
-                      cursor: "pointer",
-                      paddingBlock: "1px",
-                      paddingInline: "6px",
+                      WebkitTextSizeAdjust: "100%",
+                      color: "#191919",
+                      fontSize: "0.875rem",
                     }}
                   >
-                    Confirmer l'achat&nbsp;&nbsp;&nbsp;
-                    {isCheckoutXs && (
-                      <CircularProgress
-                        size={20}
-                        sx={{
-                          color: "#0F1111",
-                        }}
-                      />
-                    )}
+                    <Box
+                      component="button"
+                      aria-disabled="false"
+                      type="submit"
+                      sx={{
+                        overflow: "hidden",
+                        padding: "0 0.625rem",
+                        position: "relative",
+                        width: "100%",
+                        borderRadius: "24px",
+                        fontSize: "1rem",
+                        minHeight: "48px",
+                        borderColor: "#3665f3",
+                        backgroundColor: isCheckoutXs ? "#e7e9ec" : "#3665f3",
+                        color: isCheckoutXs ? "#0F1111" : "#fff",
+                        fontWeight: 700,
+                        border: "1px solid",
+                        boxSizing: "border-box",
+                        display: "inline-block",
+                        fontFamily: "inherit",
+                        margin: 0,
+                        minWidth: "88px",
+                        textAlign: "center",
+                        textDecoration: "none",
+                        verticalAlign: "bottom",
+                        cursor: "pointer",
+                        paddingBlock: "1px",
+                        paddingInline: "6px",
+                      }}
+                    >
+                      Confirmer l'achat&nbsp;&nbsp;&nbsp;
+                      {isCheckoutXs && (
+                        <CircularProgress
+                          size={20}
+                          sx={{
+                            color: "#0F1111",
+                          }}
+                        />
+                      )}
+                    </Box>
                   </Box>
-                </Box>
+                ) : (
+                  <Box
+                    sx={{
+                      WebkitTextSizeAdjust: "100%",
+                      color: "#191919",
+                      fontSize: "0.875rem",
+                    }}
+                  >
+                    <Box
+                      component="a"
+                      aria-disabled="false"
+                      onClick={handleNavHome}
+                      sx={{
+                        overflow: "hidden",
+                        padding: "0 0.625rem",
+                        position: "relative",
+                        width: "100%",
+                        borderRadius: "24px",
+                        fontSize: "1rem",
+                        minHeight: "48px",
+                        borderColor: "#3665f3",
+                        backgroundColor: isCheckoutXs ? "#e7e9ec" : "#3665f3",
+                        color: isCheckoutXs ? "#0F1111" : "#fff",
+                        fontWeight: 700,
+                        border: "1px solid",
+                        boxSizing: "border-box",
+                        display: "inline-block",
+                        fontFamily: "inherit",
+                        margin: 0,
+                        minWidth: "88px",
+                        textAlign: "center",
+                        textDecoration: "none",
+                        verticalAlign: "bottom",
+                        cursor: "pointer",
+                        paddingBlock: "1px",
+                        paddingInline: "6px",
+                      }}
+                    >
+                      Revenir à la page principale&nbsp;&nbsp;&nbsp;
+                      {navHome && (
+                        <CircularProgress
+                          size={20}
+                          sx={{
+                            color: "#0F1111",
+                          }}
+                        />
+                      )}
+                    </Box>
+                  </Box>
+                )}
               </Box>
             </Box>
           </Box>

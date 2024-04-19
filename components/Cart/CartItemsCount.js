@@ -7,6 +7,8 @@ import IconButton from "@mui/material/IconButton";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import ShowLoading from "../Loading/ShowLoading";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 export default function CartItemsCount() {
   const router = useRouter();
@@ -55,6 +57,28 @@ export default function CartItemsCount() {
             }}
           ></ShoppingCartOutlinedIcon>
         </Badge>
+        <Box
+          component="span"
+          sx={{
+            color: "#111820 !important",
+            cursor: "pointer",
+            textDecoration: "none !important",
+            padding: 0,
+            borderWidth: "1px 1px 0",
+            position: "relative",
+            fontSize: "12px",
+            border: "1px solid transparent",
+            textDecoration: "none !important",
+            display: "flex",
+            alignItems: "center",
+            position: "relative",
+            backgroundColor: "transparent",
+            border: "none",
+            outline: 0,
+          }}
+        >
+          <Typography variant="caption text">Panier</Typography>
+        </Box>
       </IconButton>
     </>
   );

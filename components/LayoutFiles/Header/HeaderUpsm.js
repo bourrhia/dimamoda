@@ -1,7 +1,6 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
-import Typography from "@mui/material/Typography";
 import SearchIcon from "@mui/icons-material/Search";
 import HeaderButtons from "./HeaderButtons";
 import FuzzySearch from "./FuzzySearch";
@@ -286,17 +285,6 @@ function HeaderUpsm() {
                   }}
                 >
                   <CartItemsCount />
-
-                  <Box
-                    component="span"
-                    sx={{
-                      color: "#111820 !important",
-                      cursor: "pointer",
-                      textDecoration: "none !important",
-                    }}
-                  >
-                    <Typography variant="caption text">Panier</Typography>
-                  </Box>
                 </Box>
               </Box>
             </Box>
