@@ -227,39 +227,63 @@ export default function FuzzySearchMobile({ children }) {
 
   return (
     <Box
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
       sx={{
+        display: "block",
         position: "relative",
-        zIndex: 208,
-        fontFamily: "inherit",
-        fontSize: "12px",
-        lineHeight: "1em",
-        minWidth: "200px",
-        color: "#0F1111",
+        margin: 0,
       }}
     >
       <Box
         sx={{
-          display: "flex",
-          fontFamily: "inherit",
-          fontSize: "12px",
-          lineHeight: "1em",
-          color: "#0F1111",
-          height: "65px",
+          transform: "translateZ(0)",
+          opacity: 1,
+          transition: "opacity 200ms ease-in-out",
         }}
       >
         <Box
-          component="form"
-          onSubmit={handleSubmit(onSubmit)}
+          component="input"
+          // id="search_id"
+          maxlength="300"
+          type="text"
+          spellcheck="false"
+          autocorrect="off"
+          autocapitalize="off"
+          autocomplete="off"
+          placeholder="Rechercher"
+          name="search_name"
+          role="combobox"
+          aria-expanded="false"
+          aria-haspopup="false"
+          aria-label="Rechercher"
+          {...register("searchInput")}
+          onChange={(e) => setSearchTerm(e.target.value)}
           sx={{
-            display: "block",
-            padding: "2px 10px 5px 10px",
+            height: "1.5em",
+            backgroundColor: "#fff",
+            border: "solid 1px #111820",
+            fontWeight: 400,
+            borderRadius: 0,
+            boxSizing: "border-box",
+            minHeight: "40px",
+            WebkitAppearance: "none",
+            color: "#000",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            padding: "7px 48px 7px 17px",
+            fontSize: "16px",
+            width: "calc(100% - 32px)",
+            margin: "8px 16px 16px",
             position: "relative",
-            height: "50px",
-            width: "100%",
-            borderBottom: "1px solid rgba(0, 0, 0, .05)",
-            marginBottom: 0,
-            flex: 1,
-            zIndex: "inherit",
+            font: "inherit",
+          }}
+        ></Box>
+
+        <Box
+          sx={{
+            whiteSpace: "nowrap",
             fontFamily: "inherit",
             fontSize: "12px",
             lineHeight: "1em",
@@ -268,295 +292,144 @@ export default function FuzzySearchMobile({ children }) {
         >
           <Box
             sx={{
-              width: "auto",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
+              left: "10px",
+              //position: "absolute",
+              position: "relative",
+              right: "10px",
+              zIndex: 21000,
+              color: "#111",
+              backgroundColor: "#FFF",
+              textAlign: "initial",
+              whiteSpace: "normal",
+              WebkitBoxShadow: "0 8px 16px 1px rgba(0,0,0,.7)",
+              MozBoxShadow: "0 8px 16px 1px rgba(0, 0, 0, .7)",
+              boxShadow: "0 8px 16px 1px rgba(0,0,0,.7)",
               fontFamily: "inherit",
               fontSize: "12px",
               lineHeight: "1em",
-              color: "#0F1111",
+              //
+              // padding: "7px 48px 7px 17px",
+              // margin: "8px 16px 16px",
+              top: "-13px",
+              left: "16px",
+              width: "calc(100% - 32px)",
             }}
           >
             <Box
               sx={{
-                // paddingRight: "90px",
-                height: "44px",
-                margin: 0,
-                position: "relative",
-                background: "#fff",
-                whiteSpace: "nowrap",
+                lineHeight: "normal",
+                color: "#111",
+                textAlign: "initial",
+                whiteSpace: "normal",
                 fontFamily: "inherit",
-                fontSize: "12px",
-                lineHeight: "1em",
-                color: "#0F1111",
               }}
             >
               <Box
-                component="label"
-                htmlFor="search-item"
                 sx={{
-                  display: "none",
-                  paddingLeft: ".5rem",
-                  paddingBottom: ".5rem",
-                  fontWeight: 700,
-                  WebkitTapHighlightColor: "transparent",
-                  fontFamily: "inherit",
-                  fontSize: "12px",
-                  lineHeight: "1em",
-                  color: "#0F1111",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                Rechercher
-              </Box>
-              <Box
-                component="input"
-                type="text"
-                placeholder="Rechercher"
-                autoComplete="off"
-                autoCorrect="off"
-                autoCapitalize="off"
-                dir="auto"
-                id="search-item"
-                spellCheck="false"
-                {...register("searchInput")}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                sx={{
-                  textOverflow: "ellipsis",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  direction: "ltr",
-                  display: "block",
-                  padding: "0 95px 0 10px",
-                  color: "#000",
-                  fontSize: "15px",
-                  fontFamily: "inherit",
-                  border: 0,
-                  outline: 0,
-                  WebkitBoxShadow:
-                    "0 1px 0 0 rgba(255,255,255,.5), inset 0 1px 0 0 rgba(0,0,0,.07)",
-                  MozBoxShadow:
-                    "0 1px 0 0 rgba(255, 255, 255, .5), inset 0 1px 0 0 rgba(0, 0, 0, .07)",
-                  boxShadow:
-                    "0 1px 0 0 rgba(255,255,255,.5), inset 0 1px 0 0 rgba(0,0,0,.07)",
+                  display: "flex",
+                  flexDirection: "row",
                   lineHeight: "normal",
-                  backgroundColor: "#fff",
-                  WebkitTransition: "all .1s linear",
-                  transition: "all .1s linear",
-                  verticalAlign: "middle",
-                  whiteSpace: "nowrap",
-                  backgroundColor: "#fff",
-                  border: "solid 1px #111820",
-                  borderRadius: 0,
-                  color: "#111820",
-                }}
-              ></Box>
-            </Box>
-            <Box
-              sx={{
-                whiteSpace: "nowrap",
-                fontFamily: "inherit",
-                fontSize: "12px",
-                lineHeight: "1em",
-                color: "#0F1111",
-              }}
-            >
-              <Box
-                sx={{
-                  left: "10px",
-                  position: "absolute",
-                  right: "10px",
-                  zIndex: 21000,
                   color: "#111",
-                  backgroundColor: "#FFF",
                   textAlign: "initial",
                   whiteSpace: "normal",
-                  WebkitBoxShadow: "0 8px 16px 1px rgba(0,0,0,.7)",
-                  MozBoxShadow: "0 8px 16px 1px rgba(0, 0, 0, .7)",
-                  boxShadow: "0 8px 16px 1px rgba(0,0,0,.7)",
                   fontFamily: "inherit",
                   fontSize: "12px",
-                  lineHeight: "1em",
                 }}
               >
-                <Box
-                  sx={{
-                    lineHeight: "normal",
-                    color: "#111",
-                    textAlign: "initial",
-                    whiteSpace: "normal",
-                    fontFamily: "inherit",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      lineHeight: "normal",
-                      color: "#111",
-                      textAlign: "initial",
-                      whiteSpace: "normal",
-                      fontFamily: "inherit",
-                      fontSize: "12px",
-                    }}
-                  >
-                    {isMenuOpen && (
-                      <ClickAwayListener onClickAway={handleClickAway}>
-                        <MenuList
-                          id="simple-menu"
-                          autoFocusItem={true}
-                          onKeyDown={handleListKeyDown}
-                          ref={menuListRef}
-                          variant="menu"
-                          sx={{
-                            flex: "1 1 0%",
-                            height: "auto",
-                            minWidth: 0,
-                            borderRight: "1px solid #c0c0c0",
-                            lineHeight: "normal",
-                            color: "#111",
-                            textAlign: "initial",
-                            whiteSpace: "normal",
-                            fontFamily: "inherit",
-                            fontSize: "12px",
-                          }}
-                        >
-                          <Box>
-                            {uniqueSearchResults.map((product, i) => (
-                              <MenuItem
-                                tabIndex={0}
-                                key={i}
-                                onClick={() => handleListItemClick(i)}
-                                onKeyDown={(e) =>
-                                  handleResultArrowKeyPress(e, i)
-                                }
-                                sx={{
-                                  fontSize: "14px",
-                                  paddingRight: "8px",
-                                  height: "35px",
-                                  cursor: "pointer",
-                                  display: "flex",
-                                  flexDirection: "row-reverse",
-                                  lineHeight: "normal",
-                                  color: "#111",
-                                  textAlign: "initial",
-                                  whiteSpace: "normal",
-                                  fontFamily: "inherit",
-                                }}
-                              >
-                                <Box
-                                  sx={{
-                                    padding: "7px 10px",
-                                    fontSize: "16px",
-                                    cursor: "pointer",
-                                    marginTop: 0,
-                                    marginBottom: 0,
-                                    flex: "1 1 auto",
-                                    whiteSpace: "nowrap",
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                    lineHeight: "normal",
-                                    direction: "ltr",
-                                    textAlign: "left",
-                                    color: "#111",
-                                  }}
-                                >
-                                  {product.productName}
-                                </Box>
-                              </MenuItem>
-                            ))}
-                          </Box>
-                        </MenuList>
-                      </ClickAwayListener>
-                    )}
-                  </Box>
-                </Box>
+                {isMenuOpen && (
+                  <ClickAwayListener onClickAway={handleClickAway}>
+                    <MenuList
+                      id="simple-menu"
+                      autoFocusItem={true}
+                      onKeyDown={handleListKeyDown}
+                      ref={menuListRef}
+                      variant="menu"
+                      sx={{
+                        flex: "1 1 0%",
+                        height: "auto",
+                        minWidth: 0,
+                        borderRight: "1px solid #c0c0c0",
+                        lineHeight: "normal",
+                        color: "#111",
+                        textAlign: "initial",
+                        whiteSpace: "normal",
+                        fontFamily: "inherit",
+                        fontSize: "12px",
+                      }}
+                    >
+                      <Box>
+                        {uniqueSearchResults.map((product, i) => (
+                          <MenuItem
+                            tabIndex={0}
+                            key={i}
+                            onClick={() => handleListItemClick(i)}
+                            onKeyDown={(e) => handleResultArrowKeyPress(e, i)}
+                            sx={{
+                              fontSize: "14px",
+                              paddingRight: "8px",
+                              height: "35px",
+                              cursor: "pointer",
+                              display: "flex",
+                              flexDirection: "row-reverse",
+                              lineHeight: "normal",
+                              color: "#111",
+                              textAlign: "initial",
+                              whiteSpace: "normal",
+                              fontFamily: "inherit",
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                padding: "7px 10px",
+                                fontSize: "16px",
+                                cursor: "pointer",
+                                marginTop: 0,
+                                marginBottom: 0,
+                                flex: "1 1 auto",
+                                whiteSpace: "nowrap",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                lineHeight: "normal",
+                                direction: "ltr",
+                                textAlign: "left",
+                                color: "#111",
+                              }}
+                            >
+                              {product.productName}
+                            </Box>
+                          </MenuItem>
+                        ))}
+                      </Box>
+                    </MenuList>
+                  </ClickAwayListener>
+                )}
               </Box>
-            </Box>
-          </Box>
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              right: 0,
-              zIndex: 1,
-              display: "flex",
-              width: "auto",
-              color: "#0F1111",
-            }}
-          >
-            <Box
-              sx={{
-                background: "-moz-linear-gradient(top, #febd69, #febd69)",
-                background: "-webkit-linear-gradient(top, #febd69, #febd69)",
-                WebkitBorderRadius: "8px 8px 8px 8px",
-                MozBorderRadius: "8px 8px 8px 8px",
-                borderRadius: "8px 8px 8px 8px",
-
-                position: "relative",
-                height: "44px",
-                width: "50px",
-                margin: "2px 10px 5px 5px",
-                border: 0,
-                cursor: "pointer",
-                color: "#0F1111",
-              }}
-            >
-              <Box
-                component="button"
-                type="submit"
-                disabled={isNavSearchResults || isSubmitting || isSearching}
-                aria-label="Go"
-                sx={{
-                  opacity: "0.01",
-                  WebkitBorderRadius: "8px 8px 8px 8px",
-                  MozBorderRadius: "8px 8px 8px 8px",
-                  borderRadius: "8px 8px 8px 8px",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  cursor: "pointer",
-                  zIndex: 10,
-                  border: 0,
-                  backgroundColor: "transparent",
-                  textIndent: "-1000px",
-                  lineHeight: "1px",
-                  WebkitAppearance: "button",
-                  outline: 0,
-                  WebkitTransition: "all .1s linear",
-                  transition: "all .1s linear",
-                  color: "#0F1111",
-                  margin: 0,
-                  fontSize: "100%",
-                  verticalAlign: "middle",
-                  fontFamily: "inherit",
-                  textAlign: "center",
-                  whiteSpace: "pre",
-                  paddingBlock: "1px",
-                  paddingInline: "6px",
-                  textRendering: "auto",
-                  letterSpacing: "normal",
-                  wordSpacing: "normal",
-                  textTransform: "none",
-                  textShadow: "none",
-                  display: "inline-block",
-                  WebkitRtlOrdering: "logical",
-                  padding: "1px 0px",
-                }}
-              ></Box>
-              <Box>{children}</Box>
-              {(isSubmitting ||
-                isSearching ||
-                isNavSearchResults ||
-                isNavFuzzySearch) && <ShowLoading />}
             </Box>
           </Box>
         </Box>
+
+        <Box
+          component="button"
+          type="submit"
+          disabled={isNavSearchResults || isSubmitting || isSearching}
+          sx={{
+            position: "absolute",
+            zIndex: 100000,
+            padding: 0,
+            backgroundColor: "transparent",
+            border: 0,
+            top: "8px",
+            right: "15px",
+            boxSizing: "content-box",
+            marginTop: 0,
+          }}
+        >
+          {children}
+        </Box>
+        {(isSubmitting ||
+          isSearching ||
+          isNavSearchResults ||
+          isNavFuzzySearch) && <ShowLoading />}
       </Box>
     </Box>
   );

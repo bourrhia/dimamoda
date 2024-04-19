@@ -274,7 +274,7 @@ function HeaderXs() {
       <FuzzySearchMobile>
         <SearchIcon
           sx={{
-            backgroundColor: "#006efc",
+            /* backgroundColor: "#006efc",
             fill: "#fff",
             padding: "12px",
             boxSizing: "content-box",
@@ -286,7 +286,21 @@ function HeaderXs() {
             pointerEvents: "none",
             width: "27px",
             height: "20px",
-            cursor: "pointer",
+            cursor: "pointer",*/
+
+            //
+
+            backgroundColor: "#006efc",
+            fill: "#fff",
+            padding: "12px",
+            height: "16px",
+            width: "16px",
+            boxSizing: "content-box",
+            pointerEvents: "none",
+            display: "inline-block",
+            stroke: "currentColor",
+            strokeWidth: 0,
+            verticalAlign: "middle",
           }}
           aria-hidden="true"
           focusable="false"

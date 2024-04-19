@@ -50,13 +50,18 @@ function Header() {
         <Box
           sx={{
             display: { xs: "block", sm: "none" },
-            backgroundColor: "#fff",
-            webkitTextSizeAdjust: "none",
-            margin: 0,
-            maxWidth: "100%",
+            overflow: "hidden",
           }}
         >
-          <HeaderXs />
+          <Box
+            sx={{
+              backgroundColor: "#fff",
+              webkitTextSizeAdjust: "none",
+              margin: 0,
+            }}
+          >
+            <HeaderXs />
+          </Box>
         </Box>
       </Box>
     </Box>
