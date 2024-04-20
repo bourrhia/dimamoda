@@ -124,7 +124,7 @@ export default function FuzzySearch({ children }) {
       try {
         if (searchProductsSuccess && !searchProductsIsError) {
           if (searchProducts) {
-            await handleNavSearchResults(uniqueProductNames);
+            await handleNavSearchResults(searchTermInput);
           }
         }
       } catch (err) {
@@ -190,10 +190,32 @@ export default function FuzzySearch({ children }) {
     menuListRef.current.children[index].focus();
   };
 
-  const handleListItemClick = (index) => {
+  const handleListItemClick = async (index) => {
     const selectedResults = uniqueSearchResults[index];
 
     setValue("searchInput", selectedResults.productName);
+
+    let searchTermInput = selectedResults.productName;
+
+    setSearchTerm(searchTermInput);
+    setMenuOpen(false);
+
+    const canSearch = [searchTermInput].every(Boolean);
+    if (canSearch) {
+      setIsSearching(true);
+      try {
+        if (searchProductsSuccess && !searchProductsIsError) {
+          if (searchProducts) {
+            await handleNavSearchResults(searchTermInput);
+          }
+        }
+      } catch (err) {
+        console.error("Un probleme est survenu pour rechercher: ", err);
+      } finally {
+        setIsSearching(false);
+        handleClickAway();
+      }
+    }
   };
 
   const handleListKeyDown = (event) => {
@@ -295,7 +317,10 @@ export default function FuzzySearch({ children }) {
                     spellCheck="false"
                     autoComplete="off"
                     {...register("searchInput")}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e) => {
+                      setSearchTerm(e.target.value);
+                      setValue("searchInput", e.target.value);
+                    }}
                     sx={{
                       webkitTransition: "none",
                       transition: "none",

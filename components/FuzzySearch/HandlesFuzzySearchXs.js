@@ -76,7 +76,6 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
             },
           }}
         >
-          {navProduct && <ShowLoading />}
           <Box
             component="a"
             onClick={() => handleNavProduct(product.productId)}
@@ -368,6 +367,7 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
               },
             }}
           >
+            {navProduct && <ShowLoading />}
             <Box
               component="ul"
               sx={{

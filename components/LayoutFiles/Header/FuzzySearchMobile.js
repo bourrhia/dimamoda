@@ -182,10 +182,32 @@ export default function FuzzySearchMobile({ children }) {
 
   const uniqueSearchResults = removeDuplicates(searchResults);
 
-  const handleListItemClick = (index) => {
+  const handleListItemClick = async (index) => {
     const selectedResults = uniqueSearchResults[index];
 
     setValue("searchInput", selectedResults.productName);
+
+    let searchTermInput = selectedResults.productName;
+
+    setSearchTerm(searchTermInput);
+    setMenuOpen(false);
+
+    const canSearch = [searchTermInput].every(Boolean);
+    if (canSearch) {
+      setIsSearching(true);
+      try {
+        if (searchProductsSuccess && !searchProductsIsError) {
+          if (searchProducts) {
+            await handleNavSearchResults(searchTermInput);
+          }
+        }
+      } catch (err) {
+        console.error("Un probleme est survenu pour rechercher: ", err);
+      } finally {
+        setIsSearching(false);
+        handleClickAway();
+      }
+    }
   };
 
   const handleListKeyDown = (event) => {
@@ -257,7 +279,10 @@ export default function FuzzySearchMobile({ children }) {
           aria-haspopup="false"
           aria-label="Rechercher"
           {...register("searchInput")}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            setValue("searchInput", e.target.value);
+          }}
           sx={{
             height: "1.5em",
             backgroundColor: "#fff",
