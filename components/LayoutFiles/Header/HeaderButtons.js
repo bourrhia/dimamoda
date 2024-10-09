@@ -56,7 +56,7 @@ export default function HeaderButtons({ buttonName, children }) {
           }}
         >
           <Typography variant="caption text">
-            Bienvenue à tout le monde&nbsp;!&nbsp;
+            Bienvenue tout le monde&nbsp;!&nbsp;
           </Typography>
         </Box>
       </>
