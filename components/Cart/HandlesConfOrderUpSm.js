@@ -38,7 +38,12 @@ const useGetOrderNum = (orderId) => {
   return orderNumber;
 };
 
-const HandlesConfOrderUpSm = ({ order_Id, cartItemId }) => {
+const HandlesConfOrderUpSm = ({
+  order_Id,
+  cartItemId,
+  cartItemSize,
+  cartItemColor,
+}) => {
   const router = useRouter();
 
   const [openConfOrder, setOpenConfOrder] = useState(true);
@@ -60,6 +65,8 @@ const HandlesConfOrderUpSm = ({ order_Id, cartItemId }) => {
         router.push(
           `/completeOrder/${encodeURIComponent(order_Id)}/${encodeURIComponent(
             cartItemId
+          )}/${encodeURIComponent(cartItemSize)}/${encodeURIComponent(
+            cartItemColor
           )}`
         );
       }
@@ -150,7 +157,7 @@ const HandlesConfOrderUpSm = ({ order_Id, cartItemId }) => {
                 variant="h6"
                 component="div"
               >
-                Confirmation de commande
+                Confirmation de commande En cours
               </Typography>
             </Toolbar>
             <ShowLoading />

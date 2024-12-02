@@ -1,11 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
-import SvgIcon from "@mui/material/SvgIcon";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -14,10 +12,14 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useSelector, useDispatch } from "react-redux";
 import { productUpdated } from "../../redux/features/cart/cartSlice";
 import { productRemoved } from "../../redux/features/cart/cartSlice";
+import { allProductRemoved } from "../../redux/features/cart/cartSlice";
 
 export const HandlesShowCartXs = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [navHome, setNavHome] = useState(false);
+  const [isCartValid, setIsCartValid] = useState(true);
+  const [hasValidated, setHasValidated] = useState(false);
 
   const qtUpdSchema = yup.object().shape({
     cartItemsArray: yup.array().of(
@@ -39,21 +41,114 @@ export const HandlesShowCartXs = () => {
 
   const cart = useSelector((state) => state.cart.products);
 
+  const validateCart = (cart) => {
+    return cart.every(
+      (item) =>
+        item.prodId !== undefined &&
+        item.prodId !== null &&
+        item.prodImage !== undefined &&
+        item.prodImage !== null &&
+        item.prodQtee !== undefined &&
+        item.prodQtee !== null &&
+        item.prodQtee > 0 &&
+        item.prodQteeDisp !== undefined &&
+        item.prodQteeDisp !== null &&
+        item.prodQteeDisp > 0 &&
+        item.prodPrix !== undefined &&
+        item.prodPrix !== null &&
+        item.prodPrix > 0 &&
+        item.prodSize !== "Sélectionner" &&
+        item.prodColor !== "Sélectionner"
+    );
+  };
+
+  useEffect(() => {
+    if (!hasValidated) {
+      if (!validateCart(cart)) {
+        setIsCartValid(false);
+        setHasValidated(true);
+      }
+    }
+  }, [cart, hasValidated]);
+
+  useEffect(() => {
+    if (!isCartValid) {
+      dispatch(allProductRemoved());
+    }
+  }, [isCartValid, dispatch]);
+
+  const handleNavHome = () => {
+    try {
+      setNavHome(true);
+      router.push("/");
+    } catch (err) {
+      console.error("An error occurred while navigating to home: ", err);
+    } finally {
+      setNavHome(false);
+    }
+  };
+
+  if (!isCartValid) {
+    return (
+      <Box
+        sx={{
+          margin: 0,
+          padding: 0,
+          display: "block",
+          margin: "0 1rem",
+        }}
+      >
+        <Box component="h2">Votre panier est vide!</Box>
+
+        <Box
+          component="a"
+          onClick={handleNavHome}
+          aria-disabled="false"
+          sx={{
+            overflow: "hidden",
+            padding: "0 0.625rem",
+            position: "relative",
+            width: "100%",
+            width: "80%",
+            borderRadius: "24px",
+            fontSize: "1rem",
+            minHeight: "48px",
+            backgroundColor: "#3665f3",
+            borderColor: "#3665f3",
+            color: "#fff",
+            fontWeight: 700,
+            border: "1px solid",
+            boxSizing: "border-box",
+            display: "inline-block",
+            fontFamily: "inherit",
+            margin: 0,
+            minWidth: "88px",
+            minWidth: "65px",
+            textAlign: "center",
+            textDecoration: "none",
+            verticalAlign: "bottom",
+            cursor: "pointer",
+            paddingBlock: "1px",
+            paddingBlock: "8px",
+            paddingInline: "6px",
+          }}
+        >
+          Revenir à la page principale&nbsp;&nbsp;&nbsp;
+          {navHome && (
+            <CircularProgress
+              size={20}
+              sx={{
+                color: "#0F1111",
+              }}
+            />
+          )}
+        </Box>
+      </Box>
+    );
+  }
+
   const HandlesCart = ({ cart }) => {
     const [isCheckoutXs, setIsCheckoutXs] = useState(false);
-
-    const [navHome, setNavHome] = useState(false);
-
-    const handleNavHome = () => {
-      try {
-        setNavHome(true);
-        router.push("/");
-      } catch (err) {
-        console.error("An error occurred while navigating to home: ", err);
-      } finally {
-        setNavHome(false);
-      }
-    };
 
     const {
       register,
@@ -78,6 +173,9 @@ export const HandlesShowCartXs = () => {
               prodDesc: item.prodDesc,
               prodPrix: item.prodPrix,
               status: item.status,
+              prodEtat: item.prodEtat,
+              prodSize: item.prodSize,
+              prodColor: item.prodColor,
             };
           }) ?? "",
       },
@@ -146,6 +244,8 @@ export const HandlesShowCartXs = () => {
       >
         {fields.map((item, index) => {
           const prodId = parseInt(item?.prodId);
+          const prodSize = item?.prodSize;
+          const prodColor = item?.prodColor;
 
           let CartItemPrice = parseFloat(
             Math.round(item?.prodPrix * 100) / 100
@@ -195,7 +295,7 @@ export const HandlesShowCartXs = () => {
                   prodQuantity,
                 })
               ).unwrap();
-              dispatch(productRemoved({ prodId }));
+              dispatch(productRemoved({ prodId, prodSize, prodColor }));
             } catch (err) {
               console.error(
                 "Un probleme est survenu pour supprimer cet article : ",
@@ -319,10 +419,6 @@ export const HandlesShowCartXs = () => {
                                     display: "-webkit-box",
                                     overflow: "hidden",
                                     textOverflow: "ellipsis",
-                                    marginBlockStart: "1em",
-                                    marginBlockEnd: "1em",
-                                    marginInlineStart: "0px",
-                                    marginInlineEnd: "0px",
                                     textAlign: "-webkit-match-parent",
                                     fontWeight: "bold",
                                     color: "#191919",
@@ -332,6 +428,7 @@ export const HandlesShowCartXs = () => {
                                 </Box>
                               </Box>
                             </Box>
+
                             <Box
                               sx={{
                                 gridArea: "2/3/span 1/span 6",
@@ -372,7 +469,7 @@ export const HandlesShowCartXs = () => {
                                         component="span"
                                         sx={{
                                           fontSize: "1rem",
-                                          fontWeight: 400,
+                                          fontWeight: 500,
                                         }}
                                       >
                                         <Box component="span">
@@ -547,10 +644,88 @@ export const HandlesShowCartXs = () => {
                                     </Box>
                                   </Box>
                                 </Box>
+
+                                <Box
+                                  sx={{
+                                    gridArea: "4/1/span 1/span 6",
+                                  }}
+                                >
+                                  <Box component="span">
+                                    <Box
+                                      sx={{
+                                        backgroundColor: "initial",
+                                        border: 0,
+                                        color: "#191919",
+                                        fontFamily: "inherit",
+                                        fontSize: "inherit",
+                                        padding: 0,
+                                        margin: 0,
+                                      }}
+                                    >
+                                      <Box component="span">
+                                        <Box component="span">
+                                          État&nbsp;:&nbsp;{item?.prodEtat}
+                                        </Box>
+                                      </Box>
+                                    </Box>
+                                  </Box>
+                                </Box>
+
+                                <Box
+                                  sx={{
+                                    gridArea: "5/1/span 1/span 6",
+                                  }}
+                                >
+                                  <Box component="span">
+                                    <Box
+                                      sx={{
+                                        backgroundColor: "initial",
+                                        border: 0,
+                                        color: "#191919",
+                                        fontFamily: "inherit",
+                                        fontSize: "inherit",
+                                        padding: 0,
+                                        margin: 0,
+                                      }}
+                                    >
+                                      <Box component="span">
+                                        <Box component="span">
+                                          Taille&nbsp;:&nbsp;{item?.prodSize}
+                                        </Box>
+                                      </Box>
+                                    </Box>
+                                  </Box>
+                                </Box>
+                                <Box
+                                  sx={{
+                                    gridArea: "6/1/span 1/span 6",
+                                  }}
+                                >
+                                  <Box component="span">
+                                    <Box
+                                      sx={{
+                                        backgroundColor: "initial",
+                                        border: 0,
+                                        color: "#191919",
+                                        fontFamily: "inherit",
+                                        fontSize: "inherit",
+                                        padding: 0,
+                                        margin: 0,
+                                      }}
+                                    >
+                                      <Box component="span">
+                                        <Box component="span">
+                                          Couleur&nbsp;:&nbsp;{item?.prodColor}
+                                        </Box>
+                                      </Box>
+                                    </Box>
+                                  </Box>
+                                </Box>
                               </Box>
                             </Box>
                           </Box>
                         </Box>
+
                         <Box
                           sx={{
                             marginBottom: 0,

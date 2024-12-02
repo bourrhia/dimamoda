@@ -9,7 +9,10 @@ import ShowLoading from "../../Loading/ShowLoading";
 export default function PrdLinkMobile({
   buttonName,
   productNum,
-  allProducts,
+  category,
+  searchTerm,
+  otherSearchTerm,
+  catTitle,
   children,
 }) {
   const router = useRouter();
@@ -52,7 +55,14 @@ export default function PrdLinkMobile({
 
   if (buttonName === "voirePlusXsButt") {
     return (
-      <Link href={"/product/showMoreProducts"} className="custom-link">
+      <Link
+        href={`/product/showMoreProductsXs/${encodeURIComponent(
+          category
+        )}/${encodeURIComponent(searchTerm)}/${encodeURIComponent(
+          catTitle
+        )}/${encodeURIComponent(otherSearchTerm)}`}
+        className="custom-link"
+      >
         {children}
       </Link>
     );

@@ -8,7 +8,6 @@ export default function ShowLoading() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        //position: "fixed",
         position: "absolute",
         top: 0,
         left: 0,

@@ -17,7 +17,7 @@ export const HandlesSlider = ({
   const [displayRightArrow, setdisplayRightArrow] = useState(true);
   const [displayLeftArrow, setdisplayLeftArrow] = useState(false);
 
-  const slidesToShow = 6;
+  const slidesToShow = 5;
 
   const setArrowDisplay = (currentSlide) => {
     const LeftArrow = currentSlide !== 0;
@@ -65,6 +65,7 @@ export const HandlesSlider = ({
               fill: "#212121",
               transformOrigin: "0px 0px",
               color: "#212121",
+              right: 0,
             }}
           ></Box>
         </Box>

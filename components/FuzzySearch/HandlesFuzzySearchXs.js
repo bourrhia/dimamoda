@@ -89,6 +89,7 @@ export const HandlesFuzzySearchXs = ({ allSearchProducts }) => {
               ":-webkit-any-link": {
                 cursor: "pointer",
               },
+              marginLeft: "16px",
             }}
           >
             <Box

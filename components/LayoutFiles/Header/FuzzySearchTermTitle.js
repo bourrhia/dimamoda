@@ -13,7 +13,7 @@ export default function FuzzySearchTermTitle({ searchTerm }) {
           marginLeft: "32px",
         },
         [theme.breakpoints.only("xs")]: {
-          marginLeft: "32px",
+          marginLeft: "16px",
         },
       })}
     >
@@ -52,7 +52,7 @@ export default function FuzzySearchTermTitle({ searchTerm }) {
                   color: "#666",
                   fontSize: ".75rem",
                   lineHeight: "13px",
-                  fontWeight: "initial",
+                  fontWeight: "700",
                 }}
               >
                 {searchTerm}

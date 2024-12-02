@@ -4,8 +4,14 @@ import Image from "next/image";
 import ProdLinkUpsm from "./ProdLinkUpSm";
 import ShowCatTitle from "../ProductListAllDevices/ShowCatTitle";
 
-export const PrdlistUpSm1 = ({ imgmrv }) => {
-  const vCatTitle = "Meilleures ventes";
+export const PrdlistUpSm1 = ({
+  imgmrv,
+  category,
+  catTitle,
+  searchTerm,
+  otherSearchTerm,
+  nbrProd,
+}) => {
   const renderedImg = imgmrv.map((image) => {
     const ItemPrixAct = parseFloat(
       Math.round(image.prixAct * 100) / 100
@@ -331,7 +337,13 @@ export const PrdlistUpSm1 = ({ imgmrv }) => {
                 width: "100%",
               }}
             >
-              <ShowCatTitle catTitle={vCatTitle} />
+              <ShowCatTitle
+                category={category}
+                catTitle={catTitle}
+                searchTerm={searchTerm}
+                otherSearchTerm={otherSearchTerm}
+                nbrProd={nbrProd}
+              />
               <Box
                 sx={{
                   marginBottom: 0,

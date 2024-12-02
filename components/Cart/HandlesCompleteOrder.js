@@ -44,8 +44,15 @@ const useGetOrderNum = (orderId) => {
   return orderNumber;
 };
 
-const HandlesCompleteOrder = ({ order_Id, cartItemId }) => {
+const HandlesCompleteOrder = ({
+  order_Id,
+  cartItemId,
+  cartItemSize,
+  cartItemColor,
+}) => {
   const router = useRouter();
+
+  const NumTel = "06 61 44 91 63";
 
   const [openDialogConfOrder, setOpenDialogConfOrder] = useState(true);
   const [navHome, setNavHome] = useState(false);
@@ -53,12 +60,14 @@ const HandlesCompleteOrder = ({ order_Id, cartItemId }) => {
   const orderNumber = useGetOrderNum(order_Id);
 
   const prodId = parseInt(cartItemId) || null;
+  const prodSize = cartItemSize || null;
+  const prodColor = cartItemColor || null;
 
   const dispatch = useDispatch();
 
   const removeAllItems = () => {
     if (prodId) {
-      dispatch(productRemoved(prodId));
+      dispatch(productRemoved({ prodId, prodSize, prodColor }));
       dispatch(orderRemoved());
     } else {
       dispatch(allProductRemoved());
@@ -115,8 +124,8 @@ const HandlesCompleteOrder = ({ order_Id, cartItemId }) => {
           <DialogContent>
             <DialogContentText>
               Veuillez appeler le numéro de téléphone &nbsp;
-              <strong>06 61 55 87 65</strong> pour recevoire votre commande
-              numéro <strong> &nbsp;{orderNumber}</strong>
+              <strong>{NumTel}</strong> pour recevoire votre commande numéro{" "}
+              <strong> &nbsp;{orderNumber}</strong>
             </DialogContentText>
           </DialogContent>
         </Dialog>
@@ -138,7 +147,7 @@ const HandlesCompleteOrder = ({ order_Id, cartItemId }) => {
                 <CloseIcon />
               </IconButton>
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                Finalisation de la commande
+                Finalisation de la commande En cours ....
               </Typography>
             </Toolbar>
             <ShowLoading />

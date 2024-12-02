@@ -7,8 +7,14 @@ import "slick-carousel/slick/slick-theme.css";
 import HandlesSlider from "../../Slider/HandlesSlider";
 import ProdLinkUpsm from "./ProdLinkUpSm";
 
-export const PrdListUpMd2 = ({ imgmrv }) => {
-  const vCatTitle = "Meilleures ventes";
+export const PrdListUpMd2 = ({
+  imgmrv,
+  category,
+  catTitle,
+  searchTerm,
+  otherSearchTerm,
+  nbrProd,
+}) => {
   const imgmrvLength = imgmrv?.length;
   const vImgClickUpMd2 = "imgClickUpMd2";
 
@@ -33,7 +39,7 @@ export const PrdListUpMd2 = ({ imgmrv }) => {
   };
 
   const prdCarouselRight = {
-    right: 0,
+    right: "30px",
     borderRadius: "4px 0 0 4px",
     display: "flex",
     position: "absolute",
@@ -159,7 +165,13 @@ export const PrdListUpMd2 = ({ imgmrv }) => {
       >
         <Box>
           <Box>
-            <ShowCatTitle catTitle={vCatTitle} />
+            <ShowCatTitle
+              category={category}
+              catTitle={catTitle}
+              searchTerm={searchTerm}
+              otherSearchTerm={otherSearchTerm}
+              nbrProd={nbrProd}
+            />
           </Box>
         </Box>
         <Box>

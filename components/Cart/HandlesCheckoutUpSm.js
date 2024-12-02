@@ -50,6 +50,8 @@ export const HandlesCheckoutUpSm = () => {
   const searchParams = useSearchParams();
 
   const cartItemId = searchParams.get("cartProdId") || null;
+  const cartItemSize = searchParams.get("cartProdSize") || null;
+  const cartItemColor = searchParams.get("cartProdColor") || null;
 
   const [navHome, setNavHome] = useState(false);
 
@@ -69,6 +71,8 @@ export const HandlesCheckoutUpSm = () => {
       router.push(
         `/confirmOrderUpSm/${encodeURIComponent(orderId)}/${encodeURIComponent(
           cartItemId
+        )}/${encodeURIComponent(cartItemSize)}/${encodeURIComponent(
+          cartItemColor
         )}`
       );
     } catch (err) {
@@ -314,6 +318,9 @@ export const HandlesCheckoutUpSm = () => {
           prodDesc: cart?.prodDesc,
           prodQtee: cart?.prodQtee,
           prodPrix: cart?.prodPrix,
+          prodEtat: cart?.prodEtat,
+          prodSize: cart?.prodSize,
+          prodColor: cart?.prodColor,
         };
       } else {
         return cart?.map((item) => ({
@@ -321,6 +328,9 @@ export const HandlesCheckoutUpSm = () => {
           prodDesc: item.prodDesc,
           prodQtee: item.prodQtee,
           prodPrix: item.prodPrix,
+          prodEtat: item.prodEtat,
+          prodSize: item.prodSize,
+          prodColor: item.prodColor,
         }));
       }
     };
@@ -448,6 +458,9 @@ export const HandlesCheckoutUpSm = () => {
       cartItemProdDesc,
       cartItemProdQtee,
       cartItemProdPrix,
+      cartItemProdEtat,
+      cartItemProdSize,
+      cartItemProdColor,
     }) => {
       let CartItemPrice = parseFloat(
         Math.round(cartItemProdPrix * 100) / 100
@@ -603,6 +616,64 @@ export const HandlesCheckoutUpSm = () => {
                           </Box>
                         </Box>
                       </Box>
+
+                      <Box
+                        sx={{
+                          // marginBottom: "1rem",
+                          marginBottom: "0,25rem",
+                          width: "100%",
+                          display: "inline-block!important",
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            color: "#767676",
+                          }}
+                        >
+                          <Box component="span">
+                            État : &nbsp;{cartItemProdEtat}
+                          </Box>
+                        </Box>
+                      </Box>
+
+                      <Box
+                        sx={{
+                          // marginBottom: "1rem",
+                          marginBottom: "0,25rem",
+                          width: "100%",
+                          display: "inline-block!important",
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            color: "#767676",
+                          }}
+                        >
+                          <Box component="span">
+                            Taille : &nbsp;{cartItemProdSize}
+                          </Box>
+                        </Box>
+                      </Box>
+
+                      <Box
+                        sx={{
+                          marginBottom: "1rem",
+                          //marginBottom: "0,5rem",
+                          width: "100%",
+                          display: "inline-block!important",
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            color: "#767676",
+                          }}
+                        >
+                          <Box component="span">
+                            Couleur : &nbsp;{cartItemProdColor}
+                          </Box>
+                        </Box>
+                      </Box>
+
                       <Box
                         sx={{
                           marginBottom: "1rem",
@@ -623,6 +694,8 @@ export const HandlesCheckoutUpSm = () => {
                         <CheckoutLinkUpSm
                           buttonName={vRemoveCartItemButt}
                           cartItemId={cartItemProdId}
+                          cartItemSize={cartItemProdSize}
+                          cartItemColor={cartItemProdColor}
                         >
                           Supprimer
                         </CheckoutLinkUpSm>
@@ -962,10 +1035,13 @@ export const HandlesCheckoutUpSm = () => {
                           {oneItemCart ? (
                             <HandlesCartItem
                               cartItemProdId={cart?.prodId}
-                              cartItemProdImage={cart.prodImage}
-                              cartItemProdDesc={cart.prodDesc}
-                              cartItemProdQtee={cart.prodQtee}
-                              cartItemProdPrix={cart.prodPrix}
+                              cartItemProdImage={cart?.prodImage}
+                              cartItemProdDesc={cart?.prodDesc}
+                              cartItemProdQtee={cart?.prodQtee}
+                              cartItemProdPrix={cart?.prodPrix}
+                              cartItemProdEtat={cart?.prodEtat}
+                              cartItemProdSize={cart?.prodSize}
+                              cartItemProdColor={cart?.prodColor}
                             />
                           ) : (
                             <>
@@ -979,6 +1055,9 @@ export const HandlesCheckoutUpSm = () => {
                                       cartItemProdDesc={cartitem?.prodDesc}
                                       cartItemProdQtee={cartitem?.prodQtee}
                                       cartItemProdPrix={cartitem?.prodPrix}
+                                      cartItemProdEtat={cartitem?.prodEtat}
+                                      cartItemProdSize={cartitem?.prodSize}
+                                      cartItemProdColor={cartitem?.prodColor}
                                     />
                                   ))}
                                 </Box>

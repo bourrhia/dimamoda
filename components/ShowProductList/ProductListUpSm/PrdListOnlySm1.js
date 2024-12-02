@@ -5,8 +5,14 @@ import Typography from "@mui/material/Typography";
 import ShowCatTitle from "../ProductListAllDevices/ShowCatTitle";
 import ProdLinkUpsm from "./ProdLinkUpSm";
 
-export const PrdListSmMod1 = ({ imgmrv }) => {
-  const vCatTitle = "Meilleures ventes";
+export const PrdListSmMod1 = ({
+  imgmrv,
+  category,
+  catTitle,
+  searchTerm,
+  otherSearchTerm,
+  nbrProd,
+}) => {
   const vImgClickSm1 = "imgClickSm1";
 
   const renderedImg = imgmrv.map((image) => (
@@ -197,7 +203,13 @@ export const PrdListSmMod1 = ({ imgmrv }) => {
   return (
     <>
       <Box>
-        <ShowCatTitle catTitle={vCatTitle} />
+        <ShowCatTitle
+          category={category}
+          catTitle={catTitle}
+          searchTerm={searchTerm}
+          otherSearchTerm={otherSearchTerm}
+          nbrProd={nbrProd}
+        />
       </Box>
       <Box>
         <Box>

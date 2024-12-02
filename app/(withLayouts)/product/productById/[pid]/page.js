@@ -53,6 +53,8 @@ const Prodview = async ({ params }) => {
       <Box
         sx={{
           display: { xs: "none", sm: "block", md: "block", lg: "block" },
+          //
+          minWidth: "600px",
         }}
       >
         <ProdViewUpSm selectedprd={prodSelected} />

@@ -1,20 +1,128 @@
 import React from "react";
-import HandlesTendUpSm from "../../../../../components/LayoutFiles/NavBar/shopByCategoryUpSm/HandlesTendUpSm";
 import clientPromise from "../../../../../lib/mongodb";
+import Box from "@mui/material/Box";
+import PrdListOnlySm1 from "../../../../../components/ShowProductList/ProductListUpSm/PrdListOnlySm1";
+import PrdListUpSm1 from "../../../../../components/ShowProductList/ProductListUpSm/PrdListUpSm1";
+import ShowCategory from "../../../../../components/ShowProductList/ProductListAllDevices/ShowCategory";
 
-async function getPrdImg() {
+const sanitizeData = (data) =>
+  data.map((item) => ({
+    ...item,
+    _id: item._id?.toString(),
+    prdDetailsBySize: item.prdDetailsBySize?.map((sizeDetail) => ({
+      ...sizeDetail,
+      detailsByColor: sizeDetail.detailsByColor?.map((colorDetail) => ({
+        ...colorDetail,
+        imgThumbnails: colorDetail.imgThumbnails?.map((thumbnail) => ({
+          ...thumbnail,
+        })),
+      })),
+    })),
+  }));
+
+async function getProductByCategory(searchCatTerm, category, limit = null) {
   const client = await clientPromise;
   const db = client.db(process.env.MONGODB_DB);
 
-  const myPrdImg = await db.collection("product").find().limit(21).toArray();
+  const query = {
+    ...(category && { [searchCatTerm]: category }),
+  };
 
-  return myPrdImg;
+  const pipeline = [
+    { $match: query },
+    {
+      $group: {
+        _id: { subcategory: { $ifNull: ["$subcategory3", "Autres"] } },
+        products: { $push: "$$ROOT" },
+      },
+    },
+    { $project: { _id: 0, subcategory: "$_id.subcategory", products: 1 } },
+    ...(limit ? [{ $limit: limit }] : []),
+  ];
+
+  const groupedProducts = await db
+    .collection("product")
+    .aggregate(pipeline)
+    .toArray();
+
+  groupedProducts.forEach((group) => {
+    group.products = sanitizeData(group.products);
+  });
+
+  return groupedProducts;
 }
 
-export const tendUpSm = async () => {
-  const prdsImg = JSON.parse(JSON.stringify(await getPrdImg()));
+export const TendencesUpSm = async () => {
+  const searchCatTerm2 = "subcategory2";
+  const searchCatTerm3 = "subcategory3";
+  const catTitle = "Tendences";
 
-  return <HandlesTendUpSm prdsImg={prdsImg} />;
+  const groupedProducts = JSON.parse(
+    JSON.stringify(await getProductByCategory(searchCatTerm2, "Tendences"))
+  );
+
+  const catTendences = "Tendences";
+
+  const nbrProdTendence = 20;
+
+  return (
+    <>
+      <ShowCategory catTitle={catTitle} />
+      {groupedProducts.map(({ subcategory, products }) => (
+        <Box key={subcategory}>
+          <Box
+            sx={{
+              display: { xs: "none", sm: "block", md: "none" },
+              marginLeft: "32px",
+              marginRight: "32px",
+              maxWidth: "1248px",
+              marginBottom: "64px",
+              marginTop: "32px",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <PrdListOnlySm1
+              imgmrv={products}
+              category={catTendences}
+              catTitle={`${subcategory}`}
+              searchTerm={searchCatTerm2}
+              otherSearchTerm={searchCatTerm3}
+              nbrProd={nbrProdTendence}
+            />
+          </Box>
+
+          <Box
+            sx={{
+              display: { xs: "none", sm: "none", md: "block", lg: "block" },
+              marginLeft: "32px",
+              marginRight: "32px",
+              maxWidth: "1248px",
+              marginBottom: "64px",
+              marginTop: "32px",
+              width: "100%",
+              height: "100%",
+            }}
+          >
+            <Box
+              sx={{
+                marginBottom: "32px !important",
+              }}
+            >
+              <PrdListUpSm1
+                imgmrv={products}
+                category={catTendences}
+                catTitle={`${subcategory}`}
+                searchTerm={searchCatTerm2}
+                otherSearchTerm={searchCatTerm3}
+                nbrProd={nbrProdTendence}
+              />
+            </Box>
+          </Box>
+        </Box>
+      ))}
+    </>
+  );
 };
 
-export default tendUpSm;
+export default TendencesUpSm;

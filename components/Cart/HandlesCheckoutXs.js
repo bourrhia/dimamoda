@@ -100,13 +100,19 @@ export const HandlesCheckoutXs = () => {
 
   const [navConfirmOrder, setNavConfirmOrder] = useState(false);
 
-  const handleNavConfirmOrder = (orderId) => {
+  /*  const handleNavConfirmOrder = (orderId) => {
     try {
       setNavConfirmOrder(true);
 
+      // router.push(
+      //  `/confirmOrderXs/${encodeURIComponent(orderId)}/${encodeURIComponent(
+       //   cartItemId
+      //  )}` 
       router.push(
         `/confirmOrderXs/${encodeURIComponent(orderId)}/${encodeURIComponent(
           cartItemId
+        )}/${encodeURIComponent(cartItemSize)}/${encodeURIComponent(
+          cartItemColor
         )}`
       );
     } catch (err) {
@@ -117,11 +123,17 @@ export const HandlesCheckoutXs = () => {
     } finally {
       setNavConfirmOrder(true);
     }
-  };
+  }; */
 
   const searchParams = useSearchParams();
 
   const cartItemId = searchParams.get("cartProdId") || null;
+  const cartItemSize = searchParams.get("cartProdSize") || null;
+  const cartItemColor = searchParams.get("cartProdColor") || null;
+
+  console.log(" cartItemId2:", cartItemId);
+  console.log("cartItemSize2 :", cartItemSize);
+  console.log("cartItemColor2 :", cartItemColor);
 
   const allCart = useSelector((state) => state.cart);
 
@@ -143,6 +155,31 @@ export const HandlesCheckoutXs = () => {
   const existProdsCart = allCart?.products.length > 0 ? true : false;
 
   const notEmptyCart = cartItemId ? existOneItemCart : existProdsCart;
+
+  const handleNavConfirmOrder = (orderId) => {
+    try {
+      setNavConfirmOrder(true);
+
+      /* router.push(
+        `/confirmOrderXs/${encodeURIComponent(orderId)}/${encodeURIComponent(
+          cartItemId
+        )}` */
+      router.push(
+        `/confirmOrderXs/${encodeURIComponent(orderId)}/${encodeURIComponent(
+          cartItemId
+        )}/${encodeURIComponent(cartItemSize)}/${encodeURIComponent(
+          cartItemColor
+        )}`
+      );
+    } catch (err) {
+      console.error(
+        "An error occurred while navigating to confirm an order: ",
+        err
+      );
+    } finally {
+      setNavConfirmOrder(true);
+    }
+  };
 
   let vtel = "";
   let vnom = "";
@@ -269,6 +306,9 @@ export const HandlesCheckoutXs = () => {
           prodDesc: cart?.prodDesc,
           prodQtee: cart?.prodQtee,
           prodPrix: cart?.prodPrix,
+          prodEtat: cart?.prodEtat,
+          prodSize: cart?.prodSize,
+          prodColor: cart?.prodColor,
         };
       } else {
         return cart?.map((item) => ({
@@ -276,6 +316,9 @@ export const HandlesCheckoutXs = () => {
           prodDesc: item.prodDesc,
           prodQtee: item.prodQtee,
           prodPrix: item.prodPrix,
+          prodEtat: item.prodEtat,
+          prodSize: item.prodSize,
+          prodColor: item.prodColor,
         }));
       }
     };
@@ -397,7 +440,12 @@ export const HandlesCheckoutXs = () => {
       }
     };
 
-    const onDeleteCartItem = async (prodId, prodQuantity) => {
+    const onDeleteCartItem = async (
+      prodId,
+      prodQuantity,
+      prodSize,
+      prodColor
+    ) => {
       try {
         await dispatch(
           cartSpinnerAsync({
@@ -405,7 +453,7 @@ export const HandlesCheckoutXs = () => {
             prodQuantity,
           })
         ).unwrap();
-        dispatch(productRemoved({ prodId }));
+        dispatch(productRemoved({ prodId, prodSize, prodColor }));
       } catch (err) {
         console.error(
           "Un probleme est survenu pour supprimer cet article : ",
@@ -421,6 +469,9 @@ export const HandlesCheckoutXs = () => {
       cartItemProdQtee,
       cartItemProdPrix,
       cartItemStatus,
+      cartItemProdEtat,
+      cartItemProdSize,
+      cartItemProdColor,
     }) => {
       let CartItemPrice = parseFloat(
         Math.round(cartItemProdPrix * 100) / 100
@@ -563,6 +614,160 @@ export const HandlesCheckoutXs = () => {
                       }}
                     ></Box>
                   </Box>
+
+                  <Box
+                    sx={{
+                      marginRight: "1rem!important",
+                      fontSize: ".875rem",
+                      WebkitTextSizeAdjust: "100%",
+                      color: "#191919",
+                    }}
+                  >
+                    <Box
+                      tabIndex="-1"
+                      sx={{
+                        display: "block",
+                        fontSize: "inherit",
+                        fontWeight: 400,
+                        margin: "initial",
+                        lineHeight: "20px",
+
+                        WebkitTextSizeAdjust: "100%",
+                        color: "#191919",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          fontSize: "inherit",
+                          fontWeight: 400,
+                          lineHeight: "20px",
+                        }}
+                      >
+                        <Box
+                          component="span"
+                          sx={{
+                            fontSize: "inherit",
+                            fontWeight: 400,
+                            lineHeight: "20px",
+                            WebkitTextSizeAdjust: "100%",
+                            color: "#191919",
+                          }}
+                        >
+                          <Box component="span">
+                            État&nbsp;:&nbsp;{cartItemProdEtat}
+                          </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                    <Box
+                      sx={{
+                        color: "#767676",
+                      }}
+                    ></Box>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      marginRight: "1rem!important",
+                      fontSize: ".875rem",
+                      WebkitTextSizeAdjust: "100%",
+                      color: "#191919",
+                    }}
+                  >
+                    <Box
+                      tabIndex="-1"
+                      sx={{
+                        display: "block",
+                        fontSize: "inherit",
+                        fontWeight: 400,
+                        margin: "initial",
+                        lineHeight: "20px",
+                        WebkitTextSizeAdjust: "100%",
+                        color: "#191919",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          fontSize: "inherit",
+                          fontWeight: 400,
+                          lineHeight: "20px",
+                        }}
+                      >
+                        <Box
+                          component="span"
+                          sx={{
+                            fontSize: "inherit",
+                            fontWeight: 400,
+                            lineHeight: "20px",
+                            WebkitTextSizeAdjust: "100%",
+                            color: "#191919",
+                          }}
+                        >
+                          <Box component="span">
+                            Taille&nbsp;:&nbsp;{cartItemProdSize}
+                          </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                    <Box
+                      sx={{
+                        color: "#767676",
+                      }}
+                    ></Box>
+                  </Box>
+                  <Box
+                    sx={{
+                      marginRight: "1rem!important",
+                      fontSize: ".875rem",
+                      WebkitTextSizeAdjust: "100%",
+                      color: "#191919",
+                    }}
+                  >
+                    <Box
+                      tabIndex="-1"
+                      sx={{
+                        display: "block",
+                        fontSize: "inherit",
+                        fontWeight: 400,
+                        margin: "initial",
+                        lineHeight: "20px",
+
+                        WebkitTextSizeAdjust: "100%",
+                        color: "#191919",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          fontSize: "inherit",
+                          fontWeight: 400,
+                          lineHeight: "20px",
+                        }}
+                      >
+                        <Box
+                          component="span"
+                          sx={{
+                            fontSize: "inherit",
+                            fontWeight: 400,
+                            lineHeight: "20px",
+                            WebkitTextSizeAdjust: "100%",
+                            color: "#191919",
+                          }}
+                        >
+                          <Box component="span">
+                            Couleur&nbsp;:&nbsp;{cartItemProdColor}
+                          </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                    <Box
+                      sx={{
+                        color: "#767676",
+                        marginBottom: "0.5rem!important",
+                        marginTop: "0.25rem!important",
+                      }}
+                    ></Box>
+                  </Box>
+
                   <Box
                     sx={{
                       paddingLeft: "1rem",
@@ -604,7 +809,12 @@ export const HandlesCheckoutXs = () => {
                         component="a"
                         role="button"
                         onClick={() =>
-                          onDeleteCartItem(cartItemProdId, cartItemProdQtee)
+                          onDeleteCartItem(
+                            cartItemProdId,
+                            cartItemProdQtee,
+                            cartItemProdSize,
+                            cartItemProdColor
+                          )
                         }
                         sx={{
                           textDecoration: "underline",
@@ -863,6 +1073,9 @@ export const HandlesCheckoutXs = () => {
                           cartItemProdQtee={cart.prodQtee}
                           cartItemProdPrix={cart.prodPrix}
                           cartItemStatus={cart.status}
+                          cartItemProdEtat={cart.prodEtat}
+                          cartItemProdSize={cart.prodSize}
+                          cartItemProdColor={cart.prodColor}
                         />
                       ) : (
                         <>
@@ -877,6 +1090,9 @@ export const HandlesCheckoutXs = () => {
                                   cartItemProdQtee={cartitem?.prodQtee}
                                   cartItemProdPrix={cartitem?.prodPrix}
                                   cartItemStatus={cartitem?.status}
+                                  cartItemProdEtat={cartitem?.prodEtat}
+                                  cartItemProdSize={cartitem?.prodSize}
+                                  cartItemProdColor={cartitem?.prodColor}
                                 />
                               ))}
                             </Box>

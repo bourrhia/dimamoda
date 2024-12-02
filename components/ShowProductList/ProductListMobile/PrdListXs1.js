@@ -1,11 +1,17 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
-import ShowCatTitle from "../ProductListAllDevices/ShowCatTitle";
+import ShowCatTitleXs from "../ProductListAllDevices/ShowCatTitleXs";
 import ProdLinkMobile from "./ProdLinkMobile";
 
-export const PrdListXs1 = ({ imgmrv }) => {
-  const vCatTitle = "Meilleures ventes";
+export const PrdListXs1 = ({
+  imgmrv,
+  category,
+  catTitle,
+  searchTerm,
+  otherSearchTerm,
+  nbrProd,
+}) => {
   const vRenderImageXsButt = "renderImageXsButt";
   const vVoirePlusXsButt = "voirePlusXsButt";
 
@@ -28,6 +34,8 @@ export const PrdListXs1 = ({ imgmrv }) => {
             ":WebkitAnyLink": {
               cursor: "pointer",
             },
+            //
+            marginBottom: "2rem !important",
           }}
         >
           <Box
@@ -334,7 +342,13 @@ export const PrdListXs1 = ({ imgmrv }) => {
                   whiteSpace: "normal",
                 }}
               >
-                <ShowCatTitle catTitle={vCatTitle} />
+                <ShowCatTitleXs
+                  catTitle={catTitle}
+                  category={category}
+                  searchTerm={searchTerm}
+                  otherSearchTerm={otherSearchTerm}
+                  nbrProd={nbrProd}
+                />
               </Box>
 
               <Box
@@ -346,7 +360,13 @@ export const PrdListXs1 = ({ imgmrv }) => {
                   whiteSpace: "normal",
                 }}
               >
-                <ShowCatTitle catTitle={vCatTitle} />
+                <ShowCatTitleXs
+                  catTitle={catTitle}
+                  category={category}
+                  searchTerm={searchTerm}
+                  otherSearchTerm={otherSearchTerm}
+                  nbrProd={nbrProd}
+                />
               </Box>
             </Box>
           </Box>
@@ -383,7 +403,14 @@ export const PrdListXs1 = ({ imgmrv }) => {
               },
             }}
           >
-            <ProdLinkMobile buttonName={vVoirePlusXsButt}>
+            <ProdLinkMobile
+              buttonName={vVoirePlusXsButt}
+              category={category}
+              searchTerm={searchTerm}
+              catTitle={catTitle}
+              otherSearchTerm={otherSearchTerm}
+              nbrProd={nbrProd}
+            >
               <Box
                 sx={{
                   cursor: "pointer",
@@ -432,9 +459,10 @@ export const PrdListXs1 = ({ imgmrv }) => {
                     component="span"
                     sx={{
                       height: "auto",
-                      display: "inline-block",
+                      display: nbrProd > 4 ? "inline-block" : "None",
                       width: "100%",
                       whiteSpace: "normal",
+                      fontWeight: "bold",
                     }}
                   >
                     Voir plus

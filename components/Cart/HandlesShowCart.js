@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { useSelector, useDispatch } from "react-redux";
 import { productUpdated } from "../../redux/features/cart/cartSlice";
 import { productRemoved } from "../../redux/features/cart/cartSlice";
+import { allProductRemoved } from "../../redux/features/cart/cartSlice";
 import Backdrop from "@mui/material/Backdrop";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -25,6 +26,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 export const HandlesShowCart = () => {
   const router = useRouter();
   const dispatch = useDispatch();
+  const [navHome, setNavHome] = useState(false);
+  const [isCartValid, setIsCartValid] = useState(true);
+  const [hasValidated, setHasValidated] = useState(false);
 
   const qtUpdSchema = yup.object().shape({
     cartItemsArray: yup.array().of(
@@ -51,7 +55,41 @@ export const HandlesShowCart = () => {
 
   const cart = useSelector((state) => state.cart.products);
 
-  const [navHome, setNavHome] = useState(false);
+  const validateCart = (cart) => {
+    return cart.every(
+      (item) =>
+        item.prodId !== undefined &&
+        item.prodId !== null &&
+        item.prodImage !== undefined &&
+        item.prodImage !== null &&
+        item.prodQtee !== undefined &&
+        item.prodQtee !== null &&
+        item.prodQtee > 0 &&
+        item.prodQteeDisp !== undefined &&
+        item.prodQteeDisp !== null &&
+        item.prodQteeDisp > 0 &&
+        item.prodPrix !== undefined &&
+        item.prodPrix !== null &&
+        item.prodPrix > 0 &&
+        item.prodSize !== "Sélectionner" &&
+        item.prodColor !== "Sélectionner"
+    );
+  };
+
+  useEffect(() => {
+    if (!hasValidated) {
+      if (!validateCart(cart)) {
+        setIsCartValid(false);
+        setHasValidated(true);
+      }
+    }
+  }, [cart, hasValidated]);
+
+  useEffect(() => {
+    if (!isCartValid) {
+      dispatch(allProductRemoved());
+    }
+  }, [isCartValid, dispatch]);
 
   const handleNavHome = () => {
     try {
@@ -64,6 +102,66 @@ export const HandlesShowCart = () => {
     }
   };
 
+  if (!isCartValid) {
+    return (
+      <Box
+        sx={{
+          margin: 0,
+          padding: 0,
+          display: "block",
+          margin: "0 1rem",
+        }}
+      >
+        <Box component="h2">Votre panier est vide!</Box>
+
+        <Box
+          component="a"
+          onClick={handleNavHome}
+          aria-disabled="false"
+          sx={{
+            overflow: "hidden",
+            padding: "0 0.625rem",
+
+            position: "relative",
+            width: "100%",
+            width: "80%",
+            borderRadius: "24px",
+            fontSize: "1rem",
+            minHeight: "48px",
+            backgroundColor: "#3665f3",
+            borderColor: "#3665f3",
+            color: "#fff",
+            fontWeight: 700,
+            border: "1px solid",
+            boxSizing: "border-box",
+            display: "inline-block",
+            fontFamily: "inherit",
+            margin: 0,
+            minWidth: "88px",
+            minWidth: "65px",
+            textAlign: "center",
+            textDecoration: "none",
+            verticalAlign: "bottom",
+            cursor: "pointer",
+            paddingBlock: "1px",
+            paddingBlock: "8px",
+            paddingInline: "6px",
+          }}
+        >
+          Revenir à la page principale&nbsp;&nbsp;&nbsp;
+          {navHome && (
+            <CircularProgress
+              size={20}
+              sx={{
+                color: "#0F1111",
+              }}
+            />
+          )}
+        </Box>
+      </Box>
+    );
+  }
+
   const HandlesCart = ({ cart }) => {
     const [isCheckoutUpSm, setIsCheckoutUpSm] = useState(false);
 
@@ -74,15 +172,12 @@ export const HandlesShowCart = () => {
       setFocus,
       getValues,
       setValue,
-      reset,
-      trigger,
-      setError,
       formState: { errors, isValid: isValidQtUpd, isDirty: isDirtyQtUpd },
     } = useForm({
       resolver: yupResolver(qtUpdSchema),
       defaultValues: {
         cartItemsArray:
-          cart.map((item) => {
+          cart?.map((item) => {
             return {
               prodId: item.prodId,
               itemQtee: item.prodQtee,
@@ -92,6 +187,9 @@ export const HandlesShowCart = () => {
               prodDesc: item.prodDesc,
               prodPrix: item.prodPrix,
               status: item.status,
+              prodSize: item.prodSize,
+              prodColor: item.prodColor,
+              prodEtat: item.prodEtat,
             };
           }) ?? "",
       },
@@ -103,8 +201,8 @@ export const HandlesShowCart = () => {
       name: "cartItemsArray",
     });
 
-    const removeCartItem = (prodId) => {
-      dispatch(productRemoved({ prodId }));
+    const removeCartItem = (prodId, prodSize, prodColor) => {
+      dispatch(productRemoved({ prodId, prodSize, prodColor }));
     };
 
     const getItemsCount = () => {
@@ -178,12 +276,14 @@ export const HandlesShowCart = () => {
           }}
         >
           <Box>
-            {fields.map((item, index) => {
+            {fields?.map((item, index) => {
               let CartItemPrice = parseFloat(
-                Math.round(item?.prodPrix * 100) / 100
+                Math.round(item?.prodPrix * item?.itemQtee * 100) / 100
               ).toFixed(2);
 
               const prodId = parseInt(item?.prodId);
+              const prodSize = item?.prodSize;
+              const prodColor = item?.prodColor;
 
               const [openItem, setOpenItem] = useState(false);
 
@@ -499,7 +599,6 @@ export const HandlesShowCart = () => {
                                           color: "#0F1111!important",
                                           wordWrap: "break-word",
                                           color: "#282828",
-                                          fontWeight: 400,
                                           fontWeight: 500,
                                         }}
                                       >
@@ -588,6 +687,74 @@ export const HandlesShowCart = () => {
                                       }}
                                     >
                                       {item?.prodEtat}
+                                    </Box>
+                                  </Box>
+                                </Box>
+
+                                <Box
+                                  sx={{
+                                    wordWrap: "break-word",
+                                    margin: 0,
+                                    padding: 0,
+
+                                    textAlign: "-webkit-match-parent",
+                                    color: "#0F1111",
+                                  }}
+                                >
+                                  <Box
+                                    component="span"
+                                    sx={{
+                                      color: "#0F1111",
+                                      wordWrap: "break-word",
+                                    }}
+                                  >
+                                    <Box
+                                      component="span"
+                                      sx={{
+                                        color: "#0f1111!important",
+                                        fontSize: "12px!important",
+                                        lineHeight: "16px!important",
+                                        wordWrap: "break-word",
+                                        margin: 0,
+                                        padding: 0,
+                                        fontWeight: 500,
+                                      }}
+                                    >
+                                      Taille &rlm; : &lrm;{item?.prodSize}
+                                    </Box>
+                                  </Box>
+                                </Box>
+
+                                <Box
+                                  sx={{
+                                    wordWrap: "break-word",
+                                    margin: 0,
+                                    padding: 0,
+
+                                    textAlign: "-webkit-match-parent",
+                                    color: "#0F1111",
+                                  }}
+                                >
+                                  <Box
+                                    component="span"
+                                    sx={{
+                                      color: "#0F1111",
+                                      wordWrap: "break-word",
+                                    }}
+                                  >
+                                    <Box
+                                      component="span"
+                                      sx={{
+                                        color: "#0f1111!important",
+                                        fontSize: "12px!important",
+                                        lineHeight: "16px!important",
+                                        wordWrap: "break-word",
+                                        margin: 0,
+                                        padding: 0,
+                                        fontWeight: 500,
+                                      }}
+                                    >
+                                      Couleur &rlm; : &lrm;{item?.prodColor}
                                     </Box>
                                   </Box>
                                 </Box>
@@ -826,7 +993,11 @@ export const HandlesShowCart = () => {
                                                   </Button>
                                                   <Button
                                                     onClick={() => {
-                                                      removeCartItem(prodId);
+                                                      removeCartItem(
+                                                        prodId,
+                                                        prodSize,
+                                                        prodColor
+                                                      );
                                                     }}
                                                     autoFocus
                                                   >
@@ -1111,7 +1282,11 @@ export const HandlesShowCart = () => {
                                                   </Button>
                                                   <Button
                                                     onClick={() => {
-                                                      removeCartItem(prodId);
+                                                      removeCartItem(
+                                                        prodId,
+                                                        prodSize,
+                                                        prodColor
+                                                      );
                                                     }}
                                                     autoFocus
                                                   >

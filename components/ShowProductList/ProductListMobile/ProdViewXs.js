@@ -1,29 +1,104 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import SvgIcon from "@mui/material/SvgIcon";
-import ProdLinkMobile from "./ProdLinkMobile";
-import ImageCartItemXs from "./ImageCartItemXs";
 import HandlesCartItemXs from "./HandlesCartItemXs";
 
-function CustChevronRightIcon(props) {
-  return (
-    <SvgIcon {...props}>
-      <ChevronRightIcon />
-    </SvgIcon>
-  );
-}
 export const ProdViewXs = ({ selectedprd }) => {
-  const vDescArticleButt = "descArticleButt";
-  const vDescCompleteButt = "descCompleteButt";
-
-  const vProductNum = selectedprd[0]?.productId;
-  const vProdImage = selectedprd[0]?.imgJpg;
-  const vDescPrd = selectedprd[0]?.descPrd;
-  const vPrixAct = selectedprd[0]?.prixAct;
+  const vDescDet = selectedprd[0]?.descdet;
   const vProdEtat = selectedprd[0]?.etatprd;
-  const vProdQteeDisp = selectedprd[0]?.qteedisp || 0;
-  const vstatus = "idle";
+  const vProdMatériau = selectedprd[0]?.matériau;
+  const vMarque = selectedprd[0]?.marque;
+  const vPaysorigine = selectedprd[0]?.paysorigine;
+  const vTailleDisp = selectedprd[0]?.tailleDisp;
+
+  const detail_produit_1 = (
+    <Box
+      sx={{
+        "&:not(:last-child)": {
+          margin: "0 0 8px",
+          display: "block",
+        },
+
+        wordBreak: "break-word",
+      }}
+    >
+      <Box
+        sx={{
+          margin: 0,
+          width: "100%",
+        }}
+      >
+        <Box
+          sx={{
+            width: "42%",
+            color: "#707070",
+            display: "inline-block",
+            boxSizing: "border-box",
+            wordBreak: "break-word",
+            verticalAlign: "top",
+            fontSize: ".875rem",
+          }}
+        >
+          <Box
+            sx={{
+              display: "inline-block",
+              color: "#707070",
+              wordBreak: "break-word",
+              fontSize: ".875rem",
+            }}
+          >
+            <Box>
+              <Box
+                component="span"
+                sx={{
+                  color: "#707070",
+                  wordBreak: "break-word",
+                  fontSize: ".875rem",
+                }}
+              >
+                Composition du matériau
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+        <Box
+          sx={{
+            paddingLeft: "8px",
+            width: "58%",
+            paddingRight: "5px",
+            color: "#111820",
+            display: "inline-block",
+            boxSizing: "border-box",
+            wordBreak: "break-word",
+            verticalAlign: "top",
+            fontSize: ".875rem",
+          }}
+        >
+          <Box
+            sx={{
+              maxWidth: "calc(100% - 8px)",
+              display: "inline-block",
+              color: "#111820",
+              wordBreak: "break-word",
+              fontSize: ".875rem",
+            }}
+          >
+            <Box>
+              <Box
+                component="span"
+                sx={{
+                  color: "#111820",
+                  wordBreak: "break-word",
+                  fontSize: ".875rem",
+                }}
+              >
+                {vProdMatériau}
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+  );
 
   const info_article_1 = (
     <Box
@@ -106,7 +181,7 @@ export const ProdViewXs = ({ selectedprd }) => {
                   fontSize: ".875rem",
                 }}
               >
-                État correct - Reconditionné
+                {vProdEtat}
               </Box>
             </Box>
           </Box>
@@ -196,7 +271,7 @@ export const ProdViewXs = ({ selectedprd }) => {
                   fontSize: ".875rem",
                 }}
               >
-                Marque1 - Marque2
+                {vMarque}
               </Box>
             </Box>
           </Box>
@@ -250,7 +325,7 @@ export const ProdViewXs = ({ selectedprd }) => {
                   fontSize: ".875rem",
                 }}
               >
-                N° article
+                Pays d'origine
               </Box>
             </Box>
           </Box>
@@ -286,7 +361,7 @@ export const ProdViewXs = ({ selectedprd }) => {
                   fontSize: ".875rem",
                 }}
               >
-                123456789023
+                {vPaysorigine}
               </Box>
             </Box>
           </Box>
@@ -336,7 +411,7 @@ export const ProdViewXs = ({ selectedprd }) => {
                   fontSize: ".875rem",
                 }}
               >
-                Information specifique sur le type de produit
+                Tailles disponibles
               </Box>
             </Box>
           </Box>
@@ -372,7 +447,7 @@ export const ProdViewXs = ({ selectedprd }) => {
                   fontSize: ".875rem",
                 }}
               >
-                Type de produit
+                {vTailleDisp}
               </Box>
             </Box>
           </Box>
@@ -592,7 +667,7 @@ export const ProdViewXs = ({ selectedprd }) => {
                   fontSize: ".875rem",
                 }}
               >
-                Paiements
+                Paiement
               </Box>
             </Box>
           </Box>
@@ -638,34 +713,17 @@ export const ProdViewXs = ({ selectedprd }) => {
   return (
     <Box
       sx={{
-        outline: 0,
         boxSizing: "border-box",
         margin: 0,
         padding: 0,
-        lineHeight: "20px",
-        letterSpacing: "normal",
-        WebkitFontSmoothing: "antialiased",
-        MozFontSmoothing: "antialiased",
-        MsFontSmoothing: "antialiased",
-        fontSmoothing: "antialiased",
-        WebkitTextSizeAdjust: "none",
-        MozTextSizeAdjust: "none",
-        MsTextSizeAdjust: "none",
-        textSizeAdjust: "none",
-        verticalAlign: "middle",
+        border: 0,
+        color: "#191919",
+        fontSize: ".875rem",
+        MsTextSizeAdjust: "100%",
+        WebkitTextSizeAdjust: "100%",
       }}
     >
-      <HandlesCartItemXs
-        prodId={vProductNum}
-        prodImage={vProdImage}
-        prodDesc={vDescPrd}
-        prodPrix={vPrixAct}
-        prodEtat={vProdEtat}
-        status={vstatus}
-        prodQteeDisp={vProdQteeDisp}
-      >
-        <ImageCartItemXs selectedprd={selectedprd} />
-      </HandlesCartItemXs>
+      <HandlesCartItemXs selectedprd={selectedprd} />
 
       <Box
         sx={{
@@ -694,6 +752,8 @@ export const ProdViewXs = ({ selectedprd }) => {
                 padding: "20px 0",
                 borderRadius: "2px",
                 backgroundColor: "#fff",
+                //
+                padding: "10px 0",
               }}
             >
               <Box
@@ -740,6 +800,53 @@ export const ProdViewXs = ({ selectedprd }) => {
                                 display: "inline-block",
                               }}
                             >
+                              Détails sur le produit
+                            </Box>
+                          </Box>
+                          <Box
+                            sx={{
+                              margin: "8px 0",
+                              wordBreak: "break-word",
+                            }}
+                          >
+                            {vProdMatériau && <>{detail_produit_1}</>}
+                          </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                    <Box
+                      sx={{
+                        "&:not(:last-child)": {
+                          margin: "0 0 20px",
+                        },
+                        border: 0,
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          width: "100%",
+                          height: "auto",
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: "100%",
+                            height: "100%",
+                          }}
+                        >
+                          <Box component="span">
+                            <Box
+                              component="span"
+                              sx={{
+                                fontSize: "1.25rem",
+                                color: "#111820",
+                                fontWeight: "700",
+                                lineHeight: "1.25",
+                                margin: 0,
+                                display: "inline-block",
+                              }}
+                            >
                               À propos de cet article
                             </Box>
                           </Box>
@@ -749,10 +856,10 @@ export const ProdViewXs = ({ selectedprd }) => {
                               wordBreak: "break-word",
                             }}
                           >
-                            {info_article_1}
-                            {info_article_2}
-                            {info_article_3}
-                            {info_article_4}
+                            {vProdEtat && <>{info_article_1} </>}
+                            {vMarque && <> {info_article_2} </>}
+                            {vPaysorigine && <>{info_article_3} </>}
+                            {vTailleDisp && <> {info_article_4}</>}
                           </Box>
                         </Box>
                       </Box>
@@ -780,53 +887,41 @@ export const ProdViewXs = ({ selectedprd }) => {
                             height: "100%",
                           }}
                         >
-                          <ProdLinkMobile
-                            buttonName={vDescArticleButt}
-                            productNum={vProductNum}
+                          <Box
+                            sx={{
+                              alignItems: "center",
+                              display: "flex",
+                              color: "inherit",
+                              textDecoration: "none",
+                              backgroundColor: "transparent",
+                              outline: 0,
+                              cursor: "pointer",
+                              ":WebkitAnyLink": {
+                                cursor: "pointer",
+                              },
+                              fontSize: ".875rem",
+                            }}
                           >
                             <Box
-                              sx={{
-                                alignItems: "center",
-                                display: "flex",
-                                color: "inherit",
-                                textDecoration: "none",
-                                backgroundColor: "transparent",
-                                outline: 0,
-                                cursor: "pointer",
-                                ":WebkitAnyLink": {
-                                  cursor: "pointer",
-                                },
-                                fontSize: ".875rem",
-                              }}
+                              component="span"
+                              aria-hidden="true"
+                              tabIndex="-1"
                             >
                               <Box
                                 component="span"
-                                aria-hidden="true"
-                                tabIndex="-1"
-                              >
-                                <Box
-                                  component="span"
-                                  sx={{
-                                    fontSize: "1.25rem",
-                                    color: "#111820",
-                                    fontWeight: 700,
-                                    lineHeight: "1.25",
-                                    margin: 0,
-                                    display: "inline-block",
-                                  }}
-                                >
-                                  Description de l'article
-                                </Box>
-                              </Box>
-                              <CustChevronRightIcon
                                 sx={{
-                                  marginLeft: "auto",
-                                  flexShrink: 0,
-                                  fill: "#282828",
+                                  fontSize: "1.25rem",
+                                  color: "#111820",
+                                  fontWeight: 700,
+                                  lineHeight: "1.25",
+                                  margin: 0,
+                                  display: "inline-block",
                                 }}
-                              />
+                              >
+                                Description de l'article
+                              </Box>
                             </Box>
-                          </ProdLinkMobile>
+                          </Box>
 
                           <Box
                             component="span"
@@ -870,56 +965,8 @@ export const ProdViewXs = ({ selectedprd }) => {
                                     wordBreak: "break-word",
                                   }}
                                 >
-                                  Lecteur optique : Graveur DVD. Réseau :
-                                  Integrated Realtek LOM + Clé USB Wifi. - 1 x
-                                  HDMI. MonsieurCyberMan Reprend &amp; Répare
-                                  Vos Vieux PC. 56350 Béganne - France. Les
-                                  Fosses Rouges. Nos coordonnées.
+                                  {vDescDet}
                                 </Box>
-                              </Box>
-                            </Box>
-                            <Box
-                              sx={{
-                                display: "flex",
-                              }}
-                            >
-                              <Box>
-                                <ProdLinkMobile
-                                  buttonName={vDescCompleteButt}
-                                  productNum={vProductNum}
-                                >
-                                  <Box
-                                    sx={{
-                                      textDecoration: "underline",
-                                      color: "#3665f3",
-                                      cursor: "initial",
-                                      wordBreak: "break-word",
-                                    }}
-                                  >
-                                    <Box
-                                      component="span"
-                                      aria-hidden="true"
-                                      tabIndex="-1"
-                                      sx={{
-                                        fontSize: ".875rem",
-                                      }}
-                                    >
-                                      <Box
-                                        component="span"
-                                        aria-hidden="true"
-                                        tabIndex="-1"
-                                        sx={{
-                                          color: "#3665f3",
-                                          textDecoration: "underline",
-                                          wordBreak: "break-word",
-                                          fontSize: ".875rem",
-                                        }}
-                                      >
-                                        Voir la description complète
-                                      </Box>
-                                    </Box>
-                                  </Box>
-                                </ProdLinkMobile>
                               </Box>
                             </Box>
                           </Box>
@@ -951,6 +998,8 @@ export const ProdViewXs = ({ selectedprd }) => {
                       margin: "30px 0 10px",
                       fontSize: ".875rem",
                       color: "var(--color-text-primary,#111820)",
+                      //
+                      margin: "10px 0 10px",
                     }}
                   >
                     <Box

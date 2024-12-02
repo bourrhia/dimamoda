@@ -1,7 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import HandlesNavBar from "./HandlesNavBar";
-import MoreCategories from "./MoreCategories";
 
 const NavBar = async () => {
   return (
@@ -17,12 +16,10 @@ const NavBar = async () => {
         marginTop: "12px",
         maxWidth: "1312px",
         position: "relative",
-        textAlign: "center",
+        textAlign: "left",
       }}
     >
-      <HandlesNavBar>
-        <MoreCategories />
-      </HandlesNavBar>
+      <HandlesNavBar />
     </Box>
   );
 };

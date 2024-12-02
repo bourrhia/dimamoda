@@ -3,8 +3,9 @@ import Box from "@mui/material/Box";
 import Image from "next/image";
 import Typography from "@mui/material/Typography";
 import ProdLinkAllDevices from "./ProdLinkAllDevices";
+import ShowCategory from "./ShowCategory";
 
-export const Allprds1 = ({ imgmrv }) => {
+export const Allprds1 = ({ imgmrv, catTitle }) => {
   const vAllPrdtsButt = "allPrdtsButt";
 
   const RenderProduct = ({ image }) => {
@@ -156,6 +157,7 @@ export const Allprds1 = ({ imgmrv }) => {
                   flexDirection: "column",
                   position: "relative",
                   height: "100%",
+                  marginLeft: "8px",
                 }}
               >
                 <Box>
@@ -169,10 +171,6 @@ export const Allprds1 = ({ imgmrv }) => {
                         display: "table",
                         lineHeight: 0,
                         fontSize: 0,
-                      },
-
-                      "&::after": {
-                        clear: "both",
                       },
                     }}
                   >
@@ -513,10 +511,7 @@ export const Allprds1 = ({ imgmrv }) => {
                         textDecoration: "none!important",
                       }}
                     >
-                      description prdt description prdt description prdt
-                      description prdt description prdt description prdt
-                      description prdt description prdt description prdt
-                      description prdt
+                      {image.descPrd}
                     </Box>
                   </Typography>
                 </Box>
@@ -529,35 +524,48 @@ export const Allprds1 = ({ imgmrv }) => {
   };
 
   return (
-    <Box
-      sx={{
-        width: "100%",
-
-        "&::before,&::after": {
-          content: '""',
-          display: "table",
-          lineHeight: 0,
-          fontSize: 0,
-        },
-
-        "&::after": {
-          clear: "both",
-        },
-      }}
-    >
+    <>
       <Box
         sx={{
           width: "100%",
-          margin: "0 auto",
-          flexWrap: "wrap",
-          display: "flex",
+
+          "&::before,&::after": {
+            content: '""',
+            display: "table",
+            lineHeight: 0,
+            fontSize: 0,
+          },
         }}
       >
-        {imgmrv.map((prd) => (
-          <RenderProduct key={prd.productId} i image={prd} />
-        ))}
+        <Box
+          component="hr"
+          sx={{
+            marginTop: "12px!important",
+            backgroundColor: "transparent",
+            display: "block",
+            height: "1px",
+            borderWidth: 0,
+            borderTop: "1px solid #e7e7e7",
+            lineHeight: "19px",
+            marginBottom: "14px",
+          }}
+        ></Box>
+        <ShowCategory catTitle={catTitle} />
+        <Box
+          sx={{
+            width: "100%",
+            margin: "0 auto",
+            flexWrap: "wrap",
+            display: "flex",
+            marginBottom: "1rem!important",
+          }}
+        >
+          {imgmrv.map((prd) => (
+            <RenderProduct key={prd.productId} i image={prd} />
+          ))}
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 };
 

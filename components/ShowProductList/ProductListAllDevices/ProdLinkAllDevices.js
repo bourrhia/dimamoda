@@ -8,6 +8,10 @@ import ShowLoading from "../../Loading/ShowLoading";
 export default function ProdLinkAllDevices({
   buttonName,
   productNum,
+  category,
+  searchTerm,
+  otherSearchTerm,
+  catTitle,
   children,
 }) {
   const router = useRouter();
@@ -28,8 +32,13 @@ export default function ProdLinkAllDevices({
 
   const handleNavShowMore = () => {
     try {
-      setNavShowMore(true);
-      router.push("/product/showMoreProducts");
+      router.push(
+        `/product/showMoreProducts/${encodeURIComponent(
+          category
+        )}/${encodeURIComponent(searchTerm)}/${encodeURIComponent(
+          catTitle
+        )}/${encodeURIComponent(otherSearchTerm)}`
+      );
     } catch (err) {
       console.error(
         "An error occurred while navigating to show more product: ",
@@ -62,6 +71,10 @@ export default function ProdLinkAllDevices({
           ":-webkit-any-link": {
             cursor: "pointer",
           },
+          //
+
+          marginBottom: "1rem !important",
+          paddingBottom: "24px",
         }}
       >
         {children}

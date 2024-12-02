@@ -38,7 +38,12 @@ const useGetOrderNum = (orderId) => {
   return orderNumber;
 };
 
-const HandlesConfOrderXs = ({ order_Id, cartItemId }) => {
+const HandlesConfOrderXs = ({
+  order_Id,
+  cartItemId,
+  cartItemSize,
+  cartItemColor,
+}) => {
   const router = useRouter();
 
   const [openConfOrder, setOpenConfOrder] = useState(true);
@@ -58,9 +63,12 @@ const HandlesConfOrderXs = ({ order_Id, cartItemId }) => {
     try {
       if (order_Id) {
         setNavCompleteOrder(true);
+
         router.push(
           `/completeOrder/${encodeURIComponent(order_Id)}/${encodeURIComponent(
             cartItemId
+          )}/${encodeURIComponent(cartItemSize)}/${encodeURIComponent(
+            cartItemColor
           )}`
         );
       }

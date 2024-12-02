@@ -12,13 +12,21 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function CheckoutLinkUpSm({ buttonName, cartItemId, children }) {
-  const prodId = parseInt(cartItemId);
+export default function CheckoutLinkUpSm({
+  buttonName,
+  cartItemId,
+  cartItemSize,
+  cartItemColor,
+  children,
+}) {
+  const prodId = parseInt(cartItemId) || null;
+  const prodSize = cartItemSize || null;
+  const prodColor = cartItemColor || null;
 
   const dispatch = useDispatch();
 
   const removeCartItem = () => {
-    dispatch(productRemoved({ prodId }));
+    dispatch(productRemoved({ prodId, prodSize, prodColor }));
   };
 
   const [openItem, setOpenItem] = useState(false);

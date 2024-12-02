@@ -3,7 +3,13 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ProdLinkAllDevices from "./ProdLinkAllDevices";
 
-export const ShowCatTitle = ({ catTitle }) => {
+export const ShowCatTitle = ({
+  catTitle,
+  category,
+  searchTerm,
+  otherSearchTerm,
+  nbrProd,
+}) => {
   const vVoirePlusButt = "voirePlusButt";
 
   return (
@@ -18,9 +24,6 @@ export const ShowCatTitle = ({ catTitle }) => {
             lineHeight: 0,
           },
 
-          "&::after": {
-            clear: "both",
-          },
           marginBottom: "0 !important",
         }}
       >
@@ -82,6 +85,23 @@ export const ShowCatTitle = ({ catTitle }) => {
             flex: "1 0 auto",
             lineHeight: "32px",
             display: "inline-block",
+
+            //
+            "@media screen and (min-width: 600px)": {
+              display: nbrProd > 3 ? "inline-block" : "None",
+            },
+
+            "@media screen and (min-width: 768px)": {
+              display: nbrProd > 4 ? "inline-block" : "None",
+            },
+
+            "@media screen and (min-width: 960px)": {
+              display: nbrProd > 5 ? "inline-block" : "None",
+            },
+
+            "@media screen and (min-width: 1083px)": {
+              display: nbrProd > 6 ? "inline-block" : "None",
+            },
           }}
         >
           <Box
@@ -114,7 +134,13 @@ export const ShowCatTitle = ({ catTitle }) => {
               },
             }}
           >
-            <ProdLinkAllDevices buttonName={vVoirePlusButt}>
+            <ProdLinkAllDevices
+              buttonName={vVoirePlusButt}
+              category={category}
+              searchTerm={searchTerm}
+              otherSearchTerm={otherSearchTerm}
+              catTitle={catTitle}
+            >
               <Typography gutterBottom component="div">
                 <Box
                   sx={{
@@ -130,6 +156,7 @@ export const ShowCatTitle = ({ catTitle }) => {
                     lineHeight: "1.125rem",
 
                     color: "#007185!important",
+                    fontWeight: "700!important",
                   }}
                 >
                   Voire plus

@@ -1,73 +1,388 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
 import LocalShippingOutlinedIcon from "@mui/icons-material/LocalShippingOutlined";
 import SvgIcon from "@mui/material/SvgIcon";
 import PaymentOutlinedIcon from "@mui/icons-material/PaymentOutlined";
 import LoopIcon from "@mui/icons-material/Loop";
-import HandlesCartItemUpSm from "./HandlesCartItemUpSm";
+
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { productAdded } from "../../../redux/features/cart/cartSlice";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export const ProdViewUpSm = ({ selectedprd }) => {
   const prodId = selectedprd[0]?.productId;
-  const prodImage = selectedprd[0]?.imgJpg;
   const prodDesc = selectedprd[0]?.descPrd;
-  const prodPrix = selectedprd[0]?.prixAct;
   const prodEtat = selectedprd[0]?.etatprd;
-  const prodQteeDisp = selectedprd[0]?.qteedisp || 0;
   const status = "idle";
 
   const vDescPrd = selectedprd[0]?.descPrd;
-  const vMarque = selectedprd[0]?.marque;
   const vEtatprd = selectedprd[0]?.etatprd;
   const vPrixSymbol = selectedprd[0]?.prixSymbol;
-  const vRed = selectedprd[0]?.red;
   const vPromoprd1 = selectedprd[0]?.promoprd1;
   const vPromoprd2 = selectedprd[0]?.promoprd2;
   const vMatériau = selectedprd[0]?.matériau;
-  const vCouleur = selectedprd[0]?.couleur;
-  const vDimensions = selectedprd[0]?.dimensions;
-  const vDescart1 = selectedprd[0]?.descart1;
-  const vDescart2 = selectedprd[0]?.descart2;
-  const vDescart3 = selectedprd[0]?.descart3;
-  const vDescart4 = selectedprd[0]?.descart4;
-  const vDescart5 = selectedprd[0]?.descart5;
-  const vNumfab = selectedprd[0]?.numfab;
-  const vFabricant = selectedprd[0]?.fabricant;
-  const vPoids = selectedprd[0]?.poids;
-  const vPaysorigibne = selectedprd[0]?.paysorigibne;
+  const vPaysOrigine = selectedprd[0]?.paysorigine;
   const vDescdet = selectedprd[0]?.descdet;
-  const vDetprd1 = selectedprd[0]?.detprd1;
-  const vDetprd2 = selectedprd[0]?.detprd2;
-  const vDetprd3 = selectedprd[0]?.detprd3;
-  const vDetprd4 = selectedprd[0]?.detprd4;
-  const vDetprd5 = selectedprd[0]?.detprd5;
-  const vDetprd6 = selectedprd[0]?.detprd6;
-  const vDetprd7 = selectedprd[0]?.detprd7;
-  const vDetprd8 = selectedprd[0]?.detprd8;
-  const vDetprd9 = selectedprd[0]?.detprd9;
-  const vDetprd10 = selectedprd[0]?.detprd10;
-  const vPcaract1 = selectedprd[0]?.pcaract1;
-  const vPcaract2 = selectedprd[0]?.pcaract2;
-  const vPcaract3 = selectedprd[0]?.pcaract3;
-  const vPcaract4 = selectedprd[0]?.pcaract4;
-  const vPcaract5 = selectedprd[0]?.pcaract5;
-  const vPcaract6 = selectedprd[0]?.pcaract6;
-  const vPcaract7 = selectedprd[0]?.pcaract7;
-  const vPcaract8 = selectedprd[0]?.pcaract8;
-  const vPcaract9 = selectedprd[0]?.pcaract9;
-  const vPcaract10 = selectedprd[0]?.pcaract10;
-  const vModèle = selectedprd[0]?.modèle;
-  const vPuissance = selectedprd[0]?.puissance;
-  const vContenance = selectedprd[0]?.contenance;
-  const vTension = selectedprd[0]?.tension;
+  const vPrincCaract = selectedprd[0]?.princCaract;
+  const vTailleDisp = selectedprd[0]?.tailleDisp;
+  const vMarque = selectedprd[0]?.marque;
+  const vPriceRangeFrom = selectedprd[0]?.priceRangeFrom;
+  const vPriceRangeTo = selectedprd[0]?.priceRangeTo;
+
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const isInitialized = useRef(false);
+
+  const [productState, setProductState] = useState({
+    prodQtee: 1,
+    isNavOpenCart: false,
+    isNavCheckout: false,
+    selectedSize: "Sélectionner",
+    prodPrix: 0,
+    prixInit: 0,
+    prodQteeDisp: 0,
+    red: 0,
+    qteemax: 0,
+    prodImage: null,
+    prevMainImage:
+      selectedprd[0]?.prdDetailsBySize[0]?.detailsByColor[0]?.mainImgJpg ||
+      null,
+    currentImage:
+      selectedprd[0]?.prdDetailsBySize[0]?.detailsByColor[0]?.mainImgJpg ||
+      null,
+    currentColorImage:
+      selectedprd[0]?.prdDetailsBySize[0]?.detailsByColor[0]?.mainImgJpg ||
+      null,
+    currentColor:
+      selectedprd[0]?.prdDetailsBySize[0]?.detailsByColor[0]?.couleur || null,
+    imgThumbnailsByCol:
+      selectedprd[0]?.prdDetailsBySize[0]?.detailsByColor[0]?.imgThumbnails ||
+      [],
+    matchingImgBySizeAndCol: [],
+  });
+
+  const {
+    prodQtee,
+    isNavOpenCart,
+    isNavCheckout,
+    selectedSize,
+    prodPrix,
+    prixInit,
+    prodQteeDisp,
+    red,
+    qteemax,
+    prodImage,
+    prevMainImage,
+    currentImage,
+    currentColorImage,
+    currentColor,
+    imgThumbnailsByCol,
+    matchingImgBySizeAndCol,
+  } = productState;
+
+  const getAllMainImgAndColor = useMemo(() => {
+    const allImagesAndColors = [];
+
+    selectedprd[0]?.prdDetailsBySize.forEach((sizeDetail) => {
+      sizeDetail.detailsByColor.forEach((colorDetail) => {
+        allImagesAndColors.push({
+          couleur: colorDetail.couleur,
+          mainImgJpg: colorDetail.mainImgJpg,
+          imgThumbnails: colorDetail.imgThumbnails,
+        });
+      });
+    });
+
+    return allImagesAndColors ?? [];
+  }, [selectedprd]);
+
+  useEffect(() => {
+    if (!isInitialized.current) {
+      setProductState((prev) => ({
+        ...prev,
+        matchingImgBySizeAndCol: getAllMainImgAndColor,
+      }));
+      isInitialized.current = true;
+    }
+  }, [getAllMainImgAndColor]);
+
+  useEffect(() => {
+    if (selectedSize !== "Sélectionner") {
+      const imagesForSize = getImagesBySize(selectedSize);
+      const imgCouleur = imagesForSize[0]?.couleur || null;
+      const mainImgCol = imagesForSize[0]?.mainImgJpg || null;
+      const imgThumbnails = imagesForSize[0]?.imgThumbnails || null;
+
+      setProductState((prevState) => ({
+        ...prevState,
+        imgThumbnailsByCol: imgThumbnails,
+        matchingImgBySizeAndCol: imagesForSize,
+        currentImage: mainImgCol,
+        prevMainImage: mainImgCol,
+        currentColor: imgCouleur,
+        currentColorImage: mainImgCol,
+      }));
+    }
+  }, [selectedSize]);
+
+  useEffect(() => {
+    if (!selectedSize || !currentColor || selectedSize === "Sélectionner")
+      return;
+
+    const details = getProductDetailsBySizeAndColor(selectedSize, currentColor);
+
+    if (details) {
+      const {
+        couleur,
+        mainImgJpg,
+        imgThumbnails,
+        prixAct,
+        prixInit,
+        qteeDisp,
+        red,
+      } = details;
+
+      setProductState((prevState) => ({
+        ...prevState,
+        prodPrix: prixAct,
+        prixInit: prixInit,
+        prodQteeDisp: qteeDisp,
+        red: red,
+        qteemax: qteeDisp,
+        prodImage: mainImgJpg,
+        imgThumbnails: imgThumbnails,
+      }));
+    }
+  }, [currentColor, selectedSize]);
+
+  const handleChange = (event) => {
+    const value = parseInt(event.target.value);
+
+    setProductState((prevState) => ({
+      ...prevState,
+      prodQtee: value,
+    }));
+  };
 
   const CartItemPrixAct = parseFloat(Math.round(prodPrix * 100) / 100).toFixed(
     2
   );
 
-  const CartItemPrixInit = parseFloat(
-    Math.round(selectedprd[0]?.prixIni * 100) / 100
-  ).toFixed(2);
+  const CartItemPrixInit =
+    parseFloat(Math.round(prixInit * 100) / 100).toFixed(2) ?? 0;
+
+  const handleSizeChange = (event) => {
+    const size = event.target.value;
+    setProductState((prevState) => {
+      const newState = { ...prevState, size };
+
+      const imagesForSize =
+        size !== "Sélectionner"
+          ? getImagesBySize(size)
+          : getAllMainImgAndColor();
+
+      if (imagesForSize?.length > 0 && size !== "Sélectionner") {
+        const { couleur, mainImgJpg, imgThumbnails } = imagesForSize[0];
+
+        return {
+          ...newState,
+          selectedSize: size,
+          currentImage: mainImgJpg,
+          prevMainImage: mainImgJpg,
+          currentColor: couleur,
+          currentColorImage: mainImgJpg,
+          imgThumbnailsByCol: imgThumbnails,
+          matchingImgBySizeAndCol: imagesForSize,
+        };
+      }
+
+      return newState;
+    });
+  };
+
+  const getProductDetailsBySizeAndColor = (size, color) => {
+    const sizeData =
+      size !== "Sélectionner" && size && color !== "Sélectionner" && color
+        ? selectedprd[0]?.prdDetailsBySize.find(
+            (sizeObj) => sizeObj.size === size
+          )
+        : null;
+
+    const colorData =
+      size !== "Sélectionner" && size && color !== "Sélectionner" && color
+        ? sizeData?.detailsByColor.find(
+            (colorObj) => colorObj.couleur === color
+          )
+        : null;
+
+    return colorData
+      ? {
+          prixAct: colorData.prixAct,
+          prixInit: colorData.prixInit,
+          qteeDisp: colorData.qteeDisp,
+          red: colorData.red,
+          mainImgJpg: colorData.mainImgJpg,
+          imgThumbnails: colorData.imgThumbnails,
+          couleur: colorData.couleur,
+        }
+      : null;
+  };
+
+  const getImagesBySize = (size) =>
+    selectedprd[0]?.prdDetailsBySize
+      .find((item) => item.size === size)
+      ?.detailsByColor.map((colorObj) => ({
+        couleur: colorObj.couleur,
+        mainImgJpg: colorObj.mainImgJpg,
+        imgThumbnails: colorObj.imgThumbnails,
+      })) || getAllMainImgAndColor;
+
+  const options = [];
+  for (let i = 1; i <= qteemax; i++) {
+    options.push(
+      <option value={i} key={i}>
+        {i}
+      </option>
+    );
+  }
+
+  const handleImgColorClick = (imgCol, mainImg) => {
+    setProductState((prevState) => ({
+      ...prevState,
+      currentColor: imgCol,
+      prevMainImage: mainImg,
+    }));
+
+    const imageDetails = getProductDetailsBySizeAndColor(selectedSize, imgCol);
+    const newImageState = imageDetails
+      ? {
+          currentImage: imageDetails.mainImgJpg,
+          prevMainImage: imageDetails.mainImgJpg,
+          currentColor: imageDetails.couleur,
+          currentColorImage: imageDetails.mainImgJpg,
+          imgThumbnailsByCol: imageDetails.imgThumbnails,
+          qteemax: imageDetails.qteeDisp,
+          prodPrix: imageDetails.prixAct,
+          prixInit: imageDetails.prixInit,
+          prodQteeDisp: imageDetails.qteeDisp,
+          red: imageDetails.red,
+          prodImage: imageDetails.mainImgJpg,
+        }
+      : null;
+
+    setProductState((prevState) => ({
+      ...prevState,
+      ...newImageState,
+    }));
+  };
+
+  function getColorByMainImgJpg(targetMainImgJpg) {
+    for (const sizeDetails of selectedprd[0]?.prdDetailsBySize) {
+      for (const colorDetails of sizeDetails.detailsByColor) {
+        if (colorDetails.mainImgJpg === targetMainImgJpg) {
+          return colorDetails.couleur;
+        }
+      }
+    }
+  }
+
+  function findColorBySizeAndImage(size, mainImgJpg) {
+    const sizeDetails =
+      size !== "Sélectionner"
+        ? selectedprd[0]?.prdDetailsBySize.find(
+            (sizeDetail) => sizeDetail.size === size
+          )
+        : getColorByMainImgJpg(mainImgJpg);
+
+    if (!sizeDetails) return null;
+
+    const colorDetail =
+      size !== "Sélectionner"
+        ? sizeDetails?.detailsByColor.find(
+            (color) => color.mainImgJpg === mainImgJpg
+          )
+        : getColorByMainImgJpg(mainImgJpg);
+
+    return size !== "Sélectionner"
+      ? colorDetail?.couleur
+      : getColorByMainImgJpg(mainImgJpg);
+  }
+
+  const returnToMainImg = (img, currColImg) => {
+    const color = findColorBySizeAndImage(selectedSize, currColImg) || null;
+    setProductState((prevState) => ({
+      ...prevState,
+      currentImage: img,
+      currentColor: color,
+    }));
+  };
+
+  const checkForAjPanDis = () => {
+    if (
+      !isNavOpenCart &&
+      prodId !== undefined &&
+      prodId !== null &&
+      prodImage !== undefined &&
+      prodImage !== null &&
+      prodQtee !== undefined &&
+      prodQtee !== null &&
+      prodQtee > 0 &&
+      prodQteeDisp !== undefined &&
+      prodQteeDisp !== null &&
+      prodQteeDisp > 0 &&
+      prodPrix !== undefined &&
+      prodPrix !== null &&
+      prodPrix > 0 &&
+      selectedSize &&
+      selectedSize !== "Sélectionner" &&
+      currentColor &&
+      currentColor !== "Sélectionner" &&
+      qteemax !== undefined &&
+      qteemax !== null &&
+      qteemax > 0
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const checkForAchMaintDis = () => {
+    if (
+      !isNavCheckout &&
+      prodId !== undefined &&
+      prodId !== null &&
+      prodImage !== undefined &&
+      prodImage !== null &&
+      prodQtee !== undefined &&
+      prodQtee !== null &&
+      prodQtee > 0 &&
+      prodQteeDisp !== undefined &&
+      prodQteeDisp !== null &&
+      prodQteeDisp > 0 &&
+      prodPrix !== undefined &&
+      prodPrix !== null &&
+      prodPrix > 0 &&
+      selectedSize &&
+      selectedSize !== "Sélectionner" &&
+      currentColor &&
+      currentColor !== "Sélectionner" &&
+      qteemax !== undefined &&
+      qteemax !== null &&
+      qteemax > 0
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
+  const ajPanDisabled = checkForAjPanDis();
+  const achMaintDisabled = checkForAchMaintDis();
 
   function CustLocalShippingOutlinedIcon(props) {
     return (
@@ -93,9 +408,481 @@ export const ProdViewUpSm = ({ selectedprd }) => {
     );
   }
 
-  const renderedImg = selectedprd.map((image) => (
+  const handleNavOpenCart = () => {
+    try {
+      router.push("/cart/showCart");
+    } catch (err) {
+      console.error("An error occurred while navigating to showCart: ", err);
+    } finally {
+      setProductState((prevState) => ({
+        ...prevState,
+        isNavOpenCart: true,
+      }));
+    }
+  };
+
+  const clickOpenCart = (e) => {
+    e.preventDefault();
+
+    if (
+      prodId !== undefined &&
+      prodId !== null &&
+      prodImage !== undefined &&
+      prodImage !== null &&
+      prodQtee !== undefined &&
+      prodQtee !== null &&
+      prodQtee > 0 &&
+      prodQteeDisp !== undefined &&
+      prodQteeDisp !== null &&
+      prodQteeDisp > 0 &&
+      prodPrix !== undefined &&
+      prodPrix !== null &&
+      prodPrix > 0 &&
+      selectedSize &&
+      selectedSize !== "Sélectionner" &&
+      currentColor &&
+      currentColor !== "Sélectionner" &&
+      qteemax !== undefined &&
+      qteemax !== null &&
+      qteemax > 0
+    ) {
+      dispatch(
+        productAdded({
+          prodId,
+          prodImage,
+          prodDesc,
+          prodQtee,
+          prodPrix,
+          prodEtat,
+          status,
+          prodQteeDisp,
+          prodSize: selectedSize,
+          prodColor: currentColor,
+        })
+      );
+
+      setProductState((prevState) => ({
+        ...prevState,
+        isNavOpenCart: true,
+      }));
+      handleNavOpenCart();
+    }
+  };
+
+  const handleNavCheckout = () => {
+    setProductState((prevState) => ({
+      ...prevState,
+      isNavCheckout: true,
+    }));
+    try {
+      router.push(
+        `/checkout/checkoutUpSm/?cartProdId=${encodeURIComponent(
+          prodId
+        )}&cartProdSize=${encodeURIComponent(
+          selectedSize
+        )}&cartProdColor=${encodeURIComponent(currentColor)}`
+      );
+    } catch (err) {
+      console.error("An error occurred while navigating to checkout : ", err);
+    } finally {
+      setProductState((prevState) => ({
+        ...prevState,
+        isNavCheckout: true,
+      }));
+    }
+  };
+
+  const clickBuyNow = (e) => {
+    e.preventDefault();
+    if (
+      prodId !== undefined &&
+      prodId !== null &&
+      prodImage !== undefined &&
+      prodImage !== null &&
+      prodQtee !== undefined &&
+      prodQtee !== null &&
+      prodQtee > 0 &&
+      prodQteeDisp !== undefined &&
+      prodQteeDisp !== null &&
+      prodQteeDisp > 0 &&
+      prodPrix !== undefined &&
+      prodPrix !== null &&
+      prodPrix > 0 &&
+      selectedSize &&
+      selectedSize !== "Sélectionner" &&
+      currentColor &&
+      currentColor !== "Sélectionner" &&
+      qteemax !== undefined &&
+      qteemax !== null &&
+      qteemax > 0
+    ) {
+      dispatch(
+        productAdded({
+          prodId,
+          prodImage,
+          prodDesc,
+          prodQtee,
+          prodPrix,
+          prodEtat,
+          status,
+          prodQteeDisp,
+          prodSize: selectedSize,
+          prodColor: currentColor,
+        })
+      );
+      handleNavCheckout();
+    }
+  };
+
+  const HandlesImgColors = () => {
+    const swapMainImgOnHover = (e, img, col) => {
+      e.stopPropagation();
+
+      setProductState((prevState) => ({
+        ...prevState,
+        currentImage: img,
+        currentColor: col,
+      }));
+    };
+
+    return (
+      <>
+        {matchingImgBySizeAndCol?.map((img, index) => (
+          <Box
+            key={index}
+            component="li"
+            onMouseEnter={(e) =>
+              swapMainImgOnHover(e, img.mainImgJpg, img.couleur)
+            }
+            onMouseOver={(e) =>
+              swapMainImgOnHover(e, img.mainImgJpg, img.couleur)
+            }
+            onTouchStart={(e) =>
+              swapMainImgOnHover(e, img.mainImgJpg, img.couleur)
+            }
+            onClick={() => handleImgColorClick(img.couleur, img.mainImgJpg)}
+            sx={{
+              borderRadius: "7px !important",
+              overflow: "hidden",
+              padding: "0 !important",
+              border:
+                currentColorImage === img.mainImgJpg
+                  ? "2px solid #007185 !important"
+                  : "1px solid #e0e0e0",
+              boxShadow: "none !important",
+
+              cursor: "pointer",
+              display: "inline-block",
+              position: "relative",
+              marginTop: "4px",
+              marginBottom: "4px",
+
+              marginLeft: "6px",
+              marginRight: 0,
+              listStyle: "none",
+              wordWrap: "break-word",
+              color: "#0f1111",
+              textAlign: "-webkit-match-parent",
+              unicodeBidi: "isolate",
+            }}
+          >
+            <Box
+              component="span"
+              sx={{
+                color: "#0f1111",
+                cursor: "pointer",
+                listStyle: "none",
+                wordWrap: "break-word",
+              }}
+            >
+              <Box>
+                <Box
+                  component="span"
+                  sx={{
+                    color: "#0f1111",
+                    cursor: "pointer",
+                    listStyle: "none",
+                    wordWrap: "break-word",
+                  }}
+                >
+                  <Box
+                    component="span"
+                    sx={{
+                      borderWidth: 0,
+                      borderRadius: 0,
+                      backgroundColor: "transparent",
+                      height: "auto",
+                      overflow: "visible",
+                      borderColor: "#888c8c",
+                      background: "#fff",
+                      borderStyle: "solid",
+                      cursor: "pointer",
+                      display: "inline-block",
+                      padding: 0,
+                      textAlign: "center",
+                      textDecoration: "none !important",
+                      verticalAlign: "middle",
+                    }}
+                  >
+                    <Box
+                      component="span"
+                      sx={{
+                        background: "#FFF",
+                        boxShadow: "none",
+                        borderRadius: 0,
+                        overflow: "hidden",
+                        padding: 0,
+                        position: "relative",
+                        cursor: "pointer",
+                        textAlign: "center",
+                        color: "#0f1111",
+                        listStyle: "none",
+                        wordWrap: "break-word",
+                      }}
+                    >
+                      <Box
+                        component="button"
+                        type="button"
+                        onClick={() =>
+                          handleImgColorClick(img.couleur, img.mainImgJpg)
+                        }
+                        sx={{
+                          padding: 0,
+                          height: "auto",
+                          lineHeight: "19px",
+                          textAlign: "left",
+                          whiteSpace: "normal",
+                          color: "#0f1111",
+                          width: "100%",
+                          backgroundColor: "transparent",
+                          border: 0,
+                          display: "block",
+                          fontSize: "13px",
+                          margin: 0,
+                          outline: 0,
+                        }}
+                      >
+                        <Box
+                          sx={{
+                            width: "38px",
+                            height: "50px",
+                          }}
+                        >
+                          <Image
+                            src={img.mainImgJpg}
+                            alt="Image"
+                            sizes="100vw"
+                            style={{
+                              width: "100%",
+                              height: "auto",
+                              maxWidth: "none !important",
+                              borderRadius: "6px !important",
+                              minWidth: "5px",
+                              textAlign: "left",
+                              whiteSpace: "normal",
+                            }}
+                            width={38}
+                            height={50}
+                          />
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+        ))}
+      </>
+    );
+  };
+
+  const ThumbnailsList = () => {
+    const handleThumbnailHover = (img) => {
+      setProductState((prevState) => ({
+        ...prevState,
+        currentImage: img,
+        prevMainImage: img,
+      }));
+    };
+
+    return (
+      <>
+        {imgThumbnailsByCol?.map((img, index) => (
+          <Box
+            key={index}
+            component="li"
+            onMouseEnter={() => handleThumbnailHover(img.imgJpg)}
+            onMouseOver={() => handleThumbnailHover(img.imgJpg)}
+            onTouchStart={() => handleThumbnailHover(img.imgJpg)}
+            onMouseLeave={() => handleThumbnailHover(img.imgJpg)}
+            onMouseOut={() => handleThumbnailHover(img.imgJpg)}
+            onTouchEnd={() => handleThumbnailHover(img.imgJpg)}
+            sx={{
+              listStyle: "none",
+              wordWrap: "break-word",
+              margin: 0,
+              marginBottom: "8px !important",
+              boxSizing: "border-box",
+              color: "#0f1111",
+              display: "list-item",
+              textAlign: "-webkit-match-parent",
+              unicodeBidi: "isolate",
+            }}
+          >
+            <Box
+              component="span"
+              sx={{
+                color: "#0f1111",
+                listStyle: "none",
+                wordWrap: "break-word",
+              }}
+            >
+              <Box
+                component="span"
+                sx={{
+                  backgroundColor:
+                    currentImage === img.imgJpg ? "#008296" : "transparent",
+                  borderColor:
+                    currentImage === img.imgJpg ? "#007185" : "#888c8c",
+                  outline:
+                    currentImage === img.imgJpg ? "3px solid #007185" : null,
+                  outlineOffset: currentImage === img.imgJpg ? "2px" : "",
+                  boxShadow: currentImage === img.imgJpg ? "none" : "",
+
+                  height: "auto",
+                  overflow: "visible",
+                  borderRadius: "8px",
+                  background: "#fff",
+                  borderStyle: "solid",
+                  borderWidth: "1px",
+                  cursor: "pointer",
+                  display: "inline-block",
+                  padding: 0,
+                  textAlign: "center",
+                  textDecoration: "none !important",
+                  verticalAlign: "middle",
+                  color: "#0f1111",
+                  listStyle: "none",
+                  wordWrap: "break-word",
+                }}
+              >
+                <Box
+                  component="span"
+                  sx={{
+                    backgroundColor: "#fff",
+                    borderRadius: "7px",
+                    height: "auto",
+                    overflow: "hidden",
+                    padding: 0,
+                    backgroundImage: "none",
+                    display: "block",
+                    position: "relative",
+                    cursor: "pointer",
+                    textAlign: "center",
+                    color: "#0f1111",
+                    listStyle: "none",
+                    wordWrap: "break-word",
+                  }}
+                >
+                  <Box
+                    component="input"
+                    type="submit"
+                    sx={{
+                      cursor: "pointer",
+                      WebkitAppearance: "button",
+                      position: "absolute",
+                      backgroundColor: "transparent",
+                      color: "transparent",
+                      border: 0,
+                      height: "100%",
+                      width: "100%",
+                      left: 0,
+                      top: 0,
+                      opacity: ".01",
+                      outline: 0,
+                      zIndex: 20,
+                      WebkitTransition: "all .1s linear",
+                      transition: "all .1s linear",
+                      lineHeight: "19px",
+                      margin: 0,
+                      fontSize: "100%",
+                      verticalAlign: "middle",
+                      overflowClipMargin: "0px !important",
+                      overflow: "clip !important",
+                    }}
+                  ></Box>
+                  <Box
+                    component="span"
+                    sx={{
+                      color: "#0f1111",
+                      padding: 0,
+                      fontWeight: 700,
+                      lineHeight: "19px",
+                      textAlign: "left",
+                      whiteSpace: "normal",
+                      backgroundColor: "transparent",
+                      border: 0,
+                      display: "block",
+                      fontSize: "13px",
+                      margin: 0,
+                      outline: 0,
+                      cursor: "pointer",
+                      listStyle: "none",
+                      wordWrap: "break-word",
+
+                      "&::after":
+                        currentImage === img.imgJpg
+                          ? {
+                              content: '""',
+                              position: "absolute",
+                              borderRadius: "7px",
+                              width: "100%",
+                              height: "100%",
+                              backgroundColor: "#000",
+                              opacity: ".03",
+                              pointerEvents: "none",
+                              display: "block",
+                              boxShadow: "none",
+                            }
+                          : {
+                              position: "absolute",
+                              width: "100%",
+                              height: "100%",
+                              backgroundColor: "#000",
+                              opacity: ".03",
+                              pointerEvents: "none",
+                              content: '""',
+                              display: "block",
+                            },
+                    }}
+                  >
+                    <Image
+                      src={img.imgJpg}
+                      alt="Image"
+                      sizes="100vw"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        maxWidth: "none !important",
+                        borderRadius: "7px",
+                        minWidth: "5px",
+                      }}
+                      width={38}
+                      height={50}
+                    />
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+        ))}
+      </>
+    );
+  };
+
+  const renderedImg = (
     <Box
-      key={image.productId}
       component="li"
       sx={{
         display: "block!important",
@@ -136,7 +923,7 @@ export const ProdViewUpSm = ({ selectedprd }) => {
         >
           <Box
             sx={{
-              height: "464px",
+              height: "354px",
               display: "table-cell",
               verticalAlign: "middle",
               margin: 0,
@@ -147,42 +934,34 @@ export const ProdViewUpSm = ({ selectedprd }) => {
               wordWrap: "break-word",
               textAlign: "-webkit-match-parent",
               borderCollapse: "collapse",
-
-              height: "550px",
+              position: "relative",
             }}
           >
-            <Box
-              sx={{
-                display: "block",
-                maxWidth: "390px",
-                width: "100%!important",
-                height: "560px",
-                position: "relative",
-                overflow: "hidden",
+            <Image
+              src={currentImage}
+              alt="Image"
+              fill
+              sizes="272px"
+              style={{
+                objectFit: "contain",
               }}
-            >
-              <Image
-                src={image.imgJpg}
-                alt="Image"
-                fill
-                sizes="390px"
-                style={{
-                  objectFit: "contain",
-                }}
-              />
-            </Box>
+            />
           </Box>
         </Box>
       </Box>
     </Box>
-  ));
+  );
 
   const rightCol = (
     <Box
       sx={{
         float: "right",
         width: "244px",
-        marginLeft: "20px",
+        marginRight: "-244px",
+        position: "relative",
+        overflow: "visible",
+        zoom: 1,
+        minHeight: "1px",
       }}
     >
       <Box>
@@ -240,67 +1019,70 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                             marginBottom: "0!important",
                           }}
                         >
-                          <Box>
+                          {selectedSize !== "Sélectionner" && (
                             <Box>
-                              <Box
-                                sx={{
-                                  marginBottom: "4px!important",
-                                  color: "#0F1111",
-                                }}
-                              >
+                              <Box>
                                 <Box
-                                  component="span"
                                   sx={{
-                                    fontSize: "28px",
+                                    marginBottom: "4px!important",
                                     color: "#0F1111",
-                                    verticalAlign: "middle!important",
-                                    textDecoration: "none",
-                                    position: "relative",
-                                    lineHeight: "normal",
                                   }}
                                 >
                                   <Box
                                     component="span"
                                     sx={{
-                                      WebkitUserSelect: "none",
-                                      MozUserSelect: "none",
-                                      MsUserSelect: "none",
-                                      userSelect: "none",
-                                      position: "absolute!important",
-                                      left: "0!important",
-                                      bottom: "-1px!important",
-                                      zIndex: "-1!important",
-                                      opacity: 0,
-                                      color: "#0F1111",
-                                      lineHeight: "normal",
-
                                       fontSize: "28px",
+                                      color: "#0F1111",
+                                      verticalAlign: "middle!important",
+                                      textDecoration: "none",
+                                      position: "relative",
+                                      lineHeight: "normal",
                                     }}
                                   >
-                                    {CartItemPrixAct}&nbsp;
-                                    {vPrixSymbol}
-                                  </Box>
-                                  <Box component="span" aria-hidden="true">
                                     <Box
                                       component="span"
                                       sx={{
-                                        fontWeight: 700,
-                                        fontSize: "24px",
-                                        fontStyle: "normal",
-                                        fontStretch: "normal",
-                                        lineHeight: "1.33",
-                                        letterSpacing: "normal",
-                                        color: "rgba(17,24,32,0.87) !important",
+                                        WebkitUserSelect: "none",
+                                        MozUserSelect: "none",
+                                        MsUserSelect: "none",
+                                        userSelect: "none",
+                                        position: "absolute!important",
+                                        left: "0!important",
+                                        bottom: "-1px!important",
+                                        zIndex: "-1!important",
+                                        opacity: 0,
+                                        color: "#0F1111",
+                                        lineHeight: "normal",
+
+                                        fontSize: "28px",
                                       }}
                                     >
                                       {CartItemPrixAct}&nbsp;
                                       {vPrixSymbol}
                                     </Box>
+                                    <Box component="span" aria-hidden="true">
+                                      <Box
+                                        component="span"
+                                        sx={{
+                                          fontWeight: 700,
+                                          fontSize: "24px",
+                                          fontStyle: "normal",
+                                          fontStretch: "normal",
+                                          lineHeight: "1.33",
+                                          letterSpacing: "normal",
+                                          color:
+                                            "rgba(17,24,32,0.87) !important",
+                                        }}
+                                      >
+                                        {CartItemPrixAct}&nbsp;
+                                        {vPrixSymbol}
+                                      </Box>
+                                    </Box>
                                   </Box>
                                 </Box>
                               </Box>
                             </Box>
-                          </Box>
+                          )}
 
                           <Box>
                             <Box
@@ -314,7 +1096,7 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                                   <Box>
                                     <Box
                                       sx={{
-                                        marginBottom: "22px",
+                                        marginBottom: "12px!important",
                                       }}
                                     >
                                       <Box>
@@ -337,41 +1119,434 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                                   </Box>
                                 </Box>
                               </Box>
-                              <Box>
-                                <Box
-                                  sx={{
-                                    marginBottom: "0!important",
-                                  }}
-                                >
+
+                              {qteemax > 0 && (
+                                <Box>
                                   <Box
                                     sx={{
-                                      marginBottom: "12px!important",
+                                      marginBottom: "0!important",
                                     }}
                                   >
                                     <Box
-                                      component="span"
                                       sx={{
-                                        color: "#007600!important",
-                                        textRendering: "optimizeLegibility",
-                                        fontSize: "18px!important",
-                                        lineHeight: "24px!important",
+                                        marginBottom: "12px!important",
                                       }}
                                     >
-                                      En stock.
+                                      <Box
+                                        component="span"
+                                        sx={{
+                                          color: "#007600!important",
+                                          textRendering: "optimizeLegibility",
+                                          fontSize: "18px!important",
+                                          lineHeight: "24px!important",
+                                        }}
+                                      >
+                                        En stock.
+                                      </Box>
+                                    </Box>
+                                  </Box>
+                                </Box>
+                              )}
+
+                              {qteemax === 0 &&
+                                selectedSize !== "Sélectionner" && (
+                                  <Box
+                                    sx={{
+                                      color: "#0f1111",
+                                      fontSize: "14px",
+                                      lineHeight: "20px",
+                                      WebkitTextSizeAdjust: "100%",
+                                    }}
+                                  >
+                                    <Box
+                                      sx={{
+                                        marginBottom: "0 !important",
+                                        color: "#0f1111",
+                                        fontSize: "14px",
+                                        lineHeight: "20px",
+                                        WebkitTextSizeAdjust: "100%",
+                                      }}
+                                    >
+                                      <Box
+                                        sx={{
+                                          paddingTop: "4px",
+                                          marginTop: "0 !important",
+                                          marginBottom: "12px !important",
+                                          color: "#0f1111",
+                                          fontSize: "14px",
+                                          lineHeight: "20px",
+                                          WebkitTextSizeAdjust: "100%",
+                                        }}
+                                      >
+                                        <Box
+                                          component="span"
+                                          sx={{
+                                            color: "#b12704 !important",
+                                            fontSize: "14px !important",
+                                            lineHeight: "20px !important",
+                                            fontWeight: "700 !important",
+                                            boxSizing: "border-box",
+                                          }}
+                                        >
+                                          Il ne reste plus de produits en stock
+                                        </Box>
+                                      </Box>
+                                    </Box>
+                                  </Box>
+                                )}
+
+                              {qteemax > 0 &&
+                                selectedSize !== "Sélectionner" && (
+                                  <Box>
+                                    <Box
+                                      sx={{
+                                        textAlign: "left!important",
+                                        marginBottom: "12px!important",
+                                      }}
+                                    >
+                                      <Box
+                                        sx={{
+                                          padding: "0!important",
+                                          marginBottom: "0!important",
+                                          textAlign: "left!important",
+                                          fontSize: "14px",
+                                          lineHeight: "20px",
+                                        }}
+                                      >
+                                        <Box component="span">
+                                          <Box
+                                            sx={{
+                                              marginBottom: "12px!important",
+                                              width: "100%",
+
+                                              "&::after,&::before": {
+                                                display: "table",
+                                                content: '""',
+                                                lineHeight: 0,
+                                                fontSize: 0,
+                                              },
+
+                                              "&::after": {
+                                                clear: "both",
+                                              },
+                                            }}
+                                          >
+                                            <Box
+                                              sx={{
+                                                width: "100%",
+                                                marginRight: 0,
+                                                float: "left",
+                                                minHight: "1px",
+                                                overflow: "visible",
+                                                textAlign: "left!important",
+                                                display: "block",
+                                              }}
+                                            >
+                                              <Box
+                                                component="span"
+                                                sx={{
+                                                  position: "relative",
+                                                }}
+                                              >
+                                                <Box
+                                                  component="label"
+                                                  htmlFor="quantité"
+                                                  sx={{
+                                                    paddingRight: "5px",
+                                                    opacity: 1,
+                                                    zIndex: "auto",
+                                                    position: "static",
+                                                    display: "inline",
+                                                    fontWeight: "normal",
+                                                    maxWidth: "100%",
+                                                    left: 0,
+                                                    paddingLeft: "2px",
+                                                    paddingBottom: "2px",
+                                                    cursor: "default",
+                                                  }}
+                                                >
+                                                  Quantité :
+                                                </Box>
+
+                                                <Box
+                                                  component="select"
+                                                  name="quantité"
+                                                  autoComplete="off"
+                                                  id="quantité"
+                                                  tabIndex="0"
+                                                  value={prodQtee}
+                                                  onChange={handleChange}
+                                                  sx={{
+                                                    opacity: 1,
+                                                    filter:
+                                                      "alpha(opacity=100)",
+                                                    zIndex: "auto",
+                                                    position: "static",
+                                                    display: "inline",
+                                                    fontWeight: "normal",
+                                                    maxWidth: "100%",
+                                                    left: 0,
+                                                    border: "1px solid #DDD",
+                                                    borderRadius:
+                                                      "4px 4px 4px 4px",
+                                                    padding: "3px",
+                                                    WebkitTransition:
+                                                      "all .1s linear",
+                                                    transition:
+                                                      "all .1s linear",
+                                                    lineHeight: "19px",
+                                                    color: "#0F1111",
+                                                    margin: 0,
+                                                    fontSize: "100%",
+                                                    verticalAlign: "middle",
+
+                                                    ":select:not(:-internal-list-box)":
+                                                      {
+                                                        overflow:
+                                                          "visible !important",
+                                                      },
+                                                    //
+                                                    width: "100%!important",
+                                                    background: "#f0f2f2",
+                                                    border: "1px #ddd solid",
+                                                    maxWidth: "100%",
+                                                    transition:
+                                                      "all .1s linear",
+                                                    fontWeight: 500,
+                                                    height: "29px",
+                                                  }}
+                                                >
+                                                  {options}
+                                                </Box>
+                                              </Box>
+                                            </Box>
+                                          </Box>
+                                        </Box>
+                                      </Box>
+                                    </Box>
+                                  </Box>
+                                )}
+
+                              {selectedSize === "Sélectionner" && (
+                                <Box
+                                  sx={{
+                                    textAlign: "center !important",
+                                    marginBottom: "8px !important",
+                                    color: "#b12704;",
+                                    fontSize: "14px",
+                                    lineHeight: "20px",
+                                    WebkitTextSizeAdjust: "100%",
+                                  }}
+                                >
+                                  <Box
+                                    component="span"
+                                    sx={{
+                                      textAlign: "center !important",
+                                      color: "#b12704;",
+                                      fontSize: "14px",
+                                      lineHeight: "20px",
+                                      WebkitTextSizeAdjust: "100%",
+                                    }}
+                                  >
+                                    Veuillez selectionner une
+                                    <Box
+                                      component="strong"
+                                      sx={{
+                                        color: "#b12704;",
+                                        fontSize: "14px",
+                                        lineHeight: "20px",
+                                        WebkitTextSizeAdjust: "100%",
+                                      }}
+                                    >
+                                      Taille
+                                    </Box>
+                                  </Box>
+                                </Box>
+                              )}
+
+                              <Box>
+                                <Box
+                                  component="button"
+                                  onClick={clickOpenCart}
+                                  disabled={ajPanDisabled || achMaintDisabled}
+                                  sx={{
+                                    backgroundColor: "transparent",
+                                    border: "none",
+                                    outline: 0,
+                                    textAlign: "center!important",
+                                    width: "100%!important",
+                                  }}
+                                >
+                                  <Box component="span">
+                                    <Box
+                                      component="span"
+                                      sx={{
+                                        display: "block",
+                                        borderRadius: "20px",
+                                        boxShadow:
+                                          "0 2px 5px 0 rgb(213 217 217 / 50%)",
+                                        background:
+                                          ajPanDisabled || achMaintDisabled
+                                            ? "#e7e9ec"
+                                            : "#FFD814",
+                                        borderColor:
+                                          ajPanDisabled || achMaintDisabled
+                                            ? "#8d9096"
+                                            : "#FCD200",
+                                        borderStyle: "solid",
+                                        borderWidth: "1px",
+                                        cursor: "pointer",
+                                        padding: 0,
+                                        textAlign: "center",
+                                        textDecoration: "none!important",
+                                        verticalAlign: "middle",
+                                        marginBottom: "8px!important",
+                                      }}
+                                    >
+                                      <Box
+                                        component="span"
+                                        sx={{
+                                          borderRadius: "19px",
+                                          background: "0 0",
+                                          boxShadow: "none",
+                                          display: "block",
+                                          position: "relative",
+                                          overflow: "hidden",
+                                          height: "29px",
+                                          cursor: "pointer",
+                                          textAlign: "center",
+                                        }}
+                                      >
+                                        <Box
+                                          component="span"
+                                          aria-hidden="true"
+                                          sx={{
+                                            color: "#0F1111",
+                                            backgroundColor: "transparent",
+                                            border: 0,
+                                            display: "block",
+                                            fontSize: "13px",
+                                            lineHeight: "29px",
+                                            margin: 0,
+                                            outline: 0,
+                                            padding: "0 10px 0 11px",
+                                            textAlign: "center",
+                                            whiteSpace: "nowrap",
+                                          }}
+                                        >
+                                          Ajouter au panier&nbsp;
+                                          {isNavOpenCart && (
+                                            <CircularProgress
+                                              size={20}
+                                              sx={{
+                                                textAlign: "center",
+                                                top: "50%",
+                                                left: "50%",
+                                              }}
+                                            />
+                                          )}
+                                        </Box>
+                                      </Box>
                                     </Box>
                                   </Box>
                                 </Box>
                               </Box>
 
-                              <HandlesCartItemUpSm
-                                prodId={prodId}
-                                prodImage={prodImage}
-                                prodDesc={prodDesc}
-                                prodPrix={prodPrix}
-                                prodEtat={prodEtat}
-                                prodQteeDisp={prodQteeDisp}
-                                status={status}
-                              ></HandlesCartItemUpSm>
+                              <Box>
+                                <Box>
+                                  <Box
+                                    component="button"
+                                    onClick={clickBuyNow}
+                                    disabled={achMaintDisabled || ajPanDisabled}
+                                    sx={{
+                                      backgroundColor: "transparent",
+                                      border: "none",
+                                      outline: 0,
+                                      textAlign: "center!important",
+                                      width: "100%!important",
+                                    }}
+                                  >
+                                    <Box
+                                      sx={{
+                                        marginBottom: "12px!important",
+                                      }}
+                                    >
+                                      <Box
+                                        component="span"
+                                        sx={{
+                                          "&:last-child": {
+                                            marginBottom: 0,
+                                          },
+                                          display: "block",
+                                          borderRadius: "20px",
+                                          boxShadow:
+                                            "0 2px 5px 0 rgb(213 217 217 / 50%)",
+                                          background:
+                                            achMaintDisabled || ajPanDisabled
+                                              ? "#e7e9ec"
+                                              : "#FF8F00",
+                                          borderColor:
+                                            achMaintDisabled || ajPanDisabled
+                                              ? "#8d9096"
+                                              : "#FF8F00",
+                                          borderStyle: "solid",
+                                          borderWidth: "1px",
+                                          cursor: "pointer",
+                                          padding: 0,
+                                          textAlign: "center",
+                                          textDecoration: "none!important",
+                                          verticalAlign: "middle",
+                                        }}
+                                      >
+                                        <Box
+                                          component="span"
+                                          sx={{
+                                            borderRadius: "19px",
+                                            background: "0 0",
+                                            boxShadow: "none",
+                                            display: "block",
+                                            position: "relative",
+                                            overflow: "hidden",
+                                            height: "29px",
+                                            cursor: "pointer",
+                                            textAlign: "center",
+                                          }}
+                                        >
+                                          <Box
+                                            component="span"
+                                            aria-hidden="true"
+                                            sx={{
+                                              color: "#0F1111",
+                                              backgroundColor: "transparent",
+                                              border: 0,
+                                              display: "block",
+                                              fontSize: "13px",
+                                              lineHeight: "29px",
+                                              margin: 0,
+                                              outline: 0,
+                                              padding: "0 10px 0 11px",
+                                              textAlign: "center",
+                                              whiteSpace: "nowrap",
+                                            }}
+                                          >
+                                            Acheter maintenant
+                                            {isNavCheckout && (
+                                              <CircularProgress
+                                                size={20}
+                                                sx={{
+                                                  textAlign: "center",
+                                                  top: "50%",
+                                                  left: "50%",
+                                                }}
+                                              />
+                                            )}
+                                          </Box>
+                                        </Box>
+                                      </Box>
+                                    </Box>
+                                  </Box>
+                                </Box>
+                              </Box>
 
                               <Box>
                                 <Box
@@ -523,27 +1698,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                                                 >
                                                   Livraison à domicile
                                                 </Box>
-                                                <Box
-                                                  component="button"
-                                                  type="button"
-                                                  sx={{
-                                                    fontSize: ".75rem",
-                                                    marginLeft: "auto",
-                                                    alignSelf: "flex-start",
-                                                    cursor: "pointer",
-                                                    color: "#264996",
-                                                    WebkitAppearance: "button",
-                                                    padding: 0,
-                                                    textTransform: "none",
-                                                    margin: 0,
-                                                    overflow: "visible",
-                                                    backgroundColor:
-                                                      "transparent",
-                                                    border: 0,
-                                                  }}
-                                                >
-                                                  Détails
-                                                </Box>
                                               </Box>
                                             </Box>
                                           </Box>
@@ -614,27 +1768,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                                                   }}
                                                 >
                                                   Paiements à la livraison
-                                                </Box>
-                                                <Box
-                                                  component="button"
-                                                  type="button"
-                                                  sx={{
-                                                    fontSize: ".75rem",
-                                                    marginLeft: "auto",
-                                                    alignSelf: "flex-start",
-                                                    cursor: "pointer",
-                                                    color: "#264996",
-                                                    WebkitAppearance: "button",
-                                                    padding: 0,
-                                                    textTransform: "none",
-                                                    margin: 0,
-                                                    overflow: "visible",
-                                                    backgroundColor:
-                                                      "transparent",
-                                                    border: 0,
-                                                  }}
-                                                >
-                                                  Détails
                                                 </Box>
                                               </Box>
                                             </Box>
@@ -747,8 +1880,11 @@ export const ProdViewUpSm = ({ selectedprd }) => {
         position: "-webkit-sticky",
         top: "4px",
         height: "100%",
-        width: "45.0%",
+        width: "31.948%",
         float: "left",
+        marginRight: "2%",
+        minHeight: "1px",
+        overflow: "visible",
       }}
     >
       <Box>
@@ -765,9 +1901,9 @@ export const ProdViewUpSm = ({ selectedprd }) => {
           >
             <Box
               sx={{
+                padding: 0,
                 paddingLeft: "40px",
                 position: "relative",
-                padding: 0,
 
                 "&::after,&::before": {
                   display: "table",
@@ -783,7 +1919,36 @@ export const ProdViewUpSm = ({ selectedprd }) => {
             >
               <Box
                 sx={{
-                  paddingLeft: "3.5%",
+                  width: "40px",
+                  marginLeft: "-40px",
+                  float: "left",
+                  position: "relative",
+                  overflow: "visible",
+                  zoom: 1,
+                  minHeight: "1px",
+                  color: "#0f1111",
+                  fontSize: "14px",
+                  lineHeight: "20px",
+                  WebkitTextSizeAdjust: "100%",
+                }}
+              >
+                <Box
+                  component="ul"
+                  sx={{
+                    margin: "0 0 0 18px",
+                    marginLeft: 0,
+                    color: "#0f1111",
+                    padding: 0,
+                    marginTop: "32px !important",
+                  }}
+                >
+                  <ThumbnailsList />
+                </Box>
+              </Box>
+
+              <Box
+                sx={{
+                  paddingLeft: "1%",
                   float: "left",
                   width: "100%",
                   textAlign: "center!important",
@@ -965,6 +2130,12 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                         "&::after": {
                           clear: "both",
                         },
+
+                        textAlign: "center !important",
+                        fontSize: "14px",
+                        lineHeight: "20px",
+                        WebkitTextSizeAdjust: "100%",
+                        borderCollapse: "collapse",
                       }}
                     >
                       {renderedImg}
@@ -982,8 +2153,13 @@ export const ProdViewUpSm = ({ selectedprd }) => {
   const centerCol = (
     <Box
       sx={{
-        marginLeft: "46.5%",
-        marginRight: "270px",
+        paddingRight: "6.5%",
+        float: "left",
+        width: "100%",
+        position: "relative",
+        overflow: "visible",
+        zoom: 1,
+        minHeight: "1px",
       }}
     >
       <Box>
@@ -1020,27 +2196,7 @@ export const ProdViewUpSm = ({ selectedprd }) => {
           </Box>
         </Box>
       </Box>
-      {vMarque && (
-        <Box>
-          <Box
-            sx={{
-              marginBottom: "0!important",
-            }}
-          >
-            <Box
-              component="span"
-              sx={{
-                color: "#007185",
-                fontSize: "14px",
-                lineHeight: "20px",
-                WebkitTextSizeAdjust: "100%",
-              }}
-            >
-              Marque&nbsp;: {vMarque}
-            </Box>
-          </Box>
-        </Box>
-      )}
+
       {vEtatprd && (
         <Box>
           <Box
@@ -1078,87 +2234,273 @@ export const ProdViewUpSm = ({ selectedprd }) => {
           marginTop: "14px",
         }}
       ></Box>
-      <Box>
+
+      {selectedSize === "Sélectionner" && (
         <Box>
-          <Box
-            sx={{
-              verticalAlign: "middle!important",
-              marginBottom: "0!important",
-            }}
-          >
+          <Box>
+            <Box>
+              <Box
+                sx={{
+                  marginBottom: "8px !important",
+                }}
+              >
+                <Box
+                  component="table"
+                  sx={{
+                    marginBottom: "0 !important",
+                    verticalAlign: "top !important",
+                    borderCollapse: "collapse",
+                    width: "100%",
+                    display: "table",
+                    textIndent: "initial",
+                    unicodeBidi: "isolate",
+                    borderSpacing: "2px",
+                    borderColor: "gray",
+                    color: "#0f1111",
+                    fontSize: "14px",
+                    lineHeight: "20px",
+                    WebkitTextSizeAdjust: "100%",
+                  }}
+                >
+                  <Box
+                    component="tbody"
+                    sx={{
+                      display: "table-row-group",
+                      verticalAlign: "middle",
+                      unicodeBidi: "isolate",
+                      borderColor: "inherit",
+                      borderCollapse: "collapse",
+                      textIndent: "initial",
+                      borderSpacing: "2px",
+                      color: "#0f1111",
+                      fontSize: "14px",
+                      lineHeight: "20px",
+                      WebkitTextSizeAdjust: "100%",
+                    }}
+                  >
+                    <Box
+                      component="tr"
+                      sx={{
+                        display: "table-row",
+                        verticalAlign: "inherit",
+                        unicodeBidi: "isolate",
+                        borderColor: "inherit",
+                        borderCollapse: "collapse",
+                        textIndent: "initial",
+                        borderSpacing: "2px",
+                        color: "#0f1111",
+                        fontSize: "14px",
+                        lineHeight: "20px",
+                        WebkitTextSizeAdjust: "100%",
+                      }}
+                    >
+                      <Box
+                        component="td"
+                        sx={{
+                          padding: "0 3px",
+                          verticalAlign: "top",
+                          whiteSpace: "nowrap",
+                          textAlign: "right !important",
+                          color: "#565959 !important",
+                          fontSize: "14px !important",
+                          lineHeight: "20px !important",
+                          display: "table-cell",
+                          unicodeBidi: "isolate",
+                          borderCollapse: "collapse",
+                          textIndent: "initial",
+                          borderSpacing: "2px",
+                          WebkitTextSizeAdjust: "100%",
+                          "&:first-of-type": {
+                            paddingLeft: 0,
+                          },
+                        }}
+                      >
+                        Prix :
+                      </Box>
+                      <Box
+                        component="td"
+                        sx={{
+                          "&:last-child": {
+                            paddingRight: 0,
+                          },
+
+                          width: "100%",
+                          marginRight: 0,
+                          padding: "0 3px",
+                          verticalAlign: "top",
+                          float: "none !important",
+                          display: "table-cell",
+                          unicodeBidi: "isolate",
+                          borderCollapse: "collapse",
+                          textIndent: "initial",
+                          borderSpacing: "2px",
+                          color: "#0f1111",
+                          fontSize: "14px",
+                          lineHeight: "20px",
+                          WebkitTextSizeAdjust: "100%",
+                        }}
+                      >
+                        <Box
+                          component="span"
+                          sx={{
+                            fontSize: 0,
+                            color: "#0f1111",
+                            lineHeight: "20px",
+                            WebkitTextSizeAdjust: "100%",
+                          }}
+                        >
+                          <Box
+                            component="span"
+                            sx={{
+                              color: "#b12704",
+                              textDecoration: "none",
+                              position: "relative",
+                              textRendering: "optimizeLegibility",
+                              fontSize: "18px !important",
+                              lineHeight: "24px !important",
+                              WebkitTextSizeAdjust: "100%",
+                            }}
+                          >
+                            <Box
+                              component="span"
+                              sx={{
+                                color: "#b12704",
+                                textRendering: "optimizeLegibility",
+                                fontSize: "18px !important",
+                                lineHeight: "24px !important",
+                                WebkitTextSizeAdjust: "100%",
+                              }}
+                            >
+                              {vPriceRangeFrom}&nbsp;{vPrixSymbol}
+                            </Box>
+                          </Box>
+                          <Box
+                            component="span"
+                            sx={{
+                              fontSize: "21px",
+                              paddingLeft: "4px",
+                              paddingRight: "4px",
+                              color: "#b12704",
+                              lineHeight: "24px !important",
+                              WebkitTextSizeAdjust: "100%",
+                              borderCollapse: "collapse",
+                              textIndent: "initial",
+                              borderSpacing: "2px",
+                            }}
+                          >
+                            -
+                          </Box>
+                          <Box
+                            component="span"
+                            sx={{
+                              color: "#b12704",
+                              textDecoration: "none",
+                              position: "relative",
+                              textRendering: "optimizeLegibility",
+                              fontSize: "18px !important",
+                              lineHeight: "24px !important",
+                              borderCollapse: "collapse",
+                              textIndent: "initial",
+                              borderSpacing: "2px",
+                              WebkitTextSizeAdjust: "100%",
+                            }}
+                          >
+                            <Box
+                              component="span"
+                              sx={{
+                                color: "#b12704",
+                                textRendering: "optimizeLegibility",
+                                fontSize: "18px !important",
+                                lineHeight: "24px !important",
+                                borderCollapse: "collapse",
+                                textIndent: "initial",
+                                borderSpacing: "2px",
+                                WebkitTextSizeAdjust: "100%",
+                              }}
+                            >
+                              {vPriceRangeTo}&nbsp;{vPrixSymbol}
+                            </Box>
+                          </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      )}
+
+      {selectedSize !== "Sélectionner" && (
+        <Box>
+          <Box>
             <Box
-              component="span"
               sx={{
-                marginRight: "3px",
-                fontSize: "28px",
-                color: "#0F1111",
                 verticalAlign: "middle!important",
-                textDecoration: "none",
-                position: "relative",
-                lineHeight: "normal",
+                marginBottom: "0!important",
               }}
             >
               <Box
                 component="span"
                 sx={{
-                  WebkitUserSelect: "none",
-                  MozUserSelect: "none",
-                  MsUserSelect: "none",
-                  userSelect: "none",
-                  position: "absolute!important",
-                  left: "0!important",
-                  bottom: "-1px!important",
-                  zIndex: "-1!important",
-                  opacity: 0,
+                  marginRight: "3px",
                   fontSize: "28px",
                   color: "#0F1111",
+                  verticalAlign: "middle!important",
+                  textDecoration: "none",
+                  position: "relative",
                   lineHeight: "normal",
                 }}
               >
-                {CartItemPrixAct}&nbsp;{vPrixSymbol}
-              </Box>
-
-              <Box component="span" aria-hidden="true">
                 <Box
                   component="span"
                   sx={{
-                    fontWeight: 700,
-                    fontSize: "24px",
-                    fontStyle: "normal",
-                    fontStretch: "normal",
-                    lineHeight: "1.33",
-                    letterSpacing: "normal",
-                    color: "rgba(17,24,32,0.87) !important",
+                    WebkitUserSelect: "none",
+                    MozUserSelect: "none",
+                    MsUserSelect: "none",
+                    userSelect: "none",
+                    position: "absolute!important",
+                    left: "0!important",
+                    bottom: "-1px!important",
+                    zIndex: "-1!important",
+                    opacity: 0,
+                    fontSize: "28px",
+                    color: "#0F1111",
+                    lineHeight: "normal",
                   }}
                 >
                   {CartItemPrixAct}&nbsp;{vPrixSymbol}
                 </Box>
+
+                <Box component="span" aria-hidden="true">
+                  <Box
+                    component="span"
+                    sx={{
+                      fontWeight: 700,
+                      fontSize: "24px",
+                      fontStyle: "normal",
+                      fontStretch: "normal",
+                      lineHeight: "1.33",
+                      letterSpacing: "normal",
+                      color: "rgba(17,24,32,0.87) !important",
+                    }}
+                  >
+                    {CartItemPrixAct}&nbsp;{vPrixSymbol}
+                  </Box>
+                </Box>
               </Box>
-            </Box>
-            {vRed && (
-              <Box
-                sx={{
-                  marginBottom: "8px",
-                }}
-              >
+              {red && (
                 <Box
-                  component="span"
                   sx={{
-                    paddingRight: "2px",
-                    fontSize: "14px",
-                    margin: 0,
-                    padding: 0,
-                    border: 0,
-                    fontWeight: "normal",
-                    lineHeight: "normal",
-                    color: "#333",
+                    marginBottom: "8px",
                   }}
                 >
                   <Box
                     component="span"
                     sx={{
-                      textDecoration: "line-through",
-                      fontSize: ".875rem",
+                      paddingRight: "2px",
+                      fontSize: "14px",
                       margin: 0,
                       padding: 0,
                       border: 0,
@@ -1170,46 +2512,61 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                     <Box
                       component="span"
                       sx={{
+                        textDecoration: "line-through",
                         fontSize: ".875rem",
-                        clip: "rect(1px,1px,1px,1px)",
-                        overflow: "hidden",
-                        border: "0 !important",
-                        height: "1px !important",
-                        padding: "0 !important",
-                        position: "absolute !important",
-                        whiteSpace: "nowrap !important",
-                        width: "1px !important",
                         margin: 0,
+                        padding: 0,
+                        border: 0,
                         fontWeight: "normal",
+                        lineHeight: "normal",
+                        color: "#333",
                       }}
                     >
-                      Prix de vente initial&nbsp;:
+                      <Box
+                        component="span"
+                        sx={{
+                          fontSize: ".875rem",
+                          clip: "rect(1px,1px,1px,1px)",
+                          overflow: "hidden",
+                          border: "0 !important",
+                          height: "1px !important",
+                          padding: "0 !important",
+                          position: "absolute !important",
+                          whiteSpace: "nowrap !important",
+                          width: "1px !important",
+                          margin: 0,
+                          fontWeight: "normal",
+                        }}
+                      >
+                        Prix de vente initial&nbsp;:
+                      </Box>
+                      {CartItemPrixInit}&nbsp;{vPrixSymbol}
+                      &nbsp;
                     </Box>
-                    {CartItemPrixInit}&nbsp;{vPrixSymbol}
-                    &nbsp;
-                  </Box>
-                  <Box
-                    component="span"
-                    sx={{
-                      fontSize: ".875rem",
-                      margin: 0,
-                      padding: 0,
-                      border: 0,
-                      fontWeight: "normal",
-                      lineHeight: "normal",
-                      color: "#767676",
-                    }}
-                  >
-                    <Box component="span"> &nbsp;(</Box>
-                    <Box component="span">{vRed}</Box>
-                    <Box component="span">% de réduction)</Box>
+                    <Box
+                      component="span"
+                      sx={{
+                        fontSize: ".875rem",
+                        margin: 0,
+                        padding: 0,
+                        border: 0,
+                        fontWeight: "normal",
+                        lineHeight: "normal",
+                        color: "#767676",
+                      }}
+                    >
+                      <Box component="span"> &nbsp;(</Box>
+                      <Box component="span">{red}</Box>
+                      <Box component="span">% de réduction)</Box>
+                    </Box>
                   </Box>
                 </Box>
-              </Box>
-            )}
+              )}
+            </Box>
           </Box>
         </Box>
-      </Box>
+      )}
+
       <Box>
         <Box component="span">
           {vPromoprd1 && (
@@ -1280,1592 +2637,835 @@ export const ProdViewUpSm = ({ selectedprd }) => {
           )}
         </Box>
       </Box>
-      <Box>
-        <Box
-          sx={{
-            marginTop: "8px!important",
-            marginBottom: "8px!important",
-          }}
-        >
-          <Box
-            component="table"
-            sx={{
-              marginBottom: "4px!important",
-              borderCollapse: "collapse",
-              width: "100%",
-              display: "table",
-              textIndent: "initial",
-              borderSpacing: "2px",
-              borderColor: "grey",
-            }}
-          >
-            <Box component="tbody">
-              {vMatériau && (
-                <Box
-                  component="tr"
-                  sx={{
-                    marginBottom: "8px!important",
-                    display: "table-row",
-                    verticalAlign: "inherit",
-                    borderColor: "inherit",
-                  }}
-                >
-                  <Box
-                    component="td"
-                    sx={{
-                      "&:first-child": {
-                        paddingTop: 0,
-                      },
-                      "&:first-child": {
-                        paddingLeft: 0,
-                      },
-                      width: "26.18%",
-                      float: "none!important",
-                      marginRight: 0,
-                      padding: "3px",
-                      verticalAlign: "top",
-                      display: "table-cell",
-                      borderCollapse: "collapse",
-                      textIndent: "initial",
-                      borderSpacing: "2px",
-                    }}
-                  >
-                    <Box
-                      component="span"
-                      sx={{
-                        fontSize: "14px!important",
-                        lineHeight: "20px!important",
-                        fontWeight: "700!important",
-                      }}
-                    >
-                      Matériau
-                    </Box>
-                  </Box>
 
-                  <Box
-                    component="td"
-                    sx={{
-                      "&:first-child": {
-                        paddingTop: 0,
-                      },
-                      "&:last-child": {
-                        paddingRight: 0,
-                      },
-                      width: "78.68%",
-                      float: "none!important",
-                      marginRight: 0,
-                      padding: "3px",
-                      verticalAlign: "top",
-                      display: "table-cell",
-                      borderCollapse: "collapse",
-                      textIndent: "initial",
-                      borderSpacing: "2px",
-                    }}
-                  >
-                    <Box
-                      component="span"
-                      sx={{
-                        fontSize: "14px!important",
-                        lineHeight: "20px!important",
-                      }}
-                    >
-                      {vMatériau}
-                    </Box>
-                  </Box>
-                </Box>
-              )}
-              {vMarque && (
-                <Box
-                  component="tr"
-                  sx={{
-                    marginBottom: "8px!important",
-                    display: "table-row",
-                    verticalAlign: "inherit",
-                    borderColor: "inherit",
-
-                    borderCollapse: "collapse",
-                    textIndent: "initial",
-                    borderSpacing: "2px",
-                    color: "#0F1111",
-                    fontSize: "14px",
-                    lineHeight: "20px",
-                    WebkitTextSizeAdjust: "100%",
-                  }}
-                >
-                  <Box
-                    component="td"
-                    sx={{
-                      "&:first-child": {
-                        paddingLeft: 0,
-                      },
-
-                      width: "26.18%",
-                      float: "none!important",
-                      marginRight: 0,
-                      padding: "3px",
-                      verticalAlign: "top",
-                      display: "table-cell",
-                      borderCollapse: "collapse",
-                      textIndent: "initial",
-                      borderSpacing: "2px",
-                      color: "#0F1111",
-                      fontSize: "14px",
-                      lineHeight: "20px",
-                    }}
-                  >
-                    <Box
-                      component="span"
-                      sx={{
-                        fontSize: "14px!important",
-                        lineHeight: "20px!important",
-                        fontWeight: "700!important",
-                      }}
-                    >
-                      Marque
-                    </Box>
-                  </Box>
-                  <Box
-                    component="td"
-                    sx={{
-                      "&:last-child": {
-                        paddingRight: 0,
-                      },
-                      width: "78.68%",
-                      float: "none!important",
-                      marginRight: 0,
-                      padding: "3px",
-                      verticalAlign: "top",
-                      display: "table-cell",
-                      borderCollapse: "collapse",
-                      textIndent: "initial",
-                      borderSpacing: "2px",
-                      color: "#0F1111",
-                      fontizSe: "14px",
-                      lineHeight: "20px",
-                      WebkitTextSizeAdjust: "100%",
-                    }}
-                  >
-                    <Box
-                      component="span"
-                      sx={{
-                        fontSize: "14px!important",
-                        lineHeight: "20px!important",
-                      }}
-                    >
-                      {selectedprd[0]?.marque}
-                    </Box>
-                  </Box>
-                </Box>
-              )}
-              {vCouleur && (
-                <Box
-                  component="tr"
-                  sx={{
-                    marginBottom: "8px!important",
-                    display: "table-row",
-                    verticalAlign: "inherit",
-                    borderColor: "inherit",
-
-                    borderCollapse: "collapse",
-                    textIndent: "initial",
-                    borderSpacing: "2px",
-                    color: "#0F1111",
-                    fontSize: "14px",
-                    lineHeight: "20px",
-                    WebkitTextSizeAdjust: "100%",
-                  }}
-                >
-                  <Box
-                    component="td"
-                    sx={{
-                      "&:first-child": {
-                        paddingLeft: 0,
-                      },
-
-                      width: "26.18%",
-                      float: "none!important",
-                      marginRight: 0,
-                      padding: "3px",
-                      verticalAlign: "top",
-                      display: "table-cell",
-                      borderCollapse: "collapse",
-                      textIndent: "initial",
-                      borderSpacing: "2px",
-                      color: "#0F1111",
-                      fontSize: "14px",
-                      lineHeight: "20px",
-                    }}
-                  >
-                    <Box
-                      component="span"
-                      sx={{
-                        fontSize: "14px!important",
-                        lineHeight: "20px!important",
-                        fontWeight: "700!important",
-                      }}
-                    >
-                      Couleur
-                    </Box>
-                  </Box>
-                  <Box
-                    component="td"
-                    sx={{
-                      "&:last-child": {
-                        paddingRight: 0,
-                      },
-
-                      width: "78.68%",
-                      float: "none!important",
-                      marginRight: 0,
-                      padding: "3px",
-                      verticalAlign: "top",
-                      display: "table-cell",
-                      borderCollapse: "collapse",
-                      textIndent: "initial",
-                      borderSpacing: "2px",
-                      color: "#0F1111",
-                      fontizSe: "14px",
-                      lineHeight: "20px",
-                      WebkitTextSizeAdjust: "100%",
-                    }}
-                  >
-                    <Box
-                      component="span"
-                      sx={{
-                        fontSize: "14px!important",
-                        lineHeight: "20px!important",
-                      }}
-                    >
-                      {vCouleur}
-                    </Box>
-                  </Box>
-                </Box>
-              )}
-              {vDimensions && (
-                <Box
-                  component="tr"
-                  sx={{
-                    marginBottom: "8px!important",
-                    display: "table-row",
-                    verticalAlign: "inherit",
-                    borderColor: "inherit",
-
-                    borderCollapse: "collapse",
-                    textIndent: "initial",
-                    borderSpacing: "2px",
-                    color: "#0F1111",
-                    fontSize: "14px",
-                    lineHeight: "20px",
-                    WebkitTextSizeAdjust: "100%",
-                  }}
-                >
-                  <Box
-                    component="td"
-                    sx={{
-                      "&:last-child": {
-                        paddingBottom: 0,
-                      },
-
-                      "&:first-child": {
-                        paddingLeft: 0,
-                      },
-
-                      width: "26.18%",
-                      float: "none!important",
-                      marginRight: 0,
-                      padding: "3px",
-                      verticalAlign: "top",
-                      display: "table-cell",
-                      borderCollapse: "collapse",
-                      textIndent: "initial",
-                      borderSpacing: "2px",
-                      color: "#0F1111",
-                      fontizSe: "14px",
-                      lineHeight: "20px",
-                      WebkitTextSizeAdjust: "100%",
-                    }}
-                  >
-                    <Box
-                      component="span"
-                      sx={{
-                        fontSize: "14px!important",
-                        lineHeight: "20px!important",
-                        fontWeight: "700!important",
-                      }}
-                    >
-                      Dimensions
-                    </Box>
-                  </Box>
-                  <Box
-                    component="td"
-                    sx={{
-                      "&:last-child": {
-                        paddingRight: 0,
-                      },
-
-                      width: "78.68%",
-                      float: "none!important",
-                      marginRight: 0,
-                      padding: "3px",
-                      verticalAlign: "top",
-                      display: "table-cell",
-                      borderCollapse: "collapse",
-                      textIndent: "initial",
-                      borderSpacing: "2px",
-                      color: "#0F1111",
-                      fontizSe: "14px",
-                      lineHeight: "20px",
-                      WebkitTextSizeAdjust: "100%",
-                    }}
-                  >
-                    <Box
-                      component="span"
-                      sx={{
-                        fontSize: "14px!important",
-                        lineHeight: "20px!important",
-                      }}
-                    >
-                      {vDimensions}
-                    </Box>
-                  </Box>
-                </Box>
-              )}
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-
-      <Box>
-        <Box
-          sx={{
-            marginBottom: "16px!important",
-            marginTop: "8px!important",
-          }}
-        >
-          <Box
-            component="hr"
-            sx={{
-              backgroundColor: "transparent",
-              borderBottomWidth: 0,
-              borderLeftWidth: 0,
-              borderRightWidth: 0,
-              borderTop: "1px solid #e7e7e7",
-              display: "block",
-              height: "1px",
-              lineHeight: "19px",
-              marginBottom: "14px",
-              marginTop: 0,
-            }}
-          ></Box>
-          <Box
-            component="h1"
-            sx={{
-              fontSize: "16px!important",
-              lineHeight: "24px!important",
-              fontWeight: "700!important",
-              paddingBottom: "4px",
-              textRendering: "optimizeLegibility",
-            }}
-          >
-            À propos de cet article
-          </Box>
-          <Box
-            component="ul"
-            sx={{
-              padding: 0,
-              margin: "0 0 0 18px",
-              color: "#0F1111",
-              marginBottom: "4px!important",
-            }}
-          >
-            {vDescart1 && (
-              <Box
-                component="li"
-                sx={{
-                  wordWrap: "break-word",
-                  margin: 0,
-                  listStyle: "disc",
-                  color: "#0F1111",
-
-                  "::marker": {
-                    unicodeBidi: "isolate",
-                    fontVariantNumeric: "tabular-nums",
-                    textTransform: "none",
-                    textIndent: "0px !important",
-                    textAlign: "start !important",
-                    textAlignLast: "start !important",
-                  },
-                }}
-              >
-                <Box
-                  component="span"
-                  sx={{
-                    color: "#0F1111",
-                    wordWrap: "break-word",
-                    fontSize: "14px",
-                    lineHeight: "20px",
-                    WebkitTextSizeAdjust: "100%",
-                  }}
-                >
-                  {vDescart1}
-                </Box>
-              </Box>
-            )}
-            {vDescart2 && (
-              <Box
-                component="li"
-                sx={{
-                  wordWrap: "break-word",
-                  margin: 0,
-                  listStyle: "disc",
-                  color: "#0F1111",
-
-                  "::marker": {
-                    unicodeBidi: "isolate",
-                    fontVariantNumeric: "tabular-nums",
-                    textTransform: "none",
-                    textIndent: "0px !important",
-                    textAlign: "start !important",
-                    textAlignLast: "start !important",
-                  },
-                }}
-              >
-                <Box
-                  component="span"
-                  sx={{
-                    color: "#0F1111",
-                    wordWrap: "break-word",
-                    fontSize: "14px",
-                    lineHeight: "20px",
-                    WebkitTextSizeAdjust: "100%",
-                  }}
-                >
-                  {vDescart2}
-                </Box>
-              </Box>
-            )}
-            {vDescart3 && (
-              <Box
-                component="li"
-                sx={{
-                  wordWrap: "break-word",
-                  margin: 0,
-                  listStyle: "disc",
-                  color: "#0F1111",
-
-                  "::marker": {
-                    unicodeBidi: "isolate",
-                    fontVariantNumeric: "tabular-nums",
-                    textTransform: "none",
-                    textIndent: "0px !important",
-                    textAlign: "start !important",
-                    textAlignLast: "start !important",
-                  },
-                }}
-              >
-                <Box
-                  component="span"
-                  sx={{
-                    color: "#0F1111",
-                    wordWrap: "break-word",
-                    fontSize: "14px",
-                    lineHeight: "20px",
-                    WebkitTextSizeAdjust: "100%",
-                  }}
-                >
-                  {vDescart3}
-                </Box>
-              </Box>
-            )}
-            {vDescart4 && (
-              <Box
-                component="li"
-                sx={{
-                  wordWrap: "break-word",
-                  margin: 0,
-                  listStyle: "disc",
-                  color: "#0F1111",
-
-                  "::marker": {
-                    unicodeBidi: "isolate",
-                    fontVariantNumeric: "tabular-nums",
-                    textTransform: "none",
-                    textIndent: "0px !important",
-                    textAlign: "start !important",
-                    textAlignLast: "start !important",
-                  },
-                }}
-              >
-                <Box
-                  component="span"
-                  sx={{
-                    color: "#0F1111",
-                    wordWrap: "break-word",
-                    fontSize: "14px",
-                    lineHeight: "20px",
-                    WebkitTextSizeAdjust: "100%",
-                  }}
-                >
-                  {vDescart4}
-                </Box>
-              </Box>
-            )}
-            {vDescart5 && (
-              <Box
-                component="li"
-                sx={{
-                  wordWrap: "break-word",
-                  margin: 0,
-                  listStyle: "disc",
-                  color: "#0F1111",
-
-                  "::marker": {
-                    unicodeBidi: "isolate",
-                    fontVariantNumeric: "tabular-nums",
-                    textTransform: "none",
-                    textIndent: "0px !important",
-                    textAlign: "start !important",
-                    textAlignLast: "start !important",
-                  },
-                }}
-              >
-                <Box
-                  component="span"
-                  sx={{
-                    color: "#0F1111",
-                    wordWrap: "break-word",
-                    fontSize: "14px",
-                    lineHeight: "20px",
-                    WebkitTextSizeAdjust: "100%",
-                  }}
-                >
-                  {vDescart5}
-                </Box>
-              </Box>
-            )}
-          </Box>
-        </Box>
-      </Box>
-    </Box>
-  );
-
-  const detailProduit = (
-    <Box>
       <Box
         sx={{
-          "&:last-child": {
-            marginBottom: "4.5px",
-          },
-
           WebkitTextSizeAdjust: "100%",
-          fontSize: "14px",
-          lineHeight: "20px",
-          color: "#0F1111",
         }}
       >
         <Box
-          component="hr"
           sx={{
-            clear: "left",
-            background: "0 0!important",
-            borderTop: "1px solid #CCC!important",
-            marginBottom: "-36px!important",
-            height: "44px!important",
-            border: 0,
-            filter: "none",
-            zIndex: 0,
-            zoom: 1,
-            display: "block",
-            lineHeight: "19px",
-            marginTop: 0,
-
-            "&::after": {
-              display: "block",
-              width: "100%",
-              height: "44px",
-              background:
-                "-webkit-linear-gradient(left,#fff,rgba(255,255,255,0),#fff)",
-              filter: "none",
-              zIndex: 1,
-              content: '""',
-            },
-          }}
-        ></Box>
-        <Box
-          component="h2"
-          sx={{
-            paddingBottom: "8px",
-            marginBottom: "0!important",
+            maxWidth: "none",
+            marginTop: "10px",
+            color: "#0f1111",
+            fontSize: "14px",
+            lineHeight: "20px",
+            WebkitTextSizeAdjust: "100%",
           }}
         >
-          Détails sur le produit
-        </Box>
-        <Box>
           <Box
-            component="ul"
             sx={{
-              margin: "0 0 1px 18px",
-              color: "#0F1111",
-              padding: 0,
-              marginBottom: "0!important",
+              "&:last-child": {
+                marginBottom: 0,
+              },
+              boxSizing: "border-box",
+              color: "#0f1111",
+              fontSize: "14px",
+              lineHeight: "20px",
+              WebkitTextSizeAdjust: "100%",
             }}
           >
             <Box
-              component="li"
+              component="form"
               sx={{
-                listStyle: "none",
-                marginBottom: "5.5px",
-                wordWrap: "break-word",
-                margin: 0,
-                color: "#0F1111",
+                marginBottom: "8px !important",
+                boxSizing: "border-box",
+                color: "#0f1111",
                 fontSize: "14px",
                 lineHeight: "20px",
+                WebkitTextSizeAdjust: "100%",
               }}
             >
               <Box
-                component="span"
                 sx={{
-                  color: "#0F1111",
-                  wordWrap: "break-word",
+                  marginBottom: "12px !important",
+                  boxSizing: "border-box",
+                  display: "block",
+                  unicodeBidi: "isolate",
+                  color: "#0f1111",
+                  fontSize: "14px",
+                  lineHeight: "20px",
+                  WebkitTextSizeAdjust: "100%",
                 }}
               >
                 <Box
-                  component="span"
                   sx={{
-                    fontWeight: "700!important",
-                    color: "#0F1111",
-                    listStyle: "none",
-                    wordWrap: "break-word",
+                    marginBottom: "4px !important",
+                  }}
+                ></Box>
+                <Box
+                  sx={{
+                    marginBottom: "4px !important",
+                    width: "100%",
+                    boxSizing: "border-box",
+                    display: "block",
+                    unicodeBidi: "isolate",
+                    color: "#0f1111",
                     fontSize: "14px",
                     lineHeight: "20px",
+                    WebkitTextSizeAdjust: "100%",
+
+                    "&::after,&::before": {
+                      display: "table",
+                      content: '""',
+                      lineHeight: 0,
+                      fontSize: 0,
+                    },
                   }}
                 >
-                  Dimensions du produit (L x l x h) &rlm; : &lrm;
+                  <Box
+                    component="label"
+                    sx={{
+                      display: "inline",
+                      fontWeight: 700,
+                      paddingLeft: "2px",
+                      paddingBottom: "2px",
+                      MozBoxSizing: "border-box",
+                      WebkitBoxSizing: "border-box",
+                      boxSizing: "border-box",
+                      color: "#0f1111",
+                      fontSize: "14px",
+                      lineHeight: "20px",
+                      WebkitTextSizeAdjust: "100%",
+                    }}
+                  >
+                    Taille:
+                  </Box>
                 </Box>
-                <Box component="span">{vDimensions}</Box>
+                <Box
+                  component="span"
+                  sx={{
+                    border: "2px solid #fff",
+                    display: "inline-block",
+                    borderRadius: "4px",
+                    boxSizing: "border-box",
+                    color: "#0f1111",
+                    fontSize: "14px",
+                    lineHeight: "20px",
+                    WebkitTextSizeAdjust: "100%",
+                    background: "#f0f2f2",
+                  }}
+                >
+                  <Box
+                    component="span"
+                    sx={{
+                      position: "relative",
+                      boxSizing: "border-box",
+                      color: "#0f1111",
+                      fontSize: "14px",
+                      lineHeight: "20px",
+                      WebkitTextSizeAdjust: "100%",
+                      background: "#f0f2f2",
+                    }}
+                  >
+                    <Box
+                      component="select"
+                      name="taille"
+                      autoComplete="off"
+                      role="combobox"
+                      tabIndex="0"
+                      id="taille"
+                      value={selectedSize}
+                      onChange={handleSizeChange}
+                      sx={{
+                        display: "inline",
+                        opacity: 1,
+                        position: "static",
+                        maxWidth: "100%",
+                        borderRadius: "4px",
+                        padding: "3px",
+                        border: "1px #ddd solid",
+                        WebkitTransition: "all .1s linear",
+                        transition: "all .1s linear",
+                        lineHeight: "19px",
+                        color: "#0f1111",
+                        margin: 0,
+                        fontSize: "100%",
+                        verticalAlign: "middle",
+                        fontFamily: "inherit",
+                        boxSizing: "border-box",
+                        overflow: "visible !important",
+                        WebkitTextSizeAdjust: "100%",
+                        background: "#f0f2f2",
+                        border: "1px #ddd solid",
+                        fontWeight: 500,
+                      }}
+                    >
+                      <Box component="option" value="" sx={{}}>
+                        Sélectionner
+                      </Box>
+                      {selectedprd[0]?.prdDetailsBySize?.map((detail) => (
+                        <Box
+                          component="option"
+                          key={detail.size}
+                          value={detail.size}
+                          sx={{}}
+                        >
+                          {detail.size}
+                        </Box>
+                      ))}
+                    </Box>
+                  </Box>
+                </Box>
               </Box>
-            </Box>
-            <Box
-              component="li"
-              sx={{
-                listStyle: "none",
-                marginBottom: "5.5px",
-                wordWrap: "break-word",
-                margin: 0,
-                color: "#0F1111",
-                fontSize: "14px",
-                lineHeight: "20px",
-              }}
-            >
               <Box
-                component="span"
                 sx={{
-                  color: "#0F1111",
-                  wordWrap: "break-word",
+                  marginBottom: "8px !important",
+                  color: "#0f1111",
                 }}
               >
                 <Box
-                  component="span"
                   sx={{
-                    fontWeight: "700!important",
-                    color: "#0F1111",
-                    listStyle: "none",
-                    wordWrap: "break-word",
-                    fontSize: "14px",
-                    lineHeight: "20px",
+                    width: "100%",
+
+                    "&::before": {
+                      display: "table",
+                      content: '""',
+                      lineHeight: 0,
+                      fontSize: 0,
+                    },
+
+                    "&::after": {
+                      clear: "both",
+                    },
+
+                    "&::after": {
+                      display: "table",
+                      content: '""',
+                      lineHeight: 0,
+                      fontSize: 0,
+                    },
                   }}
                 >
-                  Numéro de fabrication &rlm; : &lrm;
+                  <Box
+                    component="label"
+                    sx={{
+                      display: "inline",
+                      fontWeight: 700,
+                      paddingLeft: "2px",
+                      paddingBottom: "2px",
+                      color: "#0f1111",
+                      fontSize: "14px",
+                      lineHeight: "20px",
+                      WebkitTextSizeAdjust: "100%",
+                    }}
+                  >
+                    Couleur:
+                  </Box>
+                  <Box
+                    component="span"
+                    sx={{
+                      boxSizing: "border-box",
+                      color: "#0f1111",
+                      fontSize: "14px",
+                      lineHeight: "20px",
+                      WebkitTextSizeAdjust: "100%",
+                    }}
+                  >
+                    &nbsp;{currentColor}
+                  </Box>
                 </Box>
-                <Box component="span">{vNumfab}</Box>
-              </Box>
-            </Box>
-            <Box
-              component="li"
-              sx={{
-                listStyle: "none",
-                marginBottom: "5.5px",
-                wordWrap: "break-word",
-                margin: 0,
-                color: "#0F1111",
-                fontSize: "14px",
-                lineHeight: "20px",
-              }}
-            >
-              <Box
-                component="span"
-                sx={{
-                  color: "#0F1111",
-                  wordWrap: "break-word",
-                }}
-              >
                 <Box
-                  component="span"
+                  component="ul"
                   sx={{
-                    fontWeight: "700!important",
-                    color: "#0F1111",
-                    listStyle: "none",
-                    wordWrap: "break-word",
-                    fontSize: "14px",
-                    lineHeight: "20px",
+                    margin: "0 0 0 18px",
+                    marginLeft: "-6px",
+                    display: "block",
+                    color: "#0f1111",
+                    padding: 0,
+
+                    marginTop: "4px !important",
+
+                    "&::after, &::before": {
+                      display: "table",
+                      content: '""',
+                      lineHeight: 0,
+                      fontSize: 0,
+                    },
                   }}
                 >
-                  Fabricant &rlm; : &lrm;
+                  <HandlesImgColors />
                 </Box>
-                <Box component="span">{vFabricant}</Box>
-              </Box>
-            </Box>
-            <Box
-              component="li"
-              sx={{
-                listStyle: "none",
-                marginBottom: "5.5px",
-                wordWrap: "break-word",
-                margin: 0,
-                color: "#0F1111",
-                fontSize: "14px",
-                lineHeight: "20px",
-              }}
-            >
-              <Box
-                component="span"
-                sx={{
-                  color: "#0F1111",
-                  wordWrap: "break-word",
-                }}
-              >
-                <Box
-                  component="span"
-                  sx={{
-                    fontWeight: "700!important",
-                    color: "#0F1111",
-                    listStyle: "none",
-                    wordWrap: "break-word",
-                    fontSize: "14px",
-                    lineHeight: "20px",
-                  }}
-                >
-                  Poids &rlm; : &lrm;
-                </Box>
-                <Box component="span">{vPoids}</Box>
-              </Box>
-            </Box>
-            <Box
-              component="li"
-              sx={{
-                listStyle: "none",
-                marginBottom: "5.5px",
-                wordWrap: "break-word",
-                margin: 0,
-                color: "#0F1111",
-                fontSize: "14px",
-                lineHeight: "20px",
-              }}
-            >
-              <Box
-                component="span"
-                sx={{
-                  color: "#0F1111",
-                  wordWrap: "break-word",
-                }}
-              >
-                <Box
-                  component="span"
-                  sx={{
-                    fontWeight: "700!important",
-                    color: "#0F1111",
-                    listStyle: "none",
-                    wordWrap: "break-word",
-                    fontSize: "14px",
-                    lineHeight: "20px",
-                  }}
-                >
-                  Pays d'origibne &rlm; : &lrm;
-                </Box>
-                <Box component="span">{vPaysorigibne}</Box>
               </Box>
             </Box>
           </Box>
         </Box>
       </Box>
-    </Box>
-  );
 
-  const descProduit = (
-    <Box>
+      {qteemax === 0 && selectedSize !== "Sélectionner" && (
+        <Box>
+          <Box
+            sx={{
+              paddingTop: "4px",
+              marginTop: "0 !important",
+              marginBottom: "12px !important",
+              color: "#0f1111",
+              fontSize: "14px",
+              lineHeight: "20px",
+              WebkitTextSizeAdjust: "100%",
+            }}
+          >
+            <Box
+              component="span"
+              sx={{
+                MozBoxSizing: "border-box",
+                WebkitBoxSizing: "border-box",
+                boxSizing: "border-box",
+                color: "#0f1111",
+                fontSize: "14px",
+                lineHeight: "20px",
+                WebkitTextSizeAdjust: "100%",
+              }}
+            >
+              <Box
+                component="span"
+                sx={{
+                  color: "#007600 !important",
+                  textRendering: "optimizeLegibility",
+                  fontSize: "18px !important",
+                  lineHeight: "24px !important",
+                }}
+              >
+                Actuellement indisponible
+              </Box>
+            </Box>
+          </Box>
+        </Box>
+      )}
+
       <Box>
         <Box
           sx={{
+            maxHeight: "none",
+            // height: "400px",
+            height: "auto",
+            overflow: "hidden",
+            position: "relative",
+            marginBottom: "16px !important",
             width: "100%",
-
             "&::after, &::before": {
               display: "table",
               content: '""',
               lineHeight: 0,
               fontSize: 0,
             },
-
-            "&::after": {
-              clear: "both",
-            },
-          }}
-        >
-          <Box>
-            <Box
-              sx={{
-                background:
-                  "-webkit-linear-gradient(to bottom,rgba(0,0,0,.14),rgba(0,0,0,.03) 3px,transparent)",
-                background:
-                  "linear-gradient(to bottom,rgba(0,0,0,.14),rgba(0,0,0,.03) 3px,transparent)",
-                height: "44px",
-                marginBottom: "-18px",
-                zIndex: 0,
-                zoom: 1,
-
-                marginTop: "24px",
-
-                "&::after": {
-                  background:
-                    "-webkit-linear-gradient(to right,#fff,rgba(255,255,255,0),#fff)",
-                  background:
-                    "linear-gradient(to right,#fff,rgba(255,255,255,0),#fff)",
-                  backgroundColor: "transparent",
-                  content: '""',
-                  display: "block",
-                  height: "44px",
-                  width: "100%",
-                  zIndex: 1,
-                },
-              }}
-            ></Box>
-          </Box>
-          <Box
-            component="h2"
-            sx={{
-              color: "#CC6600",
-              fontSize: "medium",
-              margin: "0 0 0.25em",
-              fontWeight: 700,
-              lineHeight: "32px",
-              paddingBottom: "4px",
-              textRendering: "optimizeLegibility",
-              WebkitTextSizeAdjust: "100%",
-            }}
-          >
-            Description du produit
-          </Box>
-          <Box
-            sx={{
-              color: "#333333",
-              wordWrap: "break-word",
-              fontSize: "small",
-              lineHeight: "initial",
-              margin: "0.5em 0px 0em 25px",
-              marginBottom: "8px!important",
-            }}
-          >
-            <Box
-              component="p"
-              sx={{
-                margin: "0em 0 1em 1em",
-              }}
-            >
-              <Box
-                component="span"
-                sx={{
-                  color: "#333333",
-                  wordWrap: "break-word",
-                  fontSize: "small",
-                  lineHeight: "initial",
-                }}
-              >
-                <Box component="span">
-                  {vDescdet}
-                  <br />
-                </Box>
-                Caracteristiques :<br />
-                {vDetprd1 && (
-                  <Box component="span">
-                    -&nbsp;{vDetprd1} <br />
-                  </Box>
-                )}
-                {vDetprd2 && (
-                  <Box component="span">
-                    -&nbsp;{vDetprd2} <br />
-                  </Box>
-                )}
-                {vDetprd3 && (
-                  <Box component="span">
-                    -&nbsp;{vDetprd3} <br />
-                  </Box>
-                )}
-                {vDetprd4 && (
-                  <Box component="span">
-                    -&nbsp;{vDetprd4} <br />
-                  </Box>
-                )}
-                {vDetprd5 && (
-                  <Box component="span">
-                    -&nbsp;{vDetprd5} <br />
-                  </Box>
-                )}
-                {vDetprd6 && (
-                  <Box component="span">
-                    -&nbsp;{vDetprd6} <br />
-                  </Box>
-                )}
-                {vDetprd7 && (
-                  <Box component="span">
-                    -&nbsp;{vDetprd7} <br />
-                  </Box>
-                )}
-                {vDetprd8 && (
-                  <Box component="span">
-                    -&nbsp;{vDetprd8} <br />
-                  </Box>
-                )}
-                {vDetprd9 && (
-                  <Box component="span">
-                    -&nbsp;{vDetprd9} <br />
-                  </Box>
-                )}
-                {vDetprd10 && (
-                  <Box component="span">
-                    -&nbsp;{vDetprd10} <br />
-                  </Box>
-                )}
-              </Box>
-            </Box>
-          </Box>
-        </Box>
-      </Box>
-    </Box>
-  );
-
-  const ficheTecProduit = (
-    <Box
-      sx={{
-        "@media screen and (max-width: 1200px)": {
-          maxWidth: "950px",
-        },
-
-        marginLeft: "auto",
-
-        marginRight: "auto",
-        width: "100%",
-        flexWrap: "wrap",
-        flex: "0 1 auto",
-        display: "flex",
-        fontSize: ".875rem",
-        color: "#282828",
-        WebkitFontSmoothing: "antialiased",
-        WebkitTextSizeAdjust: "100%",
-
-        backgroundColor: "#f5f5f5",
-      }}
-    >
-      <Box
-        sx={{
-          flexBasis: "75%",
-          maxWidth: "75%",
-          minWidth: "75%",
-          width: "75%",
-          paddingLeft: "8px",
-          paddingRight: "8px",
-          color: "#282828",
-          fontSize: ".875rem",
-        }}
-      >
-        <Box
-          component="section"
-          sx={{
-            fontSize: "1rem",
-            marginTop: "16px",
-            boxShadow: "0 2px 5px 0 rgb(0 0 0 / 5%)",
-            position: "relative",
-            backgroundColor: "#fff",
-            borderRadius: "4px",
-            display: "block",
-            color: "#282828",
           }}
         >
           <Box
-            component="header"
             sx={{
-              paddingBottom: "8px",
-              paddingTop: "8px",
-              borderBottom: "1px solid #ededed",
-              display: "block",
-              fontSize: "1rem",
-              color: "#282828",
+              paddingBottom: "20px",
+              overflow: "hidden",
+              position: "relative",
             }}
           >
             <Box
-              component="h2"
+              component="h3"
               sx={{
-                fontSize: "1.25rem",
-                fontWeight: 500,
-                paddingLeft: "16px",
-                paddingBottom: "4px",
-                paddingRight: "16px",
-                paddingTop: "4px",
+                padding: 0,
                 margin: 0,
-                color: "#282828",
+                fontSize: "18px",
+                fontWeight: 700,
+                lineHeight: "24px",
+                paddingBottom: "14px",
+                paddingTop: "4px",
+                textRendering: "optimizeLegibility",
+                color: "#0f1111",
               }}
             >
-              Fiche technique
+              Détails sur le produit
             </Box>
-          </Box>
-
-          <Box
-            sx={{
-              padding: "8px",
-              "@media screen and (max-width: 1200px)": {
-                maxWidth: "950px",
-              },
-
-              marginLeft: "auto",
-              marginRight: "auto",
-              width: "100%",
-              flexWrap: "wrap",
-              flex: "0 1 auto",
-              display: "flex",
-              fontSize: "1rem",
-              color: "#282828",
-            }}
-          >
             <Box
-              component="article"
               sx={{
-                paddingBottom: "8px",
-                paddingTop: "8px",
-                flexBasis: "50%",
-                maxWidth: "50%",
-                minWidth: "50%",
-                width: "50%",
-                paddingLeft: "8px",
-                paddingRight: "8px",
-                display: "block",
-                fontSize: "1rem",
-                color: "#282828",
+                lineHeight: "20px",
+                marginBottom: "8px",
+                position: "relative",
+                color: "#0f1111",
+                fontSize: "14px",
               }}
             >
               <Box
                 sx={{
-                  height: "100%",
-                  border: "1px solid #ededed",
-                  borderRadius: "4px",
-                  fontSize: "1rem",
-                  color: "#282828",
+                  padding: 0,
+                  paddingLeft: "140px",
+                  position: "relative",
+                  lineHeight: "20px",
+                  color: "#0f1111",
+                  fontSize: "14px",
+                  WebkitTextSizeAdjust: "100%",
+
+                  "&::after, &::before": {
+                    display: "table",
+                    content: '""',
+                    lineHeight: 0,
+                    fontSize: 0,
+                  },
                 }}
               >
                 <Box
-                  component="h2"
                   sx={{
-                    fontSize: ".875rem",
-                    textTransform: "uppercase",
-                    fontWeight: 500,
-                    padding: "16px",
-                    borderBottom: "1px solid #ededed",
-                    margin: 0,
-                    color: "#282828",
-                  }}
-                >
-                  Principales caractéristiques
-                </Box>
-                <Box
-                  sx={{
-                    padding: "16px",
-                    fontSize: "1rem",
-                    color: "#282828",
+                    width: "140px",
+                    marginLeft: "-140px",
+                    float: "left",
+                    paddingRight: 0,
+                    position: "relative",
+                    overflow: "visible",
+                    zoom: 1,
+                    minHeight: "1px",
+                    lineHeight: "20px",
+                    color: "#0f1111",
+                    fontSize: "14px",
+                    WebkitTextSizeAdjust: "100%",
                   }}
                 >
                   <Box
-                    component="p"
+                    component="span"
                     sx={{
-                      margin: "0px",
-                      padding: "0px",
-                      boxSizing: "border-box",
-                      border: "0px",
-                      fontStretch: "inherit",
-                      lineHeight: "1.3em",
-                      verticalAlign: "baseline",
-                      color: "rgb(98, 98, 98)",
-                    }}
-                  ></Box>
-                  <Box
-                    component="ul"
-                    sx={{
-                      paddingLeft: "16px",
-                      margin: 0,
-
-                      fontSize: "1rem",
-                      color: "#282828",
+                      fontWeight: 600,
+                      wordBreak: "break-word",
+                      hyphens: "auto",
+                      lineHeight: "20px",
+                      color: "#0f1111",
+                      fontSize: "14px",
+                      WebkitTextSizeAdjust: "100%",
                     }}
                   >
-                    {vPcaract1 && (
-                      <Box
-                        component="li"
-                        sx={{
-                          margin: 0,
-                          padding: 0,
-                          display: "list-item",
-                          textAlign: "-webkit-match-parent",
-                          fontSize: "1rem",
-                          color: "#282828",
-
-                          "::marker": {
-                            unicodeBidi: "isolate",
-                            fontVariantNumeric: "tabular-nums",
-                            textTransform: "none",
-                            textIndent: "0px !important",
-                            textAlign: "start !important",
-                            textAlignLast: "start !important",
-                          },
-                        }}
-                      >
-                        {vPcaract1}
-                      </Box>
-                    )}
-                    {vPcaract2 && (
-                      <Box
-                        component="li"
-                        sx={{
-                          margin: 0,
-                          padding: 0,
-                          display: "list-item",
-                          textAlign: "-webkit-match-parent",
-                          fontSize: "1rem",
-                          color: "#282828",
-
-                          "::marker": {
-                            unicodeBidi: "isolate",
-                            fontVariantNumeric: "tabular-nums",
-                            textTransform: "none",
-                            textIndent: "0px !important",
-                            textAlign: "start !important",
-                            textAlignLast: "start !important",
-                          },
-                        }}
-                      >
-                        {vPcaract2}
-                      </Box>
-                    )}
-                    {vPcaract3 && (
-                      <Box
-                        component="li"
-                        sx={{
-                          margin: 0,
-                          padding: 0,
-                          display: "list-item",
-                          textAlign: "-webkit-match-parent",
-                          fontSize: "1rem",
-                          color: "#282828",
-
-                          "::marker": {
-                            unicodeBidi: "isolate",
-                            fontVariantNumeric: "tabular-nums",
-                            textTransform: "none",
-                            textIndent: "0px !important",
-                            textAlign: "start !important",
-                            textAlignLast: "start !important",
-                          },
-                        }}
-                      >
-                        {vPcaract3}
-                      </Box>
-                    )}
-                    {vPcaract4 && (
-                      <Box
-                        component="li"
-                        sx={{
-                          margin: 0,
-                          padding: 0,
-                          display: "list-item",
-                          textAlign: "-webkit-match-parent",
-                          fontSize: "1rem",
-                          color: "#282828",
-
-                          "::marker": {
-                            unicodeBidi: "isolate",
-                            fontVariantNumeric: "tabular-nums",
-                            textTransform: "none",
-                            textIndent: "0px !important",
-                            textAlign: "start !important",
-                            textAlignLast: "start !important",
-                          },
-                        }}
-                      >
-                        {vPcaract4}
-                      </Box>
-                    )}
-                    {vPcaract5 && (
-                      <Box
-                        component="li"
-                        sx={{
-                          margin: 0,
-                          padding: 0,
-                          display: "list-item",
-                          textAlign: "-webkit-match-parent",
-                          fontSize: "1rem",
-                          color: "#282828",
-
-                          "::marker": {
-                            unicodeBidi: "isolate",
-                            fontVariantNumeric: "tabular-nums",
-                            textTransform: "none",
-                            textIndent: "0px !important",
-                            textAlign: "start !important",
-                            textAlignLast: "start !important",
-                          },
-                        }}
-                      >
-                        {vPcaract5}
-                      </Box>
-                    )}
-                    {vPcaract6 && (
-                      <Box
-                        component="li"
-                        sx={{
-                          margin: 0,
-                          padding: 0,
-                          display: "list-item",
-                          textAlign: "-webkit-match-parent",
-                          fontSize: "1rem",
-                          color: "#282828",
-
-                          "::marker": {
-                            unicodeBidi: "isolate",
-                            fontVariantNumeric: "tabular-nums",
-                            textTransform: "none",
-                            textIndent: "0px !important",
-                            textAlign: "start !important",
-                            textAlignLast: "start !important",
-                          },
-                        }}
-                      >
-                        {vPcaract6}
-                      </Box>
-                    )}
-                    {vPcaract7 && (
-                      <Box
-                        component="li"
-                        sx={{
-                          margin: 0,
-                          padding: 0,
-                          display: "list-item",
-                          textAlign: "-webkit-match-parent",
-                          fontSize: "1rem",
-                          color: "#282828",
-
-                          "::marker": {
-                            unicodeBidi: "isolate",
-                            fontVariantNumeric: "tabular-nums",
-                            textTransform: "none",
-                            textIndent: "0px !important",
-                            textAlign: "start !important",
-                            textAlignLast: "start !important",
-                          },
-                        }}
-                      >
-                        {vPcaract7}
-                      </Box>
-                    )}
-                    {vPcaract8 && (
-                      <Box
-                        component="li"
-                        sx={{
-                          margin: 0,
-                          padding: 0,
-                          display: "list-item",
-                          textAlign: "-webkit-match-parent",
-                          fontSize: "1rem",
-                          color: "#282828",
-
-                          "::marker": {
-                            unicodeBidi: "isolate",
-                            fontVariantNumeric: "tabular-nums",
-                            textTransform: "none",
-                            textIndent: "0px !important",
-                            textAlign: "start !important",
-                            textAlignLast: "start !important",
-                          },
-                        }}
-                      >
-                        {vPcaract8}
-                      </Box>
-                    )}
-                    {vPcaract9 && (
-                      <Box
-                        component="li"
-                        sx={{
-                          margin: 0,
-                          padding: 0,
-                          display: "list-item",
-                          textAlign: "-webkit-match-parent",
-                          fontSize: "1rem",
-                          color: "#282828",
-
-                          "::marker": {
-                            unicodeBidi: "isolate",
-                            fontVariantNumeric: "tabular-nums",
-                            textTransform: "none",
-                            textIndent: "0px !important",
-                            textAlign: "start !important",
-                            textAlignLast: "start !important",
-                          },
-                        }}
-                      >
-                        {vPcaract9}
-                      </Box>
-                    )}
-                    {vPcaract10 && (
-                      <Box
-                        component="li"
-                        sx={{
-                          margin: 0,
-                          padding: 0,
-                          display: "list-item",
-                          textAlign: "-webkit-match-parent",
-                          fontSize: "1rem",
-                          color: "#282828",
-
-                          "::marker": {
-                            unicodeBidi: "isolate",
-                            fontVariantNumeric: "tabular-nums",
-                            textTransform: "none",
-                            textIndent: "0px !important",
-                            textAlign: "start !important",
-                            textAlignLast: "start !important",
-                          },
-                        }}
-                      >
-                        {vPcaract10}
-                      </Box>
-                    )}
+                    <Box
+                      component="span"
+                      sx={{
+                        wordBreak: "break-word",
+                        hyphens: "auto",
+                        color: "#0f1111 !important",
+                        fontWeight: 600,
+                        lineHeight: "20px",
+                        fontSize: "14px",
+                        WebkitTextSizeAdjust: "100%",
+                      }}
+                    >
+                      Composition du matériau
+                    </Box>
                   </Box>
                 </Box>
+                {vMatériau && (
+                  <Box
+                    sx={{
+                      paddingLeft: "6%",
+                      float: "left",
+                      width: "100%",
+                      position: "relative",
+                      overflow: "visible",
+                      zoom: 1,
+                      minHeight: "1px",
+                      lineHeight: "20px",
+                      color: "#0f1111",
+                      fontSize: "14px",
+                      WebkitTextSizeAdjust: "100%",
+                    }}
+                  >
+                    <Box
+                      component="span"
+                      sx={{
+                        fontWeight: "400",
+                        wordBreak: "break-word",
+                        hyphens: "auto",
+                        color: "#0f1111",
+                        lineHeight: "20px",
+                        fontSize: "14px",
+                        WebkitTextSizeAdjust: "100%",
+                      }}
+                    >
+                      <Box
+                        component="span"
+                        sx={{
+                          wordBreak: "break-word",
+                          hyphens: "auto",
+                          color: "#0f1111 !important",
+                          fontWeight: 400,
+                          lineHeight: "20px",
+                          fontSize: "14px",
+                          WebkitTextSizeAdjust: "100%",
+                        }}
+                      >
+                        {vMatériau}
+                      </Box>
+                    </Box>
+                  </Box>
+                )}
               </Box>
             </Box>
             <Box
-              component="article"
+              component="hr"
               sx={{
-                paddingBottom: "8px",
-                paddingTop: "8px",
-                flexBasis: "50%",
-                maxWidth: "50%",
-                minWidth: "50%",
-                width: "50%",
-                paddingLeft: "8px",
-                paddingRight: "8px",
+                marginBottom: "12px !important",
+                marginTop: "65px !important",
+                backgroundColor: "transparent",
+                borderBottomWidth: 0,
+                borderLeftWidth: 0,
+                borderRightWidth: 0,
+                borderTop: "1px solid #bbbfbf",
                 display: "block",
-                fontSize: "1rem",
-                color: "#282828",
+                height: "1px",
+                lineHeight: "19px",
+                color: "#0f1111",
+                fontSize: "14px",
+                WebkitTextSizeAdjust: "100%",
+              }}
+            ></Box>
+            <Box
+              component="h3"
+              sx={{
+                padding: 0,
+                margin: 0,
+                fontSize: "18px",
+                fontWeight: 700,
+                lineHeight: "24px",
+                paddingBottom: "14px",
+                paddingTop: "4px",
+                textRendering: "optimizeLegibility",
+                color: "#0f1111",
+                webkitTextSizeAdjust: "100%",
               }}
             >
+              À propos de cet article
+            </Box>
+            {vDescdet && (
               <Box
+                component="ul"
                 sx={{
-                  height: "100%",
-                  border: "1px solid #ededed",
-                  borderRadius: "4px",
-                  fontSize: "1rem",
-                  color: "#282828",
+                  padding: 0,
+                  margin: "0 0 0 18px",
+                  color: "#0f1111",
+                  marginBottom: "8px !important",
+                  fontSize: "14px",
+                  lineHeight: "20px",
+                  WebkitTextSizeAdjust: "100%",
                 }}
               >
                 <Box
-                  component="h2"
+                  component="span"
                   sx={{
-                    fontSize: ".875rem",
-                    textTransform: "uppercase",
-                    fontWeight: 500,
-                    padding: "16px",
-                    borderBottom: "1px solid #ededed",
-                    margin: 0,
-                    color: "#282828",
+                    fontWeight: 400,
+                    color: "#0f1111",
+                    fontSize: "14px",
+                    lineHeight: "20px",
+                    WebkitTextSizeAdjust: "100%",
                   }}
                 >
-                  Descriptif technique
-                </Box>
-                <Box
-                  component="ul"
-                  sx={{
-                    marginBottom: "4px",
-                    marginTop: "4px",
-                    paddingLeft: "16px",
-                    paddingBottom: "8px",
-                    paddingRight: "16px",
-                    paddingTop: "8px",
-                    listStyle: "none",
-                    fontSize: "1rem",
-                    fontSize: "1rem",
-                    color: "#282828",
-                  }}
-                >
-                  {vModèle && (
+                  <Box
+                    component="li"
+                    sx={{
+                      wordWrap: "break-word",
+                      margin: 0,
+                      listStyle: "disc",
+                      display: "list-item",
+                      textAlign: "-webkit-match-parent",
+                      unicodeBidi: "isolate",
+                      fontWeight: 400,
+                      color: "#0f1111",
+                      fontSize: "14px",
+                      lineHeight: "20px",
+                      WebkitTextSizeAdjust: "100%",
+
+                      "& li::marker": {
+                        unicodeBidi: "isolate",
+                        fontVariantNumeric: "tabular-nums",
+                        textTransform: "none",
+                        textIndent: "0px !important",
+                        textAlign: "start !important",
+                        textAlignLast: "start !important",
+                      },
+                    }}
+                  >
                     <Box
-                      component="li"
+                      component="span"
                       sx={{
-                        paddingBottom: "4px",
-                        margin: 0,
-                        display: "list-item",
+                        color: "!important",
+                        fontSize: "14px !important",
+                        lineHeight: "20px !important",
+                        wordWrap: "break-word",
+                        listStyle: "disc",
                         textAlign: "-webkit-match-parent",
-                        paddingTop: "4px",
-                        listStyle: "none",
-                        fontSize: "1rem",
-                        color: "#282828",
+                        fontWeight: 400,
+                        WebkitTextSizeAdjust: "100%",
                       }}
                     >
-                      <Box
-                        component="span"
-                        sx={{
-                          fontWeight: 700,
-                          fontSize: "1rem",
-                          color: "#282828",
-                        }}
-                      >
-                        Modèle&nbsp;
-                      </Box>
-                      :&nbsp;{vModèle}
+                      {vDescdet}
                     </Box>
-                  )}
-                  {vNumfab && (
-                    <Box
-                      component="li"
-                      sx={{
-                        paddingBottom: "4px",
-                        margin: 0,
-                        display: "list-item",
-                        textAlign: "-webkit-match-parent",
-                        paddingTop: "4px",
-                        listStyle: "none",
-                        fontSize: "1rem",
-                        color: "#282828",
-                      }}
-                    >
-                      <Box
-                        component="span"
-                        sx={{
-                          fontWeight: 700,
-                          fontSize: "1rem",
-                          color: "#282828",
-                        }}
-                      >
-                        N° fabrication&nbsp;
-                      </Box>
-                      :&nbsp;{vNumfab}
-                    </Box>
-                  )}
-                  {vPoids && (
-                    <Box
-                      component="li"
-                      sx={{
-                        paddingBottom: "4px",
-                        margin: 0,
-                        display: "list-item",
-                        textAlign: "-webkit-match-parent",
-                        paddingTop: "4px",
-                        listStyle: "none",
-                        fontSize: "1rem",
-                        color: "#282828",
-                      }}
-                    >
-                      <Box
-                        component="span"
-                        sx={{
-                          fontWeight: 700,
-                          fontSize: "1rem",
-                          color: "#282828",
-                        }}
-                      >
-                        Poids&nbsp;
-                      </Box>
-                      :&nbsp;{vPoids}
-                    </Box>
-                  )}
-                  {vPuissance && (
-                    <Box
-                      component="li"
-                      sx={{
-                        paddingBottom: "4px",
-                        margin: 0,
-                        display: "list-item",
-                        textAlign: "-webkit-match-parent",
-                        paddingTop: "4px",
-                        listStyle: "none",
-                        fontSize: "1rem",
-                        color: "#282828",
-                      }}
-                    >
-                      <Box
-                        component="span"
-                        sx={{
-                          fontWeight: 700,
-                          fontSize: "1rem",
-                          color: "#282828",
-                        }}
-                      >
-                        Puissance&nbsp;
-                      </Box>
-                      :&nbsp;{vPuissance}
-                    </Box>
-                  )}
-                  {vContenance && (
-                    <Box
-                      component="li"
-                      sx={{
-                        paddingBottom: "4px",
-                        margin: 0,
-                        display: "list-item",
-                        textAlign: "-webkit-match-parent",
-                        paddingTop: "4px",
-                        listStyle: "none",
-                        fontSize: "1rem",
-                        color: "#282828",
-                      }}
-                    >
-                      <Box
-                        component="span"
-                        sx={{
-                          fontWeight: 700,
-                          fontSize: "1rem",
-                          color: "#282828",
-                        }}
-                      >
-                        Contenance&nbsp;
-                      </Box>
-                      :&nbsp;{vContenance}
-                    </Box>
-                  )}
-                  {vTension && (
-                    <Box
-                      component="li"
-                      sx={{
-                        paddingBottom: "4px",
-                        margin: 0,
-                        display: "list-item",
-                        textAlign: "-webkit-match-parent",
-                        paddingTop: "4px",
-                        listStyle: "none",
-                        fontSize: "1rem",
-                        color: "#282828",
-                      }}
-                    >
-                      <Box
-                        component="span"
-                        sx={{
-                          fontWeight: 700,
-                          fontSize: "1rem",
-                          color: "#282828",
-                        }}
-                      >
-                        Tension&nbsp;
-                      </Box>
-                      :&nbsp;{vTension}
-                    </Box>
-                  )}
+                  </Box>
                 </Box>
               </Box>
-            </Box>
+            )}
+
+            {vTailleDisp && (
+              <Box
+                component="ul"
+                sx={{
+                  padding: 0,
+                  margin: "0 0 0 18px",
+                  color: "#0f1111",
+                  marginBottom: "8px !important",
+                  fontSize: "14px",
+                  lineHeight: "20px",
+                  WebkitTextSizeAdjust: "100%",
+                }}
+              >
+                <Box
+                  component="span"
+                  sx={{
+                    fontWeight: 400,
+                    color: "#0f1111",
+                    fontSize: "14px",
+                    lineHeight: "20px",
+                    WebkitTextSizeAdjust: "100%",
+                  }}
+                >
+                  <Box
+                    component="li"
+                    sx={{
+                      wordWrap: "break-word",
+                      margin: 0,
+                      listStyle: "disc",
+                      display: "list-item",
+                      textAlign: "-webkit-match-parent",
+                      unicodeBidi: "isolate",
+                      fontWeight: 400,
+                      color: "#0f1111",
+                      fontSize: "14px",
+                      lineHeight: "20px",
+                      WebkitTextSizeAdjust: "100%",
+
+                      "& li::marker": {
+                        unicodeBidi: "isolate",
+                        fontVariantNumeric: "tabular-nums",
+                        textTransform: "none",
+                        textIndent: "0px !important",
+                        textAlign: "start !important",
+                        textAlignLast: "start !important",
+                      },
+                    }}
+                  >
+                    <Box
+                      component="span"
+                      sx={{
+                        color: "!important",
+                        fontSize: "14px !important",
+                        lineHeight: "20px !important",
+                        wordWrap: "break-word",
+                        listStyle: "disc",
+                        textAlign: "-webkit-match-parent",
+                        fontWeight: 400,
+                        WebkitTextSizeAdjust: "100%",
+                      }}
+                    >
+                      Taille disponibles &rlm; : &lrm;{vTailleDisp}
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            )}
+
+            {vPaysOrigine && (
+              <Box
+                component="ul"
+                sx={{
+                  padding: 0,
+                  margin: "0 0 0 18px",
+                  color: "#0f1111",
+                  marginBottom: "8px !important",
+                  fontSize: "14px",
+                  lineHeight: "20px",
+                  WebkitTextSizeAdjust: "100%",
+                }}
+              >
+                <Box
+                  component="span"
+                  sx={{
+                    fontWeight: 400,
+                    color: "#0f1111",
+                    fontSize: "14px",
+                    lineHeight: "20px",
+                    WebkitTextSizeAdjust: "100%",
+                  }}
+                >
+                  <Box
+                    component="li"
+                    sx={{
+                      wordWrap: "break-word",
+                      margin: 0,
+                      listStyle: "disc",
+                      display: "list-item",
+                      textAlign: "-webkit-match-parent",
+                      unicodeBidi: "isolate",
+                      fontWeight: 400,
+                      color: "#0f1111",
+                      fontSize: "14px",
+                      lineHeight: "20px",
+                      WebkitTextSizeAdjust: "100%",
+
+                      "& li::marker": {
+                        unicodeBidi: "isolate",
+                        fontVariantNumeric: "tabular-nums",
+                        textTransform: "none",
+                        textIndent: "0px !important",
+                        textAlign: "start !important",
+                        textAlignLast: "start !important",
+                      },
+                    }}
+                  >
+                    <Box
+                      component="span"
+                      sx={{
+                        color: "!important",
+                        fontSize: "14px !important",
+                        lineHeight: "20px !important",
+                        wordWrap: "break-word",
+                        listStyle: "disc",
+                        textAlign: "-webkit-match-parent",
+                        fontWeight: 400,
+                        WebkitTextSizeAdjust: "100%",
+                      }}
+                    >
+                      Pays d'origibne &rlm; : &lrm;{vPaysOrigine}
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            )}
+
+            {vPrincCaract && (
+              <Box
+                component="ul"
+                sx={{
+                  padding: 0,
+                  margin: "0 0 0 18px",
+                  color: "#0f1111",
+                  marginBottom: "8px !important",
+                  fontSize: "14px",
+                  lineHeight: "20px",
+                  WebkitTextSizeAdjust: "100%",
+                }}
+              >
+                <Box
+                  component="span"
+                  sx={{
+                    fontWeight: 400,
+                    color: "#0f1111",
+                    fontSize: "14px",
+                    lineHeight: "20px",
+                    WebkitTextSizeAdjust: "100%",
+                  }}
+                >
+                  <Box
+                    component="li"
+                    sx={{
+                      wordWrap: "break-word",
+                      margin: 0,
+                      listStyle: "disc",
+                      display: "list-item",
+                      textAlign: "-webkit-match-parent",
+                      unicodeBidi: "isolate",
+                      fontWeight: 400,
+                      color: "#0f1111",
+                      fontSize: "14px",
+                      lineHeight: "20px",
+                      WebkitTextSizeAdjust: "100%",
+
+                      "& li::marker": {
+                        unicodeBidi: "isolate",
+                        fontVariantNumeric: "tabular-nums",
+                        textTransform: "none",
+                        textIndent: "0px !important",
+                        textAlign: "start !important",
+                        textAlignLast: "start !important",
+                      },
+                    }}
+                  >
+                    <Box
+                      component="span"
+                      sx={{
+                        color: "!important",
+                        fontSize: "14px !important",
+                        lineHeight: "20px !important",
+                        wordWrap: "break-word",
+                        listStyle: "disc",
+                        textAlign: "-webkit-match-parent",
+                        fontWeight: 400,
+                        WebkitTextSizeAdjust: "100%",
+                      }}
+                    >
+                      Principale caracteristique &rlm; : &lrm;{vPrincCaract}
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            )}
+
+            {vMarque && (
+              <Box
+                component="ul"
+                sx={{
+                  padding: 0,
+                  margin: "0 0 0 18px",
+                  color: "#0f1111",
+                  marginBottom: "8px !important",
+                  fontSize: "14px",
+                  lineHeight: "20px",
+                  WebkitTextSizeAdjust: "100%",
+                }}
+              >
+                <Box
+                  component="span"
+                  sx={{
+                    fontWeight: 400,
+                    color: "#0f1111",
+                    fontSize: "14px",
+                    lineHeight: "20px",
+                    WebkitTextSizeAdjust: "100%",
+                  }}
+                >
+                  <Box
+                    component="li"
+                    sx={{
+                      wordWrap: "break-word",
+                      margin: 0,
+                      listStyle: "disc",
+                      display: "list-item",
+                      textAlign: "-webkit-match-parent",
+                      unicodeBidi: "isolate",
+                      fontWeight: 400,
+                      color: "#0f1111",
+                      fontSize: "14px",
+                      lineHeight: "20px",
+                      WebkitTextSizeAdjust: "100%",
+
+                      "& li::marker": {
+                        unicodeBidi: "isolate",
+                        fontVariantNumeric: "tabular-nums",
+                        textTransform: "none",
+                        textIndent: "0px !important",
+                        textAlign: "start !important",
+                        textAlignLast: "start !important",
+                      },
+                    }}
+                  >
+                    <Box
+                      component="span"
+                      sx={{
+                        color: "!important",
+                        fontSize: "14px !important",
+                        lineHeight: "20px !important",
+                        wordWrap: "break-word",
+                        listStyle: "disc",
+                        textAlign: "-webkit-match-parent",
+                        fontWeight: 400,
+                        WebkitTextSizeAdjust: "100%",
+                      }}
+                    >
+                      Marque &rlm; : &lrm;{vMarque}
+                    </Box>
+                  </Box>
+                </Box>
+              </Box>
+            )}
           </Box>
         </Box>
       </Box>
@@ -2874,6 +3474,9 @@ export const ProdViewUpSm = ({ selectedprd }) => {
 
   return (
     <Box
+      onMouseEnter={() => returnToMainImg(prevMainImage, currentColorImage)}
+      onMouseOver={() => returnToMainImg(prevMainImage, currentColorImage)}
+      onTouchStart={() => returnToMainImg(prevMainImage, currentColorImage)}
       sx={{
         margin: "0 auto",
         minWidth: "1000px",
@@ -2883,21 +3486,73 @@ export const ProdViewUpSm = ({ selectedprd }) => {
     >
       <Box
         sx={{
-          marginTop: "20px",
-          paddingTop: 0,
-          minWidth: "996px",
-          padding: "14px 18px 18px",
           margin: "0 auto",
+          padding: "0 8px !important",
+          marginTop: "10px !important",
+          minWidth: "996px",
         }}
       >
         <Box>
-          {rightCol}
-          {leftCol}
-          {centerCol}
+          <Box
+            sx={{
+              marginBottom: "12px !important",
+            }}
+          >
+            <Box
+              sx={{
+                width: "100%",
+
+                "&::after,&::before": {
+                  display: "table",
+                  content: '""',
+                  lineHeight: 0,
+                  fontSize: 0,
+                },
+              }}
+            >
+              {leftCol}
+              <Box
+                sx={{
+                  marginRight: 0,
+                  float: "right",
+                  width: "65.948%",
+                  minHeight: "1px",
+                  overflow: "visible",
+
+                  padding: "60px",
+                }}
+              >
+                <Box
+                  sx={{
+                    position: "relative",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      padding: 0,
+                      paddingRight: "244px",
+                      position: "relative",
+
+                      "&::after,&::before": {
+                        display: "table",
+                        content: '""',
+                        lineHeight: 0,
+                        fontSize: 0,
+                      },
+
+                      "&::after": {
+                        clear: "both",
+                      },
+                    }}
+                  >
+                    {centerCol}
+                    {rightCol}
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
         </Box>
-        {detailProduit}
-        {descProduit}
-        {ficheTecProduit}
       </Box>
     </Box>
   );

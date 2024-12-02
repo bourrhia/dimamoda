@@ -1,18 +1,11 @@
 "use client";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-//import { fetchCartSpinner } from "./cartSpinnerApi";
-//import { fetchCartDropdown } from "./cartDropdownApi";
-//
-//import { PURGE } from "redux-persist";
-//import { HYDRATE } from "next-redux-wrapper";
-
-//import { current } from "@reduxjs/toolkit";
 
 const initialState = {
   products: [],
   orderId: null,
 };
-/////////////////
+
 async function fetchCartSpinner(initialPost) {
   const response = await fetch("/api/cart/cartspinner", {
     method: "POST",
@@ -27,68 +20,118 @@ async function fetchCartSpinner(initialPost) {
   return result;
 }
 
-//////////////////
-
 export const cartSpinnerAsync = createAsyncThunk(
   "cart/fetchCartSpinner",
   async (initialPost) => {
-    // console.log("cartSpinnerAsync initialPost:", initialPost);
     const response = await fetchCartSpinner(initialPost);
-    // console.log("cartSpinnerAsync response:", response);
-    // console.log("cartSpinnerAsync response.data:", response.data);
     return response.data;
-    // return response;
   }
 );
 
-/*export const cartDropdownAsync = createAsyncThunk(
-  "cart/fetchCartDropdown",
-  async (initialPost, { dispatch }) => {
-    const response = await fetchCartDropdown(initialPost);
-    // The value we return becomes the `fulfilled` action payload
-    // dispatch(productUpdated(initialPost));
-
-    dispatch(productUpdated(initialPost));
-    return response.data;
-  }
-);*/
+const findProductIndex = (products, prodId, prodSize, prodColor) =>
+  products.findIndex(
+    (product) =>
+      product.prodId === parseInt(prodId) &&
+      product.prodSize === prodSize &&
+      product.prodColor === prodColor
+  );
 
 const cartSlice = createSlice({
   name: "cart",
-  //initialState: [],
   initialState,
   reducers: {
     productAdded(state, action) {
-      const productExists = state.products.find(
-        (item) => item.prodId === parseInt(action.payload.prodId)
+      const {
+        prodId,
+        prodImage,
+        prodQtee,
+        prodQteeDisp,
+        prodPrix,
+        prodSize,
+        prodColor,
+      } = action.payload;
+
+      const isValidProduct = () =>
+        prodId !== undefined &&
+        prodId !== null &&
+        prodImage !== undefined &&
+        prodImage !== null &&
+        prodQtee !== undefined &&
+        prodQtee !== null &&
+        prodQtee > 0 &&
+        prodQteeDisp !== undefined &&
+        prodQteeDisp !== null &&
+        prodQteeDisp > 0 &&
+        prodPrix !== undefined &&
+        prodPrix !== null &&
+        prodPrix > 0 &&
+        prodSize &&
+        prodSize !== "Sélectionner" &&
+        prodColor &&
+        prodColor !== "Sélectionner";
+
+      if (!isValidProduct()) {
+        console.warn("Invalid product data; product not added.");
+        return;
+      }
+
+      const productIndex = findProductIndex(
+        state.products,
+        prodId,
+        prodSize,
+        prodColor
       );
 
-      if (productExists) {
-        productExists.prodQtee = action.payload.prodQtee;
+      if (productIndex !== -1) {
+        state.products[productIndex] = {
+          ...state.products[productIndex],
+          prodImage,
+          prodQtee,
+          prodQteeDisp,
+          prodPrix,
+        };
       } else {
         state.products.push(action.payload);
       }
     },
     productUpdated(state, action) {
-      //const { prodId, prodQuantity } = action.payload;
-      const { prodId } = action.payload;
+      const { prodId, prodSize, prodColor, prodQuantity } = action.payload;
 
-      const existingProduct = state.products.find(
-        (product) => product.prodId === parseInt(prodId)
+      const productIndex = findProductIndex(
+        state.products,
+        prodId,
+        prodSize,
+        prodColor
       );
 
-      if (existingProduct) {
-        existingProduct.prodQtee = action.payload.prodQuantity;
+      if (productIndex !== -1) {
+        state.products[productIndex].prodQtee = prodQuantity;
+      } else {
+        console.warn(
+          `Product with ID ${prodId}, size ${prodSize}, and color ${prodColor} not found.`
+        );
       }
     },
 
     productRemoved: (state, action) => {
-      const index = state.products.findIndex(
-        (product) => product.prodId === parseInt(action.payload.prodId)
+      const { prodId, prodSize, prodColor } = action.payload;
+
+      const productIndex = findProductIndex(
+        state.products,
+        prodId,
+        prodSize,
+        prodColor
       );
-      state.products.splice(index, 1);
+
+      if (productIndex !== -1) {
+        state.products.splice(productIndex, 1);
+      } else {
+        console.warn(
+          `Product with ID ${prodId}, size ${prodSize}, and color ${prodColor} not found.`
+        );
+      }
     },
-    //////////
+
     orderRemoved: (state) => {
       return {
         ...state,
@@ -129,13 +172,6 @@ const cartSlice = createSlice({
           state.products[index].prodQtee = action.payload.prodQuantity;
         }
       });
-    //.addCase(cartDropdownAsync.fulfilled, (state, action) => {
-    // state.status = "testidle";
-    // state.products[index].status = "idle";
-    // })
-    //  .addCase(PURGE, (state) => {
-    //  customEntityAdapter.removeAll(state);
-    //});
   },
 });
 

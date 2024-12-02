@@ -2,9 +2,10 @@ import React from "react";
 import Box from "@mui/material/Box";
 import Image from "next/image";
 import ProdLinkMobile from "./ProdLinkMobile";
+import ShowCategory from "../ProductListAllDevices/ShowCategory";
 
-export const AllPrdtsxs1 = ({ imgmrv }) => {
-  const vRenderImgXsButt = "renderImgXsButt";
+export const AllPrdtsxs1 = ({ imgmrv, catTitle }) => {
+  const vRenderImgXsButt = "renderedImgXsButt";
 
   const renderedImg = imgmrv.map((image) => (
     <Box
@@ -38,12 +39,13 @@ export const AllPrdtsxs1 = ({ imgmrv }) => {
             lineHeight: 0,
           },
 
-          "&::after": {
-            clear: "both",
-          },
+          marginLeft: "16px!important",
         }}
       >
-        <ProdLinkMobile buttonName={vRenderImgXsButt}>
+        <ProdLinkMobile
+          buttonName={vRenderImgXsButt}
+          productNum={image.productId}
+        >
           <Box
             sx={{
               color: "#111820",
@@ -131,10 +133,6 @@ export const AllPrdtsxs1 = ({ imgmrv }) => {
                   lineHeight: 0,
                 },
 
-                "&::after": {
-                  clear: "both",
-                },
-
                 paddingTop: "28px",
               }}
             >
@@ -169,10 +167,6 @@ export const AllPrdtsxs1 = ({ imgmrv }) => {
                     content: '""',
                     display: "table",
                     lineHeight: 0,
-                  },
-
-                  "&::after": {
-                    clear: "both",
                   },
                 }}
               >
@@ -317,10 +311,6 @@ export const AllPrdtsxs1 = ({ imgmrv }) => {
             display: "table",
             lineHeight: 0,
           },
-
-          "&::after": {
-            clear: "both",
-          },
         }}
       >
         <Box
@@ -330,12 +320,29 @@ export const AllPrdtsxs1 = ({ imgmrv }) => {
               display: "table",
               lineHeight: 0,
             },
-
-            "&::after": {
-              clear: "both",
-            },
           }}
         >
+          <Box
+            component="hr"
+            sx={{
+              marginTop: "8px!important",
+              backgroundColor: "transparent",
+              display: "block",
+              height: "1px",
+              borderWidth: 0,
+              borderTop: "1px solid #e7e7e7",
+              lineHeight: "19px",
+              marginBottom: "14px",
+            }}
+          ></Box>
+          <Box
+            sx={{
+              margin: "0 -8px",
+              padding: 0,
+            }}
+          >
+            <ShowCategory catTitle={catTitle} />
+          </Box>
           <Box
             component="ul"
             sx={{
@@ -346,10 +353,6 @@ export const AllPrdtsxs1 = ({ imgmrv }) => {
                 content: '""',
                 display: "table",
                 lineHeight: 0,
-              },
-
-              "&::after": {
-                clear: "both",
               },
             }}
           >

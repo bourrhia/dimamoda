@@ -135,7 +135,7 @@ export default function FuzzySearchMobile({ children }) {
   };
 
   useEffect(() => {
-    if (!searchTerm || searchTerm.trim() === "") {
+    if (!searchTerm || searchTerm.trim() === "" || !allProducts) {
       setSearchResults([]);
       return;
     }
@@ -145,10 +145,20 @@ export default function FuzzySearchMobile({ children }) {
     const options = {
       keys: ["productName"],
       includeScore: true,
+      caseSensitive: false,
+      threshold: 0.3,
     };
-    const fuse = new Fuse(allProducts, options);
+
+    const normalizedProducts = allProducts?.map((product) => ({
+      ...product,
+      productName: product.productName.toLowerCase(),
+    }));
+
+    const fuse = new Fuse(normalizedProducts, options);
 
     const filterResults = (searchTerm) => {
+      let normalizedSearchTerm;
+
       if (!fuse || !allProducts || allProducts.length === 0) {
         return [];
       }
@@ -156,18 +166,23 @@ export default function FuzzySearchMobile({ children }) {
       if (!searchTerm || searchTerm.trim() === "") {
         return [];
       }
-      const results = fuse.search(searchTerm);
 
-      const filteredResults = results.filter((result) =>
-        result.item.productName.startsWith(searchTerm)
+      if (searchTerm || searchTerm.trim() !== "") {
+        normalizedSearchTerm = searchTerm.toLowerCase();
+      }
+
+      const results = fuse.search(normalizedSearchTerm);
+
+      const filteredResults = results?.filter((result) =>
+        result.item.productName.startsWith(normalizedSearchTerm)
       );
 
-      return filteredResults.map((result) => result.item);
+      return filteredResults?.map((result) => result.item) || null;
     };
 
     const allSearchResults = filterResults(searchTerm);
     setSearchResults(allSearchResults);
-  }, [searchTerm]);
+  }, [searchTerm, allProducts]);
 
   const removeDuplicates = (results) => {
     const seen = new Set();
