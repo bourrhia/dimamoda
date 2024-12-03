@@ -245,11 +245,6 @@ function FouterUpsm() {
                             textDecoration: "none",
                             marginRight: "5px",
 
-                            ":-webkit-any-link": {
-                              cursor: "pointer",
-                            },
-
-                            cursor: "pointer",
                             lineHeight: 1,
                           }}
                         >
