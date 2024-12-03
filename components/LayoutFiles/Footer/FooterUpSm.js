@@ -1,7 +1,57 @@
+"use client";
+
 import React from "react";
 import Box from "@mui/material/Box";
+import { useRouter } from "next/navigation";
 
 function FouterUpsm() {
+  const router = useRouter();
+
+  const handleNeedHelp = () => {
+    try {
+      router.push("/footerUpSm/needHelp");
+    } catch (err) {
+      console.error("An error occurred while navigating to need help : ", err);
+    } finally {
+    }
+  };
+
+  const handleAboutUs = () => {
+    try {
+      router.push("/footerUpSm/aboutUs");
+    } catch (err) {
+      console.error("An error occurred while navigating to need help : ", err);
+    } finally {
+    }
+  };
+
+  const handlePaiement = () => {
+    try {
+      router.push("/footerUpSm/paiement");
+    } catch (err) {
+      console.error("An error occurred while navigating to need help : ", err);
+    } finally {
+    }
+  };
+
+  const handleDelivery = () => {
+    try {
+      router.push("/footerUpSm/delivery");
+    } catch (err) {
+      console.error("An error occurred while navigating to need help : ", err);
+    } finally {
+    }
+  };
+
+  const handleReturnRefund = () => {
+    try {
+      router.push("/footerUpSm/returnRefund");
+    } catch (err) {
+      console.error("An error occurred while navigating to need help : ", err);
+    } finally {
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -98,7 +148,6 @@ function FouterUpsm() {
                       }}
                     >
                       <Box
-                        component="a"
                         sx={{
                           color: "#191919 !important",
                           fontSize: "0.75rem !important",
@@ -110,15 +159,10 @@ function FouterUpsm() {
                             cursor: "pointer",
                           },
 
-                          cursor: "pointer",
                           fontWeight: "bold",
-
-                          ":hover": {
-                            textDecoration: "underline",
-                          },
                         }}
                       >
-                        Besoin d'aide
+                        Besoin d'aide ?
                       </Box>
                     </Box>
                     <Box
@@ -156,6 +200,7 @@ function FouterUpsm() {
                       >
                         <Box
                           component="a"
+                          onClick={handleNeedHelp}
                           sx={{
                             display: "inline-block",
                             fontSize: "12px",
@@ -176,6 +221,40 @@ function FouterUpsm() {
                           }}
                         >
                           Contactez-nous
+                        </Box>
+                      </Box>
+                      <Box
+                        component="li"
+                        sx={{
+                          margin: 0,
+                          padding: 0,
+                          listStyle: "none outside none",
+                          marginBottom: "12px",
+                          display: "list-item",
+                          fontSize: "12px",
+                          lineHeight: 1,
+                          color: "#333",
+                        }}
+                      >
+                        <Box
+                          component="a"
+                          sx={{
+                            display: "inline-block",
+                            fontSize: "12px",
+                            color: "#767676 !important",
+                            textDecoration: "none",
+                            marginRight: "5px",
+
+                            ":-webkit-any-link": {
+                              cursor: "pointer",
+                            },
+
+                            cursor: "pointer",
+                            lineHeight: 1,
+                          }}
+                        >
+                          Commander par Tél :&nbsp;
+                          <strong>06 61 44 91 63</strong>
                         </Box>
                       </Box>
                     </Box>
@@ -201,7 +280,6 @@ function FouterUpsm() {
                       }}
                     >
                       <Box
-                        component="a"
                         sx={{
                           color: "#191919 !important",
                           fontSize: "0.75rem !important",
@@ -210,10 +288,6 @@ function FouterUpsm() {
                           marginRight: "5px",
                           ":-webkit-any-link": {
                             cursor: "pointer",
-                          },
-                          cursor: "pointer",
-                          ":hover": {
-                            textDecoration: "underline",
                           },
                         }}
                       >
@@ -255,6 +329,7 @@ function FouterUpsm() {
                       >
                         <Box
                           component="a"
+                          onClick={handleAboutUs}
                           sx={{
                             display: "inline-block",
                             fontSize: "12px",
@@ -277,151 +352,41 @@ function FouterUpsm() {
                           Qui sommes-nous
                         </Box>
                       </Box>
-                      <Box
-                        component="li"
-                        sx={{
-                          margin: 0,
-                          padding: 0,
-                          listStyle: "none outside none",
-                          marginBottom: "12px",
-                          display: "list-item",
-                          fontSize: "12px",
-                          lineHeight: 1,
-                          color: "#333",
-                        }}
-                      >
-                        <Box
-                          component="a"
-                          sx={{
-                            display: "inline-block",
-                            fontSize: "12px",
-                            color: "#767676 !important",
-                            textDecoration: "none",
-                            marginRight: "5px",
-
-                            ":-webkit-any-link": {
-                              cursor: "pointer",
-                            },
-
-                            cursor: "pointer",
-                            lineHeight: 1,
-
-                            ":hover": {
-                              textDecoration: "underline",
-                            },
-                          }}
-                        >
-                          Conditions générales d'utilisation
-                        </Box>
-                      </Box>
-                      <Box
-                        component="li"
-                        sx={{
-                          margin: 0,
-                          padding: 0,
-                          listStyle: "none outside none",
-                          marginBottom: "12px",
-                          display: "list-item",
-                          fontSize: "12px",
-                          lineHeight: 1,
-                          color: "#333",
-                        }}
-                      >
-                        <Box
-                          component="a"
-                          sx={{
-                            display: "inline-block",
-                            fontSize: "12px",
-                            color: "#767676 !important",
-                            textDecoration: "none",
-                            marginRight: "5px",
-
-                            ":-webkit-any-link": {
-                              cursor: "pointer",
-                            },
-
-                            cursor: "pointer",
-                            lineHeight: 1,
-
-                            ":hover": {
-                              textDecoration: "underline",
-                            },
-                          }}
-                        >
-                          Modes de paiement et livraisons
-                        </Box>
-                      </Box>
-                      <Box
-                        component="li"
-                        sx={{
-                          margin: 0,
-                          padding: 0,
-                          listStyle: "none outside none",
-                          marginBottom: "12px",
-                          display: "list-item",
-                          fontSize: "12px",
-                          lineHeight: 1,
-                          color: "#333",
-                        }}
-                      >
-                        <Box
-                          component="a"
-                          sx={{
-                            display: "inline-block",
-                            fontSize: "12px",
-                            color: "#767676 !important",
-                            textDecoration: "none",
-                            marginRight: "5px",
-
-                            ":-webkit-any-link": {
-                              cursor: "pointer",
-                            },
-
-                            cursor: "pointer",
-                            lineHeight: 1,
-
-                            ":hover": {
-                              textDecoration: "underline",
-                            },
-                          }}
-                        >
-                          Politique de retours et de remboursements
-                        </Box>
-                      </Box>
                     </Box>
                   </Box>
-                  <Box component="td">
+                  <Box
+                    component="td"
+                    sx={{
+                      maxWidth: "235px",
+                      verticalAlign: "top",
+                      padding: "1px 0",
+                      textAlign: "left",
+                    }}
+                  >
                     <Box
                       component="h3"
                       sx={{
                         color: "#191919 !important",
                         fontSize: "0.75rem !important",
-                        lineHeight: 1,
+                        display: "block",
+                        float: "unset",
+                        height: "initial",
                         textAlign: "left",
                       }}
                     >
                       <Box
-                        component="a"
                         sx={{
                           color: "#191919 !important",
                           fontSize: "0.75rem !important",
                           display: "inline-block",
                           textDecoration: "none",
                           marginRight: "5px",
-
                           ":-webkit-any-link": {
                             cursor: "pointer",
                           },
-
-                          cursor: "pointer",
-                          fontWeight: "bold",
-
-                          ":hover": {
-                            textDecoration: "underline",
-                          },
                         }}
                       >
-                        Aide
+                        Liens utiles
                       </Box>
                     </Box>
                     <Box
@@ -459,6 +424,7 @@ function FouterUpsm() {
                       >
                         <Box
                           component="a"
+                          onClick={handleDelivery}
                           sx={{
                             display: "inline-block",
                             fontSize: "12px",
@@ -478,7 +444,83 @@ function FouterUpsm() {
                             },
                           }}
                         >
-                          Garantie
+                          Modalités de livraison
+                        </Box>
+                      </Box>
+                      <Box
+                        component="li"
+                        sx={{
+                          margin: 0,
+                          padding: 0,
+                          listStyle: "none outside none",
+                          marginBottom: "12px",
+                          display: "list-item",
+                          fontSize: "12px",
+                          lineHeight: 1,
+                          color: "#333",
+                        }}
+                      >
+                        <Box
+                          component="a"
+                          onClick={handlePaiement}
+                          sx={{
+                            display: "inline-block",
+                            fontSize: "12px",
+                            color: "#767676 !important",
+                            textDecoration: "none",
+                            marginRight: "5px",
+
+                            ":-webkit-any-link": {
+                              cursor: "pointer",
+                            },
+
+                            cursor: "pointer",
+                            lineHeight: 1,
+
+                            ":hover": {
+                              textDecoration: "underline",
+                            },
+                          }}
+                        >
+                          Mode de paiement
+                        </Box>
+                      </Box>
+                      <Box
+                        component="li"
+                        sx={{
+                          margin: 0,
+                          padding: 0,
+                          listStyle: "none outside none",
+                          marginBottom: "12px",
+                          display: "list-item",
+                          fontSize: "12px",
+                          lineHeight: 1,
+                          color: "#333",
+                        }}
+                      >
+                        <Box
+                          component="a"
+                          onClick={handleReturnRefund}
+                          sx={{
+                            display: "inline-block",
+                            fontSize: "12px",
+                            color: "#767676 !important",
+                            textDecoration: "none",
+                            marginRight: "5px",
+
+                            ":-webkit-any-link": {
+                              cursor: "pointer",
+                            },
+
+                            cursor: "pointer",
+                            lineHeight: 1,
+
+                            ":hover": {
+                              textDecoration: "underline",
+                            },
+                          }}
+                        >
+                          Politique de retours et de remboursements
                         </Box>
                       </Box>
                     </Box>

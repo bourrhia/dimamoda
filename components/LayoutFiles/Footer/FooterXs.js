@@ -1,10 +1,61 @@
+"use client";
+
 import React from "react";
 import Box from "@mui/material/Box";
 import FooterButtons from "./FooterButtons";
+import { useRouter } from "next/navigation";
 
 function FouterXs() {
   const vTopOfPageButt = "topOfPageButt";
   const vHomePageButt = "homePageButt";
+
+  const router = useRouter();
+
+  const handleNeedHelp = () => {
+    try {
+      router.push("/footerXs/needHelp");
+    } catch (err) {
+      console.error("An error occurred while navigating to need help : ", err);
+    } finally {
+    }
+  };
+
+  const handleAboutUs = () => {
+    try {
+      router.push("/footerXs/aboutUs");
+    } catch (err) {
+      console.error("An error occurred while navigating to need help : ", err);
+    } finally {
+    }
+  };
+
+  const handlePaiement = () => {
+    try {
+      router.push("/footerXs/paiement");
+    } catch (err) {
+      console.error("An error occurred while navigating to need help : ", err);
+    } finally {
+    }
+  };
+
+  const handleDelivery = () => {
+    try {
+      router.push("/footerXs/delivery");
+    } catch (err) {
+      console.error("An error occurred while navigating to need help : ", err);
+    } finally {
+    }
+  };
+
+  const handleReturnRefund = () => {
+    try {
+      router.push("/footerXs/returnRefund");
+    } catch (err) {
+      console.error("An error occurred while navigating to need help : ", err);
+    } finally {
+    }
+  };
+
   return (
     <Box
       component="footer"
@@ -117,6 +168,7 @@ function FouterXs() {
           >
             <Box
               component="a"
+              onClick={handlePaiement}
               sx={{
                 padding: 0,
                 display: "block",
@@ -177,6 +229,7 @@ function FouterXs() {
           >
             <Box
               component="a"
+              onClick={handleDelivery}
               sx={{
                 padding: 0,
                 display: "block",
@@ -209,7 +262,7 @@ function FouterXs() {
                   lineHeight: "16px",
                 }}
               >
-                Mode de livraison
+                Modalités de livraison
               </Box>
             </Box>
           </Box>
@@ -278,6 +331,65 @@ function FouterXs() {
           >
             <Box
               component="a"
+              onClick={handleNeedHelp}
+              sx={{
+                padding: 0,
+                display: "block",
+                color: "#111",
+                fontSize: "15px",
+                lineHeight: "16px",
+                fontFamily: "inherit",
+                textDecoration: "none",
+                ":-webkit-any-link": {
+                  cursor: "pointer",
+                },
+                cursor: "pointer",
+              }}
+            >
+              <Box
+                component="span"
+                sx={{
+                  whiteSpace: "normal",
+                  color: "#fff",
+                  overflow: "inherit",
+                  "&:not(:focus)": {
+                    outline: "none",
+                  },
+                  display: "inline-block",
+                  maxWidth: "100%",
+                  textOverflow: "ellipsis",
+                  fontSize: "15px",
+                  lineHeight: "16px",
+                }}
+              >
+                Besoin d'aide
+              </Box>
+            </Box>
+          </Box>
+          <Box
+            component="li"
+            sx={{
+              margin: 0,
+              padding: 0,
+              width: "50%",
+              display: "block",
+              marginBottom: 0,
+              paddingRight: "4px",
+              marginTop: "25px",
+              borderBottom: 0,
+              listStyle: "none",
+              wordWrap: "break-word",
+              color: "#0F1111",
+              fontFamily: "inherit",
+              fontSize: "12px",
+              lineHeight: "1em",
+
+              fontWeight: "bold",
+            }}
+          >
+            <Box
+              component="a"
+              onClick={handleAboutUs}
               sx={{
                 padding: 0,
                 display: "block",
@@ -333,7 +445,6 @@ function FouterXs() {
             }}
           >
             <Box
-              component="a"
               sx={{
                 padding: 0,
                 display: "block",
@@ -342,10 +453,6 @@ function FouterXs() {
                 lineHeight: "16px",
                 fontFamily: "inherit",
                 textDecoration: "none",
-                ":-webkit-any-link": {
-                  cursor: "pointer",
-                },
-                cursor: "pointer",
               }}
             >
               <Box
@@ -364,7 +471,25 @@ function FouterXs() {
                   lineHeight: "16px",
                 }}
               >
-                Commandez par tél : XXXXXXXXXX
+                Commandez par tél :
+              </Box>
+              <Box
+                component="span"
+                sx={{
+                  whiteSpace: "normal",
+                  color: "#fff",
+                  overflow: "inherit",
+                  "&:not(:focus)": {
+                    outline: "none",
+                  },
+                  display: "inline-block",
+                  maxWidth: "100%",
+                  textOverflow: "ellipsis",
+                  fontSize: "15px",
+                  lineHeight: "16px",
+                }}
+              >
+                <strong>06 61 44 91 63</strong>
               </Box>
             </Box>
           </Box>
@@ -391,6 +516,7 @@ function FouterXs() {
           >
             <Box
               component="a"
+              onClick={handleReturnRefund}
               sx={{
                 padding: 0,
                 display: "block",
@@ -421,64 +547,7 @@ function FouterXs() {
                   lineHeight: "16px",
                 }}
               >
-                Politique de retour
-              </Box>
-            </Box>
-          </Box>
-
-          <Box
-            component="li"
-            sx={{
-              margin: 0,
-              padding: 0,
-              width: "50%",
-              display: "block",
-              marginBottom: 0,
-              paddingRight: "4px",
-              marginTop: "25px",
-              borderBottom: 0,
-              listStyle: "none",
-              wordWrap: "break-word",
-              color: "#0F1111",
-              fontFamily: "inherit",
-              fontSize: "12px",
-              lineHeight: "1em",
-              fontWeight: "bold",
-            }}
-          >
-            <Box
-              component="a"
-              sx={{
-                padding: 0,
-                display: "block",
-                color: "#111",
-                fontSize: "15px",
-                lineHeight: "16px",
-                fontFamily: "inherit",
-                textDecoration: "none",
-                ":-webkit-any-link": {
-                  cursor: "pointer",
-                },
-                cursor: "pointer",
-              }}
-            >
-              <Box
-                component="span"
-                sx={{
-                  whiteSpace: "normal",
-                  color: "#fff",
-                  overflow: "inherit",
-                  "&:not(:focus)": {
-                    outline: "none",
-                  },
-                  display: "inline-block",
-                  maxWidth: "100%",
-                  textOverflow: "ellipsis",
-                  fontSize: "15px",
-                  lineHeight: "16px",
-                }}
-              >
-                Garantie
+                Politique de Retours et de Remboursements
               </Box>
             </Box>
           </Box>
