@@ -23,7 +23,7 @@ export default function HandlesCartItemXs({ selectedprd }) {
 
   const prixSymbol = selectedprd[0]?.prixSymbol;
 
-  const getAllMainImgAndColor = useMemo(() => {
+  /*const getAllMainImgAndColor = useMemo(() => {
     const allImagesAndColors = [];
 
     selectedprd[0]?.prdDetailsBySize.forEach((sizeDetail) => {
@@ -41,6 +41,32 @@ export default function HandlesCartItemXs({ selectedprd }) {
     });
 
     return allImagesAndColors;
+  }, [selectedprd]);*/
+
+  const getAllMainImgAndColor = useMemo(() => {
+    const allImagesAndColors = [];
+
+    selectedprd[0]?.prdDetailsBySize.forEach((sizeDetail) => {
+      sizeDetail.detailsByColor.forEach((colorDetail) => {
+        const record = {
+          couleur: colorDetail.couleur,
+          mainImgJpg: colorDetail.mainImgJpg,
+          prixAct: colorDetail.prixAct,
+          prixInit: colorDetail.prixInit,
+          qteeDisp: colorDetail.qteeDisp,
+          red: colorDetail.red,
+          imgThumbnails: colorDetail.imgThumbnails,
+        };
+        allImagesAndColors.push(record);
+      });
+    });
+
+    // Remove duplicates using a Set with JSON.stringify
+    const uniqueRecords = Array.from(
+      new Set(allImagesAndColors.map((item) => JSON.stringify(item)))
+    ).map((item) => JSON.parse(item));
+
+    return uniqueRecords;
   }, [selectedprd]);
 
   const [productState, setProductState] = useState({

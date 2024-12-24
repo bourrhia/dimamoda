@@ -117,15 +117,12 @@ export const PrdlistUpSm1 = ({
                   <Box
                     sx={{
                       position: "relative",
-
                       margin: "10px auto 10px auto",
-
                       height: "230px",
                       maxHeight: "230px",
                       verticalAlign: "top",
                       maxWidth: "100%",
                       border: 0,
-
                       boxSizing: "border-box",
                       overflow: "hidden",
                       display: "block",

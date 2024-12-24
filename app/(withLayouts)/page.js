@@ -180,14 +180,16 @@ export default async function Home() {
             marginBottom: "32px !important",
           }}
         >
-          <PrdListUpMd2
-            imgmrv={prodTendence}
-            category={catTendence}
-            catTitle={catTitleTendence}
-            searchTerm={searchCatTerm2}
-            otherSearchTerm={searchCatTerm2}
-            nbrProd={nbrProdTendence}
-          />
+          {prodTendence.length !== 0 ? (
+            <PrdListUpMd2
+              imgmrv={prodTendence}
+              category={catTendence}
+              catTitle={catTitleTendence}
+              searchTerm={searchCatTerm2}
+              otherSearchTerm={searchCatTerm2}
+              nbrProd={nbrProdTendence}
+            />
+          ) : null}
         </Box>
 
         <Box
@@ -195,14 +197,16 @@ export default async function Home() {
             marginBottom: "32px !important",
           }}
         >
-          <PrdListUpSm1
-            imgmrv={prodFemme}
-            category={catFemme}
-            catTitle={catTitleFemme}
-            searchTerm={searchCatTerm1}
-            otherSearchTerm={searchCatTerm1}
-            nbrProd={nbrProdFemme}
-          />
+          {prodFemme.length !== 0 ? (
+            <PrdListUpSm1
+              imgmrv={prodFemme}
+              category={catFemme}
+              catTitle={catTitleFemme}
+              searchTerm={searchCatTerm1}
+              otherSearchTerm={searchCatTerm1}
+              nbrProd={nbrProdFemme}
+            />
+          ) : null}
         </Box>
 
         <Box
@@ -210,14 +214,16 @@ export default async function Home() {
             marginBottom: "32px !important",
           }}
         >
-          <PrdListUpSm1
-            imgmrv={prodHomme}
-            category={catHomme}
-            catTitle={catTitleHomme}
-            searchTerm={searchCatTerm1}
-            otherSearchTerm={searchCatTerm1}
-            nbrProd={nbrProdHomme}
-          />
+          {prodHomme.length !== 0 ? (
+            <PrdListUpSm1
+              imgmrv={prodHomme}
+              category={catHomme}
+              catTitle={catTitleHomme}
+              searchTerm={searchCatTerm1}
+              otherSearchTerm={searchCatTerm1}
+              nbrProd={nbrProdHomme}
+            />
+          ) : null}
         </Box>
 
         <Box
@@ -225,14 +231,16 @@ export default async function Home() {
             marginBottom: "32px !important",
           }}
         >
-          <PrdListUpSm1
-            imgmrv={prodFille}
-            category={catFille}
-            catTitle={catTitleFille}
-            searchTerm={searchCatTerm1}
-            otherSearchTerm={searchCatTerm1}
-            nbrProd={nbrProdFille}
-          />
+          {prodFille.length !== 0 ? (
+            <PrdListUpSm1
+              imgmrv={prodFille}
+              category={catFille}
+              catTitle={catTitleFille}
+              searchTerm={searchCatTerm1}
+              otherSearchTerm={searchCatTerm1}
+              nbrProd={nbrProdFille}
+            />
+          ) : null}
         </Box>
 
         <Box
@@ -240,14 +248,16 @@ export default async function Home() {
             marginBottom: "32px !important",
           }}
         >
-          <PrdListUpSm1
-            imgmrv={prodGarcon}
-            category={catGarcon}
-            catTitle={catTitleGarcon}
-            searchTerm={searchCatTerm1}
-            otherSearchTerm={searchCatTerm1}
-            nbrProd={nbrProdGarcon}
-          />
+          {prodGarcon.length !== 0 ? (
+            <PrdListUpSm1
+              imgmrv={prodGarcon}
+              category={catGarcon}
+              catTitle={catTitleGarcon}
+              searchTerm={searchCatTerm1}
+              otherSearchTerm={searchCatTerm1}
+              nbrProd={nbrProdGarcon}
+            />
+          ) : null}
         </Box>
       </Box>
 

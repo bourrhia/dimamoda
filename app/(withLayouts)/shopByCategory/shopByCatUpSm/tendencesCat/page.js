@@ -68,6 +68,7 @@ export const TendencesUpSm = async () => {
   return (
     <>
       <ShowCategory catTitle={catTitle} />
+
       {groupedProducts.map(({ subcategory, products }) => (
         <Box key={subcategory}>
           <Box
