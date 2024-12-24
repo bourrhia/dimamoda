@@ -117,50 +117,60 @@ export default async function Home() {
           height: "100%",
         }}
       >
-        <PrdListOnlySm1
-          imgmrv={prodTendence}
-          category={catTendence}
-          catTitle={catTitleTendence}
-          searchTerm={searchCatTerm2}
-          otherSearchTerm={searchCatTerm1}
-          nbrProd={nbrProdTendence}
-        />
+        {prodTendence.length !== 0 ? (
+          <PrdListOnlySm1
+            imgmrv={prodTendence}
+            category={catTendence}
+            catTitle={catTitleTendence}
+            searchTerm={searchCatTerm2}
+            otherSearchTerm={searchCatTerm1}
+            nbrProd={nbrProdTendence}
+          />
+        ) : null}
 
-        <PrdListOnlySm1
-          imgmrv={prodFemme}
-          category={catFemme}
-          catTitle={catTitleFemme}
-          searchTerm={searchCatTerm1}
-          otherSearchTerm={searchCatTerm1}
-          nbrProd={nbrProdFemme}
-        />
+        {prodFemme.length !== 0 ? (
+          <PrdListOnlySm1
+            imgmrv={prodFemme}
+            category={catFemme}
+            catTitle={catTitleFemme}
+            searchTerm={searchCatTerm1}
+            otherSearchTerm={searchCatTerm1}
+            nbrProd={nbrProdFemme}
+          />
+        ) : null}
 
-        <PrdListOnlySm1
-          imgmrv={prodHomme}
-          category={catHomme}
-          catTitle={catTitleHomme}
-          searchTerm={searchCatTerm1}
-          otherSearchTerm={searchCatTerm1}
-          nbrProd={nbrProdHomme}
-        />
+        {prodHomme.length !== 0 ? (
+          <PrdListOnlySm1
+            imgmrv={prodHomme}
+            category={catHomme}
+            catTitle={catTitleHomme}
+            searchTerm={searchCatTerm1}
+            otherSearchTerm={searchCatTerm1}
+            nbrProd={nbrProdHomme}
+          />
+        ) : null}
 
-        <PrdListOnlySm1
-          imgmrv={prodFille}
-          category={catFille}
-          catTitle={catTitleFille}
-          searchTerm={searchCatTerm1}
-          otherSearchTerm={searchCatTerm1}
-          nbrProd={nbrProdFille}
-        />
+        {prodFille.length !== 0 ? (
+          <PrdListOnlySm1
+            imgmrv={prodFille}
+            category={catFille}
+            catTitle={catTitleFille}
+            searchTerm={searchCatTerm1}
+            otherSearchTerm={searchCatTerm1}
+            nbrProd={nbrProdFille}
+          />
+        ) : null}
 
-        <PrdListOnlySm1
-          imgmrv={prodGarcon}
-          category={catGarcon}
-          catTitle={catTitleGarcon}
-          searchTerm={searchCatTerm1}
-          otherSearchTerm={searchCatTerm1}
-          nbrProd={nbrProdGarcon}
-        />
+        {prodGarcon.length !== 0 ? (
+          <PrdListOnlySm1
+            imgmrv={prodGarcon}
+            category={catGarcon}
+            catTitle={catTitleGarcon}
+            searchTerm={searchCatTerm1}
+            otherSearchTerm={searchCatTerm1}
+            nbrProd={nbrProdGarcon}
+          />
+        ) : null}
       </Box>
 
       <Box
@@ -297,50 +307,60 @@ export default async function Home() {
                   width: "100%",
                 }}
               >
-                <PrdListXs1
-                  imgmrv={fourProdTendence}
-                  category={catTendence}
-                  catTitle={catTitleTendence}
-                  searchTerm={searchCatTerm2}
-                  otherSearchTerm={searchCatTerm2}
-                  nbrProd={nbrProdTendence}
-                />
+                {fourProdTendence.length !== 0 ? (
+                  <PrdListXs1
+                    imgmrv={fourProdTendence}
+                    category={catTendence}
+                    catTitle={catTitleTendence}
+                    searchTerm={searchCatTerm2}
+                    otherSearchTerm={searchCatTerm2}
+                    nbrProd={nbrProdTendence}
+                  />
+                ) : null}
 
-                <PrdListXs1
-                  imgmrv={fourProdFemme}
-                  category={catFemme}
-                  catTitle={catTitleFemme}
-                  searchTerm={searchCatTerm1}
-                  otherSearchTerm={searchCatTerm1}
-                  nbrProd={nbrProdFemme}
-                />
+                {fourProdFemme.length !== 0 ? (
+                  <PrdListXs1
+                    imgmrv={fourProdFemme}
+                    category={catFemme}
+                    catTitle={catTitleFemme}
+                    searchTerm={searchCatTerm1}
+                    otherSearchTerm={searchCatTerm1}
+                    nbrProd={nbrProdFemme}
+                  />
+                ) : null}
 
-                <PrdListXs1
-                  imgmrv={fourProdHomme}
-                  category={catHomme}
-                  catTitle={catTitleHomme}
-                  searchTerm={searchCatTerm1}
-                  otherSearchTerm={searchCatTerm1}
-                  nbrProd={nbrProdHomme}
-                />
+                {fourProdHomme.length !== 0 ? (
+                  <PrdListXs1
+                    imgmrv={fourProdHomme}
+                    category={catHomme}
+                    catTitle={catTitleHomme}
+                    searchTerm={searchCatTerm1}
+                    otherSearchTerm={searchCatTerm1}
+                    nbrProd={nbrProdHomme}
+                  />
+                ) : null}
 
-                <PrdListXs1
-                  imgmrv={fourProdFille}
-                  category={catFille}
-                  catTitle={catTitleFille}
-                  searchTerm={searchCatTerm1}
-                  otherSearchTerm={searchCatTerm1}
-                  nbrProd={nbrProdFille}
-                />
+                {fourProdFille.length !== 0 ? (
+                  <PrdListXs1
+                    imgmrv={fourProdFille}
+                    category={catFille}
+                    catTitle={catTitleFille}
+                    searchTerm={searchCatTerm1}
+                    otherSearchTerm={searchCatTerm1}
+                    nbrProd={nbrProdFille}
+                  />
+                ) : null}
 
-                <PrdListXs1
-                  imgmrv={fourProdGarcon}
-                  category={catGarcon}
-                  catTitle={catTitleGarcon}
-                  searchTerm={searchCatTerm1}
-                  otherSearchTerm={searchCatTerm1}
-                  nbrProd={nbrProdGarcon}
-                />
+                {fourProdGarcon.length !== 0 ? (
+                  <PrdListXs1
+                    imgmrv={fourProdGarcon}
+                    category={catGarcon}
+                    catTitle={catTitleGarcon}
+                    searchTerm={searchCatTerm1}
+                    otherSearchTerm={searchCatTerm1}
+                    nbrProd={nbrProdGarcon}
+                  />
+                ) : null}
               </Box>
             </Box>
           </Box>
