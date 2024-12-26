@@ -23,7 +23,7 @@ export default function HandlesCartItemXs({ selectedprd }) {
 
   const prixSymbol = selectedprd[0]?.prixSymbol;
 
-  /*const getAllMainImgAndColor = useMemo(() => {
+  const getAllMainImgAndColor = useMemo(() => {
     const allImagesAndColors = [];
 
     selectedprd[0]?.prdDetailsBySize.forEach((sizeDetail) => {
@@ -41,9 +41,9 @@ export default function HandlesCartItemXs({ selectedprd }) {
     });
 
     return allImagesAndColors;
-  }, [selectedprd]);*/
+  }, [selectedprd]);
 
-  const getAllMainImgAndColor = useMemo(() => {
+  const getAllMainImgAndColor2 = useMemo(() => {
     const allImagesAndColors = [];
 
     selectedprd[0]?.prdDetailsBySize.forEach((sizeDetail) => {
@@ -51,23 +51,22 @@ export default function HandlesCartItemXs({ selectedprd }) {
         const record = {
           couleur: colorDetail.couleur,
           mainImgJpg: colorDetail.mainImgJpg,
-          prixAct: colorDetail.prixAct,
-          prixInit: colorDetail.prixInit,
-          qteeDisp: colorDetail.qteeDisp,
-          red: colorDetail.red,
           imgThumbnails: colorDetail.imgThumbnails,
         };
         allImagesAndColors.push(record);
       });
     });
 
-    // Remove duplicates using a Set with JSON.stringify
     const uniqueRecords = Array.from(
       new Set(allImagesAndColors.map((item) => JSON.stringify(item)))
     ).map((item) => JSON.parse(item));
 
     return uniqueRecords;
   }, [selectedprd]);
+
+  const [productDetailsBySize2, setProductDetailsBySize2] = useState(
+    getAllMainImgAndColor2
+  );
 
   const [productState, setProductState] = useState({
     prodQtee: 1,
@@ -407,7 +406,15 @@ export default function HandlesCartItemXs({ selectedprd }) {
     },
   };
 
-  const renderedImg = productDetailsBySize?.map((colorDetail, colorIndex) => (
+  const vProductDetailsBySize =
+    selectedSize &&
+    selectedSize !== "Sélectionner" &&
+    selectedColor &&
+    selectedColor !== "Sélectionner"
+      ? productDetailsBySize
+      : productDetailsBySize2;
+
+  const renderedImg = vProductDetailsBySize?.map((colorDetail, colorIndex) => (
     <Box
       component="li"
       key={colorIndex}

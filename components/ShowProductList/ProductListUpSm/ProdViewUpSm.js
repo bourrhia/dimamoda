@@ -100,11 +100,37 @@ export const ProdViewUpSm = ({ selectedprd }) => {
     return allImagesAndColors ?? [];
   }, [selectedprd]);
 
+  const getAllMainImgAndColor2 = useMemo(() => {
+    const allImagesAndColors = [];
+
+    selectedprd[0]?.prdDetailsBySize.forEach((sizeDetail) => {
+      sizeDetail.detailsByColor.forEach((colorDetail) => {
+        const record = {
+          couleur: colorDetail.couleur,
+          mainImgJpg: colorDetail.mainImgJpg,
+          imgThumbnails: colorDetail.imgThumbnails,
+        };
+        allImagesAndColors.push(record);
+      });
+    });
+
+    const uniqueRecords = Array.from(
+      new Set(allImagesAndColors.map((item) => JSON.stringify(item)))
+    ).map((item) => JSON.parse(item));
+
+    return uniqueRecords;
+  }, [selectedprd]);
+
+  /************************************** */
+
   useEffect(() => {
     if (!isInitialized.current) {
       setProductState((prev) => ({
         ...prev,
-        matchingImgBySizeAndCol: getAllMainImgAndColor,
+        matchingImgBySizeAndCol:
+          selectedSize && selectedSize !== "Sélectionner"
+            ? getAllMainImgAndColor
+            : getAllMainImgAndColor2,
       }));
       isInitialized.current = true;
     }
@@ -120,7 +146,10 @@ export const ProdViewUpSm = ({ selectedprd }) => {
       setProductState((prevState) => ({
         ...prevState,
         imgThumbnailsByCol: imgThumbnails,
-        matchingImgBySizeAndCol: imagesForSize,
+        matchingImgBySizeAndCol:
+          selectedSize && selectedSize !== "Sélectionner"
+            ? imagesForSize
+            : getAllMainImgAndColor2,
         currentImage: mainImgCol,
         prevMainImage: mainImgCol,
         currentColor: imgCouleur,
@@ -196,7 +225,10 @@ export const ProdViewUpSm = ({ selectedprd }) => {
           currentColor: couleur,
           currentColorImage: mainImgJpg,
           imgThumbnailsByCol: imgThumbnails,
-          matchingImgBySizeAndCol: imagesForSize,
+          matchingImgBySizeAndCol:
+            selectedSize && selectedSize !== "Sélectionner"
+              ? imagesForSize
+              : getAllMainImgAndColor2,
         };
       }
 
