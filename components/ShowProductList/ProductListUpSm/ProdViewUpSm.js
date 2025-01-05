@@ -2406,41 +2406,33 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                               {vPriceRangeFrom}&nbsp;{vPrixSymbol}
                             </Box>
                           </Box>
-                          <Box
-                            component="span"
-                            sx={{
-                              fontSize: "21px",
-                              paddingLeft: "4px",
-                              paddingRight: "4px",
-                              color: "#b12704",
-                              lineHeight: "24px !important",
-                              WebkitTextSizeAdjust: "100%",
-                              borderCollapse: "collapse",
-                              textIndent: "initial",
-                              borderSpacing: "2px",
-                            }}
-                          >
-                            -
-                          </Box>
-                          <Box
-                            component="span"
-                            sx={{
-                              color: "#b12704",
-                              textDecoration: "none",
-                              position: "relative",
-                              textRendering: "optimizeLegibility",
-                              fontSize: "18px !important",
-                              lineHeight: "24px !important",
-                              borderCollapse: "collapse",
-                              textIndent: "initial",
-                              borderSpacing: "2px",
-                              WebkitTextSizeAdjust: "100%",
-                            }}
-                          >
+
+                          {vPriceRangeTo && (
+                            <Box
+                              component="span"
+                              sx={{
+                                fontSize: "21px",
+                                paddingLeft: "4px",
+                                paddingRight: "4px",
+                                color: "#b12704",
+                                lineHeight: "24px !important",
+                                WebkitTextSizeAdjust: "100%",
+                                borderCollapse: "collapse",
+                                textIndent: "initial",
+                                borderSpacing: "2px",
+                              }}
+                            >
+                              -
+                            </Box>
+                          )}
+
+                          {vPriceRangeTo && (
                             <Box
                               component="span"
                               sx={{
                                 color: "#b12704",
+                                textDecoration: "none",
+                                position: "relative",
                                 textRendering: "optimizeLegibility",
                                 fontSize: "18px !important",
                                 lineHeight: "24px !important",
@@ -2450,9 +2442,23 @@ export const ProdViewUpSm = ({ selectedprd }) => {
                                 WebkitTextSizeAdjust: "100%",
                               }}
                             >
-                              {vPriceRangeTo}&nbsp;{vPrixSymbol}
+                              <Box
+                                component="span"
+                                sx={{
+                                  color: "#b12704",
+                                  textRendering: "optimizeLegibility",
+                                  fontSize: "18px !important",
+                                  lineHeight: "24px !important",
+                                  borderCollapse: "collapse",
+                                  textIndent: "initial",
+                                  borderSpacing: "2px",
+                                  WebkitTextSizeAdjust: "100%",
+                                }}
+                              >
+                                {vPriceRangeTo}&nbsp;{vPrixSymbol}
+                              </Box>
                             </Box>
-                          </Box>
+                          )}
                         </Box>
                       </Box>
                     </Box>
