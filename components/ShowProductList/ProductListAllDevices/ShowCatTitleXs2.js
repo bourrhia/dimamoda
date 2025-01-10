@@ -1,7 +1,8 @@
 import React from "react";
 import Box from "@mui/material/Box";
 // import ProdLinkAllDevices from "./ProdLinkAllDevices";
-import ProdLinkShowMoreXs from "./ProdLinkShowMoreXs";
+//import ProdLinkShowMoreXs from "./ProdLinkShowMoreXs";
+import ProdLinkShowByCatXs from "./ProdLinkShowByCatXs";
 
 export const ShowCatTitleXs = ({
   catTitle,
@@ -136,7 +137,7 @@ export const ShowCatTitleXs = ({
               },
             }}
           >
-            <ProdLinkShowMoreXs
+            <ProdLinkShowByCatXs
               buttonName={vVoirePlusButt}
               category={category}
               searchTerm={searchTerm}
@@ -168,7 +169,7 @@ export const ShowCatTitleXs = ({
               >
                 Voire plus
               </Box>
-            </ProdLinkShowMoreXs>
+            </ProdLinkShowByCatXs>
           </Box>
         </Box>
       </Box>

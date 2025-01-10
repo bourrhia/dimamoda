@@ -44,24 +44,11 @@ export default function HandlesCartItemXs({ selectedprd }) {
   }, [selectedprd]);
 
   const getAllMainImgAndColor2 = useMemo(() => {
-    const allImagesAndColors = [];
-
-    selectedprd[0]?.prdDetailsBySize.forEach((sizeDetail) => {
-      sizeDetail.detailsByColor.forEach((colorDetail) => {
-        const record = {
-          couleur: colorDetail.couleur,
-          mainImgJpg: colorDetail.mainImgJpg,
-          imgThumbnails: colorDetail.imgThumbnails,
-        };
-        allImagesAndColors.push(record);
-      });
-    });
-
-    const uniqueRecords = Array.from(
-      new Set(allImagesAndColors.map((item) => JSON.stringify(item)))
-    ).map((item) => JSON.parse(item));
-
-    return uniqueRecords;
+    return (
+      selectedprd[0]?.imgThumbnails?.map((thumbnail) => ({
+        mainImgJpg: thumbnail.imgJpg,
+      })) || []
+    );
   }, [selectedprd]);
 
   const [productDetailsBySize2, setProductDetailsBySize2] = useState(

@@ -218,8 +218,15 @@ export const HandlesCheckoutUpSm = () => {
         .nullable(),
       email: yup
         .string()
-        .matches(emailRegex, "L'adresse email est invalide")
-        .nullable(),
+        // .matches(emailRegex, "L'adresse email est invalide")
+        .nullable()
+        .test("is-valid-email", "L'adresse email est invalide", (value) => {
+          // Allow null or empty string
+          if (value === null || value === "") return true;
+
+          // Check email format
+          return emailRegex.test(value);
+        }),
     });
 
     const {
@@ -335,7 +342,8 @@ export const HandlesCheckoutUpSm = () => {
       }
     };
 
-    const mtLiv = 10;
+    //const mtLiv = 10;
+    const mtLiv = 0;
 
     const cartMtLiv = parseFloat(Math.round(mtLiv * 100) / 100).toFixed(2);
 
@@ -389,7 +397,7 @@ export const HandlesCheckoutUpSm = () => {
       let email = data.email;
 
       const canAddOrder = [
-        email,
+        // email,
         nom,
         prenom,
         ville,
@@ -2639,55 +2647,57 @@ export const HandlesCheckoutUpSm = () => {
                                       </Box>
                                     </Box>
                                   </Box>
-                                  <Box component="tr">
-                                    <Box
-                                      component="td"
-                                      sx={{
-                                        width: "11.25rem",
-                                        borderBottom: "1px solid #e5e5e5",
-                                        paddingBottom: "1rem",
-                                        textAlign: "left",
-                                      }}
-                                    >
+                                  {cartMtLiv > 0 && (
+                                    <Box component="tr">
                                       <Box
-                                        component="span"
+                                        component="td"
                                         sx={{
+                                          width: "11.25rem",
+                                          borderBottom: "1px solid #e5e5e5",
+                                          paddingBottom: "1rem",
                                           textAlign: "left",
-                                          WebkitTextSizeAdjust: "100%",
-                                          color: "#191919",
-                                          fontSize: "0.875rem",
-                                          fontWeight: 500,
                                         }}
                                       >
-                                        Livraison
+                                        <Box
+                                          component="span"
+                                          sx={{
+                                            textAlign: "left",
+                                            WebkitTextSizeAdjust: "100%",
+                                            color: "#191919",
+                                            fontSize: "0.875rem",
+                                            fontWeight: 500,
+                                          }}
+                                        >
+                                          Livraison
+                                        </Box>
                                       </Box>
-                                    </Box>
-                                    <Box
-                                      component="td"
-                                      sx={{
-                                        minWidth: 0,
-                                        whiteSpace: "nowrap",
-                                        borderBottom: "1px solid #e5e5e5",
-                                        paddingBottom: "1rem",
-                                        textAlign: "right",
-                                      }}
-                                    >
                                       <Box
-                                        component="span"
+                                        component="td"
                                         sx={{
+                                          minWidth: 0,
                                           whiteSpace: "nowrap",
+                                          borderBottom: "1px solid #e5e5e5",
+                                          paddingBottom: "1rem",
                                           textAlign: "right",
-                                          color: "#191919",
-                                          fontSize: "0.875rem",
-                                          fontWeight: 500,
                                         }}
                                       >
-                                        <Box component="span">
-                                          {cartMtLiv}&nbsp;Dhs
+                                        <Box
+                                          component="span"
+                                          sx={{
+                                            whiteSpace: "nowrap",
+                                            textAlign: "right",
+                                            color: "#191919",
+                                            fontSize: "0.875rem",
+                                            fontWeight: 500,
+                                          }}
+                                        >
+                                          <Box component="span">
+                                            {cartMtLiv}&nbsp;Dhs
+                                          </Box>
                                         </Box>
                                       </Box>
                                     </Box>
-                                  </Box>
+                                  )}
                                   <Box component="tr">
                                     <Box
                                       component="td"

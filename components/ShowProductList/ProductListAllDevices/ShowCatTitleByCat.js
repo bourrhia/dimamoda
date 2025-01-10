@@ -1,9 +1,10 @@
 import React from "react";
 import Box from "@mui/material/Box";
-// import ProdLinkAllDevices from "./ProdLinkAllDevices";
-import ProdLinkShowMoreXs from "./ProdLinkShowMoreXs";
+import Typography from "@mui/material/Typography";
+//import ProdLinkAllDevices from "./ProdLinkAllDevices";
+import ProdLinkShowByCatUpSm from "./ProdLinkShowByCatUpSm";
 
-export const ShowCatTitleXs = ({
+export const ShowCatTitleByCat = ({
   catTitle,
   category,
   searchTerm,
@@ -38,7 +39,6 @@ export const ShowCatTitleXs = ({
             sx={{
               fontSize: "1.5rem",
               lineHeight: "32px",
-              fontSize: "1rem",
               fontWeight: "700",
               marginBottom: 0,
               marginTop: 0,
@@ -58,52 +58,51 @@ export const ShowCatTitleXs = ({
 
                 fontSize: "1.5rem",
                 lineHeight: "32px",
-                fontSize: "1rem",
-                lineHeight: "1.125rem",
                 fontWeight: "700",
 
                 cursor: "pointer",
                 textDecoration: "none!important",
               }}
             >
-              <Box
-                component="span"
-                sx={{
-                  fontSize: "1.5rem",
-                  lineHeight: "32px",
-                  fontSize: "1.125rem",
-                  fontWeight: "700",
-                  fontSize: "1rem",
-                  textOverflow: "ellipsis",
-                  maxHeight: "2.8rem",
-                  overflow: "hidden",
-                  display: "-webkit-box",
-                  WebkitLineClamp: "3",
-                  WebkitBoxOrient: "vertical",
-                  fontWeight: "700!important",
-                  fontStyle: "normal!important",
-                  textTransform: "none!important",
-                  textDecoration: "none!important",
-
-                  lineHeight: ".8",
-
-                  "@media screen and (min-width: 250px)": {
-                    lineHeight: "1.4",
-                  },
-                }}
-              >
-                {catTitle}
-              </Box>
+              <Typography gutterBottom component="div">
+                <Box
+                  component="span"
+                  sx={{
+                    fontSize: "1.5rem",
+                    lineHeight: "32px",
+                    fontWeight: "700",
+                  }}
+                >
+                  {catTitle}
+                </Box>
+              </Typography>
             </Box>
           </Box>
         </Box>
         <Box
           sx={{
+            fontSize: "1.25rem",
             fontWeight: "normal",
             flex: "1 0 auto",
-            display: nbrProd > 4 ? "inline-block" : "None",
-            fontSize: "1rem",
-            lineHeight: "1.4rem",
+            lineHeight: "32px",
+            display: "inline-block",
+
+            //
+            "@media screen and (min-width: 600px)": {
+              display: nbrProd > 3 ? "inline-block" : "None",
+            },
+
+            "@media screen and (min-width: 768px)": {
+              display: nbrProd > 4 ? "inline-block" : "None",
+            },
+
+            "@media screen and (min-width: 960px)": {
+              display: nbrProd > 5 ? "inline-block" : "None",
+            },
+
+            "@media screen and (min-width: 1083px)": {
+              display: nbrProd > 6 ? "inline-block" : "None",
+            },
           }}
         >
           <Box
@@ -136,39 +135,35 @@ export const ShowCatTitleXs = ({
               },
             }}
           >
-            <ProdLinkShowMoreXs
+            <ProdLinkShowByCatUpSm
               buttonName={vVoirePlusButt}
               category={category}
               searchTerm={searchTerm}
-              catTitle={catTitle}
               otherSearchTerm={otherSearchTerm}
+              catTitle={catTitle}
             >
-              <Box
-                sx={{
-                  fontSize: "1rem",
-                  color: "#007185!important",
-                  fontWeight: "700!important",
-                  textOverflow: "ellipsis",
-                  maxHeight: "2.8rem",
-                  overflow: "hidden",
-                  display: "-webkit-box",
-                  WebkitLineClamp: "2",
-                  WebkitBoxOrient: "vertical",
-                  fontStyle: "normal!important",
-                  textTransform: "none!important",
-                  textDecoration: "none!important",
-                  wordWrap: "break-word",
-                  overflowWrap: "break-word",
-                  lineHeight: "1",
+              <Typography gutterBottom component="div">
+                <Box
+                  sx={{
+                    display: {
+                      xs: "none",
+                      sm: "block",
+                      md: "block",
+                      lg: "block",
+                    },
 
-                  "@media screen and (min-width: 250px)": {
-                    lineHeight: "1.4",
-                  },
-                }}
-              >
-                Voire plus
-              </Box>
-            </ProdLinkShowMoreXs>
+                    fontSize: "1rem",
+                    fontWeight: "normal",
+                    lineHeight: "1.125rem",
+
+                    color: "#007185!important",
+                    fontWeight: "700!important",
+                  }}
+                >
+                  Voire plus
+                </Box>
+              </Typography>
+            </ProdLinkShowByCatUpSm>
           </Box>
         </Box>
       </Box>
@@ -189,4 +184,4 @@ export const ShowCatTitleXs = ({
   );
 };
 
-export default ShowCatTitleXs;
+export default ShowCatTitleByCat;

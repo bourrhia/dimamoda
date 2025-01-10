@@ -59,14 +59,29 @@ const HandlesCompleteOrder = ({
 
   const orderNumber = useGetOrderNum(order_Id);
 
+  const fullyDecodeValue = (value) => {
+    let decodedValue = value;
+    try {
+      while (
+        decodedValue &&
+        decodedValue !== decodeURIComponent(decodedValue)
+      ) {
+        decodedValue = decodeURIComponent(decodedValue);
+      }
+    } catch (error) {
+      console.error("Error decoding value:", value, error);
+    }
+    return decodedValue || null;
+  };
+
   const prodId = parseInt(cartItemId) || null;
-  const prodSize = cartItemSize || null;
-  const prodColor = cartItemColor || null;
+  const prodSize = fullyDecodeValue(cartItemSize);
+  const prodColor = fullyDecodeValue(cartItemColor);
 
   const dispatch = useDispatch();
 
   const removeAllItems = () => {
-    if (prodId) {
+    if (prodId && prodSize && prodColor) {
       dispatch(productRemoved({ prodId, prodSize, prodColor }));
       dispatch(orderRemoved());
     } else {

@@ -100,40 +100,11 @@ export const HandlesCheckoutXs = () => {
 
   const [navConfirmOrder, setNavConfirmOrder] = useState(false);
 
-  /*  const handleNavConfirmOrder = (orderId) => {
-    try {
-      setNavConfirmOrder(true);
-
-      // router.push(
-      //  `/confirmOrderXs/${encodeURIComponent(orderId)}/${encodeURIComponent(
-       //   cartItemId
-      //  )}` 
-      router.push(
-        `/confirmOrderXs/${encodeURIComponent(orderId)}/${encodeURIComponent(
-          cartItemId
-        )}/${encodeURIComponent(cartItemSize)}/${encodeURIComponent(
-          cartItemColor
-        )}`
-      );
-    } catch (err) {
-      console.error(
-        "An error occurred while navigating to confirm an order: ",
-        err
-      );
-    } finally {
-      setNavConfirmOrder(true);
-    }
-  }; */
-
   const searchParams = useSearchParams();
 
   const cartItemId = searchParams.get("cartProdId") || null;
   const cartItemSize = searchParams.get("cartProdSize") || null;
   const cartItemColor = searchParams.get("cartProdColor") || null;
-
-  console.log(" cartItemId2:", cartItemId);
-  console.log("cartItemSize2 :", cartItemSize);
-  console.log("cartItemColor2 :", cartItemColor);
 
   const allCart = useSelector((state) => state.cart);
 
@@ -160,10 +131,6 @@ export const HandlesCheckoutXs = () => {
     try {
       setNavConfirmOrder(true);
 
-      /* router.push(
-        `/confirmOrderXs/${encodeURIComponent(orderId)}/${encodeURIComponent(
-          cartItemId
-        )}` */
       router.push(
         `/confirmOrderXs/${encodeURIComponent(orderId)}/${encodeURIComponent(
           cartItemId
@@ -323,7 +290,9 @@ export const HandlesCheckoutXs = () => {
       }
     };
 
-    const mtLiv = 10;
+    // const mtLiv = 10;
+
+    const mtLiv = 0;
 
     const cartMtLiv = parseFloat(Math.round(mtLiv * 100) / 100).toFixed(2);
 
@@ -2647,72 +2616,63 @@ export const HandlesCheckoutXs = () => {
                           </Box>
                         </Box>
                       </Box>
-                      <Box
-                        component="dl"
-                        sx={{
-                          border: "none",
-                          paddingBottom: "0.25rem",
-                          alignItems: "center",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          width: "100%",
-                          marginBlockStart: "1em",
-                          marginBlockEnd: "1em",
-                          marginInlineStart: "0px",
-                          marginInlineEnd: "0px",
-                          fontSize: ".875rem",
-                          WebkitTextSizeAdjust: "100%",
-                          color: "#191919",
-                          margin: 0,
-                          padding: 0,
-                        }}
-                      >
+                      {cartMtLiv > 0 && (
                         <Box
-                          component="dt"
+                          component="dl"
                           sx={{
-                            textAlign: "left",
+                            border: "none",
                             paddingBottom: "0.25rem",
+                            alignItems: "center",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            marginBlockStart: "1em",
+                            marginBlockEnd: "1em",
+                            marginInlineStart: "0px",
+                            marginInlineEnd: "0px",
                             fontSize: ".875rem",
                             WebkitTextSizeAdjust: "100%",
                             color: "#191919",
+                            margin: 0,
+                            padding: 0,
                           }}
                         >
                           <Box
-                            component="span"
-                            aria-hidden="false"
+                            component="dt"
                             sx={{
                               textAlign: "left",
+                              paddingBottom: "0.25rem",
                               fontSize: ".875rem",
                               WebkitTextSizeAdjust: "100%",
                               color: "#191919",
                             }}
                           >
-                            Livraison
+                            <Box
+                              component="span"
+                              aria-hidden="false"
+                              sx={{
+                                textAlign: "left",
+                                fontSize: ".875rem",
+                                WebkitTextSizeAdjust: "100%",
+                                color: "#191919",
+                              }}
+                            >
+                              Livraison2
+                            </Box>
                           </Box>
-                        </Box>
-                        <Box
-                          component="dd"
-                          sx={{
-                            minWidth: "100px",
-                            paddingBottom: "0.25rem",
-                            textAlign: "right",
-                            whiteSpace: "break-spaces",
-                            display: "block",
-                            marginInlineStart: "40px",
-                            fontSize: ".875rem",
-                            WebkitTextSizeAdjust: "100%",
-                            color: "#191919",
-                            margin: 0,
-                          }}
-                        >
                           <Box
-                            component="span"
+                            component="dd"
                             sx={{
+                              minWidth: "100px",
+                              paddingBottom: "0.25rem",
                               textAlign: "right",
                               whiteSpace: "break-spaces",
+                              display: "block",
+                              marginInlineStart: "40px",
                               fontSize: ".875rem",
                               WebkitTextSizeAdjust: "100%",
                               color: "#191919",
+                              margin: 0,
                             }}
                           >
                             <Box
@@ -2725,11 +2685,22 @@ export const HandlesCheckoutXs = () => {
                                 color: "#191919",
                               }}
                             >
-                              {cartMtLiv}&nbsp;Dhs
+                              <Box
+                                component="span"
+                                sx={{
+                                  textAlign: "right",
+                                  whiteSpace: "break-spaces",
+                                  fontSize: ".875rem",
+                                  WebkitTextSizeAdjust: "100%",
+                                  color: "#191919",
+                                }}
+                              >
+                                {cartMtLiv}&nbsp;Dhs
+                              </Box>
                             </Box>
                           </Box>
                         </Box>
-                      </Box>
+                      )}
                       <Box
                         component="dl"
                         sx={{

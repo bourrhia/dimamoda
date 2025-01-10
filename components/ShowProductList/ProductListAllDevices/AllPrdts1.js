@@ -131,6 +131,7 @@ export const Allprds1 = ({ imgmrv, catTitle }) => {
 
             position: "relative",
             padding: "18px",
+            paddingBottom: "72px",
             flexDirection: "column",
             flexWrap: "wrap",
             display: "flex",

@@ -1,9 +1,10 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import PrdListOnlySm1 from "../../components/ShowProductList/ProductListUpSm/PrdListOnlySm1";
-import PrdListUpSm1 from "../../components/ShowProductList/ProductListUpSm/PrdListUpSm1";
-import PrdListUpMd2 from "../../components/ShowProductList/ProductListUpSm/PrdListUpMd2";
-import PrdListXs1 from "../../components/ShowProductList/ProductListMobile/PrdListXs1";
+import PrdListOnlySm2 from "../../components/ShowProductList/ProductListUpSm/PrdListOnlySm2";
+import PrdListUpSm2 from "../../components/ShowProductList/ProductListUpSm/PrdListUpSm2";
+import PrdListUpMd3 from "../../components/ShowProductList/ProductListUpSm/PrdListUpMd3";
+//import PrdListXs1 from "../../components/ShowProductList/ProductListMobile/PrdListXs1";
+import PrdListXs2 from "../../components/ShowProductList/ProductListMobile/PrdListXs2";
 import clientPromise from "../../lib/mongodb";
 
 const sanitizeData = (data) =>
@@ -118,7 +119,7 @@ export default async function Home() {
         }}
       >
         {prodTendence.length !== 0 ? (
-          <PrdListOnlySm1
+          <PrdListOnlySm2
             imgmrv={prodTendence}
             category={catTendence}
             catTitle={catTitleTendence}
@@ -129,7 +130,7 @@ export default async function Home() {
         ) : null}
 
         {prodFemme.length !== 0 ? (
-          <PrdListOnlySm1
+          <PrdListOnlySm2
             imgmrv={prodFemme}
             category={catFemme}
             catTitle={catTitleFemme}
@@ -140,7 +141,7 @@ export default async function Home() {
         ) : null}
 
         {prodHomme.length !== 0 ? (
-          <PrdListOnlySm1
+          <PrdListOnlySm2
             imgmrv={prodHomme}
             category={catHomme}
             catTitle={catTitleHomme}
@@ -151,7 +152,7 @@ export default async function Home() {
         ) : null}
 
         {prodFille.length !== 0 ? (
-          <PrdListOnlySm1
+          <PrdListOnlySm2
             imgmrv={prodFille}
             category={catFille}
             catTitle={catTitleFille}
@@ -162,7 +163,7 @@ export default async function Home() {
         ) : null}
 
         {prodGarcon.length !== 0 ? (
-          <PrdListOnlySm1
+          <PrdListOnlySm2
             imgmrv={prodGarcon}
             category={catGarcon}
             catTitle={catTitleGarcon}
@@ -191,7 +192,7 @@ export default async function Home() {
           }}
         >
           {prodTendence.length !== 0 ? (
-            <PrdListUpMd2
+            <PrdListUpMd3
               imgmrv={prodTendence}
               category={catTendence}
               catTitle={catTitleTendence}
@@ -208,7 +209,7 @@ export default async function Home() {
           }}
         >
           {prodFemme.length !== 0 ? (
-            <PrdListUpSm1
+            <PrdListUpSm2
               imgmrv={prodFemme}
               category={catFemme}
               catTitle={catTitleFemme}
@@ -225,7 +226,7 @@ export default async function Home() {
           }}
         >
           {prodHomme.length !== 0 ? (
-            <PrdListUpSm1
+            <PrdListUpSm2
               imgmrv={prodHomme}
               category={catHomme}
               catTitle={catTitleHomme}
@@ -242,7 +243,7 @@ export default async function Home() {
           }}
         >
           {prodFille.length !== 0 ? (
-            <PrdListUpSm1
+            <PrdListUpSm2
               imgmrv={prodFille}
               category={catFille}
               catTitle={catTitleFille}
@@ -259,7 +260,7 @@ export default async function Home() {
           }}
         >
           {prodGarcon.length !== 0 ? (
-            <PrdListUpSm1
+            <PrdListUpSm2
               imgmrv={prodGarcon}
               category={catGarcon}
               catTitle={catTitleGarcon}
@@ -308,7 +309,7 @@ export default async function Home() {
                 }}
               >
                 {fourProdTendence.length !== 0 ? (
-                  <PrdListXs1
+                  <PrdListXs2
                     imgmrv={fourProdTendence}
                     category={catTendence}
                     catTitle={catTitleTendence}
@@ -319,7 +320,7 @@ export default async function Home() {
                 ) : null}
 
                 {fourProdFemme.length !== 0 ? (
-                  <PrdListXs1
+                  <PrdListXs2
                     imgmrv={fourProdFemme}
                     category={catFemme}
                     catTitle={catTitleFemme}
@@ -330,7 +331,7 @@ export default async function Home() {
                 ) : null}
 
                 {fourProdHomme.length !== 0 ? (
-                  <PrdListXs1
+                  <PrdListXs2
                     imgmrv={fourProdHomme}
                     category={catHomme}
                     catTitle={catTitleHomme}
@@ -341,7 +342,7 @@ export default async function Home() {
                 ) : null}
 
                 {fourProdFille.length !== 0 ? (
-                  <PrdListXs1
+                  <PrdListXs2
                     imgmrv={fourProdFille}
                     category={catFille}
                     catTitle={catTitleFille}
@@ -352,7 +353,7 @@ export default async function Home() {
                 ) : null}
 
                 {fourProdGarcon.length !== 0 ? (
-                  <PrdListXs1
+                  <PrdListXs2
                     imgmrv={fourProdGarcon}
                     category={catGarcon}
                     catTitle={catTitleGarcon}
