@@ -221,8 +221,15 @@ export const HandlesCheckoutXs = () => {
         .nullable(),
       email: yup
         .string()
-        .matches(emailRegex, "L'adresse email est invalide")
-        .nullable(),
+        // .matches(emailRegex, "L'adresse email est invalide")
+        .nullable()
+        .test("is-valid-email", "L'adresse email est invalide", (value) => {
+          // Allow null or empty string
+          if (value === null || value === "") return true;
+
+          // Check email format
+          return emailRegex.test(value);
+        }),
     });
 
     const {
@@ -346,7 +353,7 @@ export const HandlesCheckoutXs = () => {
       let email = data.email;
 
       const canAddOrder = [
-        email,
+        // email,
         nom,
         prenom,
         ville,
@@ -2657,7 +2664,7 @@ export const HandlesCheckoutXs = () => {
                                 color: "#191919",
                               }}
                             >
-                              Livraison2
+                              Livraison
                             </Box>
                           </Box>
                           <Box
