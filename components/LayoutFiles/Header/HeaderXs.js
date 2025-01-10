@@ -108,9 +108,12 @@ function HeaderXs() {
 
                   position: "relative",
                   display: "block",
-                  width: "120px",
-                  height: "28px",
+                  // width: "120px",
+                  // height: "28px",
                   whiteSpace: "nowrap",
+
+                  width: "80px",
+                  height: "40px",
 
                   ":-webkit-any-link": {
                     cursor: "pointer",
@@ -118,9 +121,11 @@ function HeaderXs() {
                 }}
               >
                 <Image
-                  src="/logopic.svg"
+                  // src="/logopic.svg"
+                  src="/logodimalamode.svg"
                   alt="logo"
-                  sizes="120px"
+                  // sizes="120px"
+                  sizes="80px"
                   fill
                   priority={true}
                   style={{

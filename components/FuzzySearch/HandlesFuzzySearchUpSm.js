@@ -272,10 +272,12 @@ export const HandlesFuzzySearchUpSm = ({ allSearchProducts }) => {
                                   <Image
                                     src={product.imgJpg}
                                     alt="Image from fuzzy search"
-                                    sizes="(min-width: 960px) 225px, (min-width:  600px)  178px, (min-width:  480px) 29%"
                                     fill
+                                    sizes="(min-width: 3043px) 10vw, (min-width: 2763px) 11vw, ((min-width: 2483px) 12vw,(min-width: 2203px) 14vw,
+                                    (min-width: 1923px) 16vw, (min-width: 1643px) 20vw, (min-width: 1363px) 20vw,(min-width: 1083px) 25vw,(min-width: 960px) 25vw, 
+                                    (min-width: 768px) 33vw,(min-width: 600px) 50vw"
                                     style={{
-                                      objectFit: "cover",
+                                      objectFit: "contain",
                                     }}
                                   />
                                 </Box>
@@ -568,7 +570,14 @@ export const HandlesFuzzySearchUpSm = ({ allSearchProducts }) => {
                                   fontSize: "14px",
                                 }}
                               >
-                                <Box component="span">5,90 Dhs (Livraison)</Box>
+                                <Box
+                                  component="span"
+                                  sx={{
+                                    display: "none",
+                                  }}
+                                >
+                                  5,90 Dhs (Livraison)
+                                </Box>
                               </Box>
                               <Box
                                 sx={{
@@ -589,7 +598,14 @@ export const HandlesFuzzySearchUpSm = ({ allSearchProducts }) => {
                                   fontSize: "14px",
                                 }}
                               >
-                                <Box component="span">Retours gratuits</Box>
+                                <Box
+                                  component="span"
+                                  sx={{
+                                    display: "none",
+                                  }}
+                                >
+                                  Retours gratuits
+                                </Box>
                               </Box>
                             </Box>
                           </Box>

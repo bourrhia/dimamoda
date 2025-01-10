@@ -121,8 +121,6 @@ export const ProdViewUpSm = ({ selectedprd }) => {
     return uniqueRecords;
   }, [selectedprd]);
 
-  /************************************** */
-
   useEffect(() => {
     if (!isInitialized.current) {
       setProductState((prev) => ({

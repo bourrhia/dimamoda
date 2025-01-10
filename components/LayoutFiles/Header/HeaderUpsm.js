@@ -56,12 +56,15 @@ function HeaderUpsm() {
                       backgroundColor: "transparent",
                       border: "none",
                       outline: 0,
-                      width: "150px",
-                      height: "35px",
+                      // width: "150px",
+                      // height: "135px",
+                      width: "100px",
+                      height: "80px",
                     }}
                   >
                     <Image
-                      src="/logopic.svg"
+                      // src="/logopic.svg"
+                      src="/logodimalamode.svg"
                       alt="logo"
                       sizes="150px"
                       fill
