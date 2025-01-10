@@ -37,10 +37,11 @@ function HeaderUpsm() {
                 display: "table-cell",
                 textAlign: "left",
                 paddingRight: "80px",
+                paddingLeft: 0,
               }}
             >
               <Box
-                component="h1"
+                // component="h1"
                 sx={{
                   display: "block",
                   margin: 0,
@@ -56,17 +57,14 @@ function HeaderUpsm() {
                       backgroundColor: "transparent",
                       border: "none",
                       outline: 0,
-                      // width: "150px",
-                      // height: "135px",
                       width: "100px",
                       height: "80px",
                     }}
                   >
                     <Image
-                      // src="/logopic.svg"
                       src="/logodimalamode.svg"
                       alt="logo"
-                      sizes="150px"
+                      sizes="100px"
                       fill
                       style={{
                         objectFit: "contain",

@@ -78,7 +78,8 @@ function HeaderXs() {
             minWidth: "90px",
             webkitBoxOrdinalGroup: 2,
             order: 1,
-            paddingLeft: "16px",
+            //paddingLeft: "16px",
+            paddingLeft: "4px",
           }}
         >
           <Box
@@ -108,12 +109,10 @@ function HeaderXs() {
 
                   position: "relative",
                   display: "block",
-                  // width: "120px",
-                  // height: "28px",
                   whiteSpace: "nowrap",
 
-                  width: "80px",
-                  height: "40px",
+                  width: "90px",
+                  height: "45px",
 
                   ":-webkit-any-link": {
                     cursor: "pointer",
@@ -121,11 +120,9 @@ function HeaderXs() {
                 }}
               >
                 <Image
-                  // src="/logopic.svg"
                   src="/logodimalamode.svg"
                   alt="logo"
-                  // sizes="120px"
-                  sizes="80px"
+                  sizes="90px"
                   fill
                   priority={true}
                   style={{
