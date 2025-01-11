@@ -28,7 +28,7 @@ const getProductByCategory = async (searchCatTerm, category, limit = null) => {
 
   const query = {
     [searchCatTerm]: category,
-    highlight: "Y",
+    // highlight: "Y",
   };
 
   const options = {
@@ -98,7 +98,9 @@ export default async function Home() {
   const catGarcon = "Garçon";
   const catTendence = "Tendences";
 
-  const nbrProdTendence = 20;
+  // const nbrProdTendence = 20;
+
+  const nbrProdTendence = prodTendence?.length || 0;
   const nbrProdFemme = prodFemme?.length || 0;
   const nbrProdHomme = prodHomme?.length || 0;
   const nbrProdFille = prodFille?.length || 0;
