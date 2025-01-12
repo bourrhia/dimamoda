@@ -63,65 +63,68 @@ export const TendencesUpSm = async () => {
 
   const catTendences = "Tendences";
 
-  const nbrProdTendence = 20;
+  // const nbrProdTendence = 20;
 
   return (
     <>
       <ShowCategory catTitle={catTitle} />
 
-      {groupedProducts.map(({ subcategory, products }) => (
-        <Box key={subcategory}>
-          <Box
-            sx={{
-              display: { xs: "none", sm: "block", md: "none" },
-              marginLeft: "32px",
-              marginRight: "32px",
-              maxWidth: "1248px",
-              marginBottom: "64px",
-              marginTop: "32px",
-              width: "100%",
-              height: "100%",
-            }}
-          >
-            <PrdListOnlySm1
-              imgmrv={products}
-              category={catTendences}
-              catTitle={`${subcategory}`}
-              searchTerm={searchCatTerm2}
-              otherSearchTerm={searchCatTerm3}
-              nbrProd={nbrProdTendence}
-            />
-          </Box>
-
-          <Box
-            sx={{
-              display: { xs: "none", sm: "none", md: "block", lg: "block" },
-              marginLeft: "32px",
-              marginRight: "32px",
-              maxWidth: "1248px",
-              marginBottom: "64px",
-              marginTop: "32px",
-              width: "100%",
-              height: "100%",
-            }}
-          >
+      {groupedProducts.map(({ subcategory, products }) => {
+        const nbrProd = products?.length || 0;
+        return (
+          <Box key={subcategory}>
             <Box
               sx={{
-                marginBottom: "32px !important",
+                display: { xs: "none", sm: "block", md: "none" },
+                marginLeft: "32px",
+                marginRight: "32px",
+                maxWidth: "1248px",
+                marginBottom: "64px",
+                marginTop: "32px",
+                width: "100%",
+                height: "100%",
               }}
             >
-              <PrdListUpSm1
+              <PrdListOnlySm1
                 imgmrv={products}
                 category={catTendences}
                 catTitle={`${subcategory}`}
                 searchTerm={searchCatTerm2}
                 otherSearchTerm={searchCatTerm3}
-                nbrProd={nbrProdTendence}
+                nbrProd={nbrProd}
               />
             </Box>
+
+            <Box
+              sx={{
+                display: { xs: "none", sm: "none", md: "block", lg: "block" },
+                marginLeft: "32px",
+                marginRight: "32px",
+                maxWidth: "1248px",
+                marginBottom: "64px",
+                marginTop: "32px",
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <Box
+                sx={{
+                  marginBottom: "32px !important",
+                }}
+              >
+                <PrdListUpSm1
+                  imgmrv={products}
+                  category={catTendences}
+                  catTitle={`${subcategory}`}
+                  searchTerm={searchCatTerm2}
+                  otherSearchTerm={searchCatTerm3}
+                  nbrProd={nbrProd}
+                />
+              </Box>
+            </Box>
           </Box>
-        </Box>
-      ))}
+        );
+      })}
     </>
   );
 };

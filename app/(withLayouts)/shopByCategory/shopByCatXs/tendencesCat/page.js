@@ -62,13 +62,14 @@ export const TendencesXs = async () => {
 
   const catTendences = "Tendences";
 
-  const nbrProdTendence = 20;
+  // const nbrProdTendence = 20;
 
   return (
     <>
       <ShowCategoryXs catTitle={catTitle} />
       {groupedProducts.map(({ subcategory, products }) => {
         const limitedProducts = products.slice(0, 4);
+        const nbrProd = products?.length || 0;
 
         return (
           <Box key={subcategory}>
@@ -114,7 +115,7 @@ export const TendencesXs = async () => {
                         catTitle={`${subcategory}`}
                         searchTerm={searchCatTerm2}
                         otherSearchTerm={searchCatTerm3}
-                        nbrProd={nbrProdTendence}
+                        nbrProd={nbrProd}
                       />
                     </Box>
                   </Box>
