@@ -1,9 +1,11 @@
 import React from "react";
 import Box from "@mui/material/Box";
+import PrdListOnlySm1 from "../../components/ShowProductList/ProductListUpSm/PrdListOnlySm1";
+import PrdListUpSm1 from "../../components/ShowProductList/ProductListUpSm/PrdListUpSm1";
 import PrdListOnlySm2 from "../../components/ShowProductList/ProductListUpSm/PrdListOnlySm2";
 import PrdListUpSm2 from "../../components/ShowProductList/ProductListUpSm/PrdListUpSm2";
 import PrdListUpMd3 from "../../components/ShowProductList/ProductListUpSm/PrdListUpMd3";
-//import PrdListXs1 from "../../components/ShowProductList/ProductListMobile/PrdListXs1";
+import PrdListXs1 from "../../components/ShowProductList/ProductListMobile/PrdListXs1";
 import PrdListXs2 from "../../components/ShowProductList/ProductListMobile/PrdListXs2";
 import clientPromise from "../../lib/mongodb";
 
@@ -28,7 +30,6 @@ const getProductByCategory = async (searchCatTerm, category, limit = null) => {
 
   const query = {
     [searchCatTerm]: category,
-    // highlight: "Y",
   };
 
   const options = {
@@ -55,6 +56,39 @@ export default async function Home() {
     JSON.stringify(await getProductByCategory(searchCatTerm2, "Tendences", 4))
   );
   const catTitleTendence = "Tendences";
+
+  const prodMrVentes = JSON.parse(
+    JSON.stringify(
+      await getProductByCategory(searchCatTerm2, "Meilleuresventes")
+    )
+  );
+
+  const fourProdMrVentes = JSON.parse(
+    JSON.stringify(
+      await getProductByCategory(searchCatTerm2, "Meilleuresventes", 4)
+    )
+  );
+  const catTitleMrVentes = "Meilleures ventes";
+
+  const prodBonsPlans = JSON.parse(
+    JSON.stringify(await getProductByCategory(searchCatTerm2, "Bonsplans"))
+  );
+
+  const fourProdBonsplans = JSON.parse(
+    JSON.stringify(await getProductByCategory(searchCatTerm2, "Bonsplans", 4))
+  );
+
+  const catTitleBonsPlans = "Bons plans";
+
+  const prodNouveautes = JSON.parse(
+    JSON.stringify(await getProductByCategory(searchCatTerm2, "Nouveautés"))
+  );
+
+  const fourProdNouveautes = JSON.parse(
+    JSON.stringify(await getProductByCategory(searchCatTerm2, "Nouveautés", 4))
+  );
+
+  const catTitleNouveautes = "Nouveautés";
 
   const prodFemme = JSON.parse(
     JSON.stringify(await getProductByCategory(searchCatTerm1, "Femme"))
@@ -92,19 +126,51 @@ export default async function Home() {
   );
   const catTitleGarcon = "Vêtements pour Garçons";
 
+  const prodBigSizeFemme = JSON.parse(
+    JSON.stringify(await getProductByCategory(searchCatTerm2, "Bigsizefemme"))
+  );
+
+  const fourProdBigSizeFemme = JSON.parse(
+    JSON.stringify(
+      await getProductByCategory(searchCatTerm2, "Bigsizefemme", 4)
+    )
+  );
+
+  const catTitleBigSizeFemme = "Grandes tailles pour femme";
+
+  const prodBigSizehomme = JSON.parse(
+    JSON.stringify(await getProductByCategory(searchCatTerm2, "Bigsizehomme"))
+  );
+
+  const fourProdBigSizeHomme = JSON.parse(
+    JSON.stringify(
+      await getProductByCategory(searchCatTerm2, "Bigsizehomme", 4)
+    )
+  );
+
+  const catTitleBigSizeHomme = "Grandes tailles pour homme";
+
   const catFemme = "Femme";
   const catHomme = "Homme";
   const catFille = "Fille";
   const catGarcon = "Garçon";
   const catTendence = "Tendences";
-
-  // const nbrProdTendence = 20;
+  const catMrVentes = "Meilleuresventes";
+  const catBonsPlans = "Bonsplans";
+  const catNouveautes = "Nouveautés";
+  const catBigSizeFemme = "Bigsizefemme";
+  const catBigSizeHomme = "Bigsizehomme";
 
   const nbrProdTendence = prodTendence?.length || 0;
+  const nbrProdMrVentes = prodMrVentes?.length || 0;
+  const nbrProdBonsPlans = prodBonsPlans?.length || 0;
+  const nbrProdNouveautes = prodNouveautes?.length || 0;
   const nbrProdFemme = prodFemme?.length || 0;
   const nbrProdHomme = prodHomme?.length || 0;
   const nbrProdFille = prodFille?.length || 0;
   const nbrProdGarcon = prodGarcon?.length || 0;
+  const nbrProdBigSizeFemme = prodBigSizeFemme?.length || 0;
+  const nbrProdBigSizeHomme = prodBigSizehomme?.length || 0;
 
   return (
     <>
@@ -128,6 +194,39 @@ export default async function Home() {
             searchTerm={searchCatTerm2}
             otherSearchTerm={searchCatTerm1}
             nbrProd={nbrProdTendence}
+          />
+        ) : null}
+
+        {prodMrVentes.length !== 0 ? (
+          <PrdListOnlySm2
+            imgmrv={prodMrVentes}
+            category={catMrVentes}
+            catTitle={catTitleMrVentes}
+            searchTerm={searchCatTerm2}
+            otherSearchTerm={searchCatTerm1}
+            nbrProd={nbrProdMrVentes}
+          />
+        ) : null}
+
+        {prodBonsPlans.length !== 0 ? (
+          <PrdListOnlySm2
+            imgmrv={prodBonsPlans}
+            category={catBonsPlans}
+            catTitle={catTitleBonsPlans}
+            searchTerm={searchCatTerm2}
+            otherSearchTerm={searchCatTerm1}
+            nbrProd={nbrProdBonsPlans}
+          />
+        ) : null}
+
+        {prodNouveautes.length !== 0 ? (
+          <PrdListOnlySm2
+            imgmrv={prodNouveautes}
+            category={catNouveautes}
+            catTitle={catTitleNouveautes}
+            searchTerm={searchCatTerm2}
+            otherSearchTerm={searchCatTerm1}
+            nbrProd={nbrProdNouveautes}
           />
         ) : null}
 
@@ -174,6 +273,28 @@ export default async function Home() {
             nbrProd={nbrProdGarcon}
           />
         ) : null}
+
+        {prodBigSizeFemme.length !== 0 ? (
+          <PrdListOnlySm1
+            imgmrv={prodBigSizeFemme}
+            category={catBigSizeFemme}
+            catTitle={catTitleBigSizeFemme}
+            searchTerm={searchCatTerm2}
+            otherSearchTerm={searchCatTerm1}
+            nbrProd={nbrProdBigSizeFemme}
+          />
+        ) : null}
+
+        {prodBigSizehomme.length !== 0 ? (
+          <PrdListOnlySm1
+            imgmrv={prodBigSizehomme}
+            category={catBigSizeHomme}
+            catTitle={catTitleBigSizeHomme}
+            searchTerm={searchCatTerm2}
+            otherSearchTerm={searchCatTerm1}
+            nbrProd={nbrProdBigSizeHomme}
+          />
+        ) : null}
       </Box>
 
       <Box
@@ -204,7 +325,54 @@ export default async function Home() {
             />
           ) : null}
         </Box>
-
+        <Box
+          sx={{
+            marginBottom: "32px !important",
+          }}
+        >
+          {prodMrVentes.length !== 0 ? (
+            <PrdListUpMd3
+              imgmrv={prodMrVentes}
+              category={catMrVentes}
+              catTitle={catTitleMrVentes}
+              searchTerm={searchCatTerm2}
+              otherSearchTerm={searchCatTerm2}
+              nbrProd={nbrProdMrVentes}
+            />
+          ) : null}
+        </Box>
+        <Box
+          sx={{
+            marginBottom: "32px !important",
+          }}
+        >
+          {prodBonsPlans.length !== 0 ? (
+            <PrdListUpMd3
+              imgmrv={prodBonsPlans}
+              category={catBonsPlans}
+              catTitle={catTitleBonsPlans}
+              searchTerm={searchCatTerm2}
+              otherSearchTerm={searchCatTerm2}
+              nbrProd={nbrProdBonsPlans}
+            />
+          ) : null}
+        </Box>
+        <Box
+          sx={{
+            marginBottom: "32px !important",
+          }}
+        >
+          {prodNouveautes.length !== 0 ? (
+            <PrdListUpMd3
+              imgmrv={prodNouveautes}
+              category={catNouveautes}
+              catTitle={catTitleNouveautes}
+              searchTerm={searchCatTerm2}
+              otherSearchTerm={searchCatTerm2}
+              nbrProd={nbrProdNouveautes}
+            />
+          ) : null}
+        </Box>
         <Box
           sx={{
             marginBottom: "32px !important",
@@ -221,7 +389,6 @@ export default async function Home() {
             />
           ) : null}
         </Box>
-
         <Box
           sx={{
             marginBottom: "32px !important",
@@ -238,7 +405,6 @@ export default async function Home() {
             />
           ) : null}
         </Box>
-
         <Box
           sx={{
             marginBottom: "32px !important",
@@ -255,7 +421,6 @@ export default async function Home() {
             />
           ) : null}
         </Box>
-
         <Box
           sx={{
             marginBottom: "32px !important",
@@ -269,6 +434,39 @@ export default async function Home() {
               searchTerm={searchCatTerm1}
               otherSearchTerm={searchCatTerm1}
               nbrProd={nbrProdGarcon}
+            />
+          ) : null}
+        </Box>
+        <Box
+          sx={{
+            marginBottom: "32px !important",
+          }}
+        >
+          {prodBigSizeFemme.length !== 0 ? (
+            <PrdListUpSm1
+              imgmrv={prodBigSizeFemme}
+              category={catBigSizeFemme}
+              catTitle={catTitleBigSizeFemme}
+              searchTerm={searchCatTerm2}
+              otherSearchTerm={searchCatTerm1}
+              nbrProd={nbrProdBigSizeFemme}
+            />
+          ) : null}
+        </Box>
+
+        <Box
+          sx={{
+            marginBottom: "32px !important",
+          }}
+        >
+          {prodBigSizehomme.length !== 0 ? (
+            <PrdListUpSm1
+              imgmrv={prodBigSizehomme}
+              category={catBigSizeHomme}
+              catTitle={catTitleBigSizeHomme}
+              searchTerm={searchCatTerm2}
+              otherSearchTerm={searchCatTerm1}
+              nbrProd={nbrProdBigSizeHomme}
             />
           ) : null}
         </Box>
@@ -321,6 +519,39 @@ export default async function Home() {
                   />
                 ) : null}
 
+                {fourProdMrVentes.length !== 0 ? (
+                  <PrdListXs2
+                    imgmrv={fourProdMrVentes}
+                    category={catMrVentes}
+                    catTitle={catTitleMrVentes}
+                    searchTerm={searchCatTerm2}
+                    otherSearchTerm={searchCatTerm2}
+                    nbrProd={nbrProdMrVentes}
+                  />
+                ) : null}
+
+                {fourProdBonsplans.length !== 0 ? (
+                  <PrdListXs2
+                    imgmrv={fourProdBonsplans}
+                    category={catBonsPlans}
+                    catTitle={catTitleBonsPlans}
+                    searchTerm={searchCatTerm2}
+                    otherSearchTerm={searchCatTerm2}
+                    nbrProd={nbrProdBonsPlans}
+                  />
+                ) : null}
+
+                {fourProdNouveautes.length !== 0 ? (
+                  <PrdListXs2
+                    imgmrv={fourProdNouveautes}
+                    category={catNouveautes}
+                    catTitle={catTitleNouveautes}
+                    searchTerm={searchCatTerm2}
+                    otherSearchTerm={searchCatTerm2}
+                    nbrProd={nbrProdNouveautes}
+                  />
+                ) : null}
+
                 {fourProdFemme.length !== 0 ? (
                   <PrdListXs2
                     imgmrv={fourProdFemme}
@@ -362,6 +593,28 @@ export default async function Home() {
                     searchTerm={searchCatTerm1}
                     otherSearchTerm={searchCatTerm1}
                     nbrProd={nbrProdGarcon}
+                  />
+                ) : null}
+
+                {fourProdBigSizeFemme.length !== 0 ? (
+                  <PrdListXs1
+                    imgmrv={fourProdBigSizeFemme}
+                    category={catBigSizeFemme}
+                    catTitle={catTitleBigSizeFemme}
+                    searchTerm={searchCatTerm2}
+                    otherSearchTerm={searchCatTerm1}
+                    nbrProd={nbrProdBigSizeFemme}
+                  />
+                ) : null}
+
+                {fourProdBigSizeHomme.length !== 0 ? (
+                  <PrdListXs1
+                    imgmrv={fourProdBigSizeHomme}
+                    category={catBigSizeHomme}
+                    catTitle={catTitleBigSizeHomme}
+                    searchTerm={searchCatTerm2}
+                    otherSearchTerm={searchCatTerm1}
+                    nbrProd={nbrProdBigSizeHomme}
                   />
                 ) : null}
               </Box>

@@ -10,9 +10,9 @@ export default function PrdLinkMobile({
   buttonName,
   productNum,
   category,
-  searchTerm,
-  otherSearchTerm,
-  catTitle,
+  // searchTerm,
+  // otherSearchTerm,
+  // catTitle,
   children,
 }) {
   const router = useRouter();
@@ -37,6 +37,9 @@ export default function PrdLinkMobile({
       Fille: "filleCat",
       Garçon: "garconCat",
       Tendences: "tendencesCat",
+      Meilleuresventes: "mrVentesCat",
+      Bonsplans: "bonsPlansCat",
+      Nouveautés: "nouveautesCat",
     };
 
     return categoryMap[category] || null;
@@ -70,11 +73,6 @@ export default function PrdLinkMobile({
   if (buttonName === "voirePlusXsButt") {
     return (
       <Link
-        /* href={`/product/showMoreProductsXs/${encodeURIComponent(
-          category
-        )}/${encodeURIComponent(searchTerm)}/${encodeURIComponent(
-          catTitle
-        )}/${encodeURIComponent(otherSearchTerm)}`}*/
         href={`/shopByCategory/shopByCatXs/${encodeURIComponent(shopCat)}`}
         className="custom-link"
       >

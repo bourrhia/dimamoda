@@ -29,6 +29,7 @@ export default function ProdLinkShowByCatXs({
       setNavProduct(true);
     }
   };
+  console.log("category :", category);
 
   const handleNavShowMore = () => {
     try {
@@ -47,6 +48,15 @@ export default function ProdLinkShowByCatXs({
       } else if (category === "Tendences") {
         router.prefetch("/shopByCategory/shopByCatXs/tendencesCat");
         router.push("/shopByCategory/shopByCatXs/tendencesCat");
+      } else if (category === "Meilleuresventes") {
+        router.prefetch("/shopByCategory/shopByCatXs/mrVentesCat");
+        router.push("/shopByCategory/shopByCatXs/mrVentesCat");
+      } else if (category === "Bonsplans") {
+        router.prefetch("/shopByCategory/shopByCatXs/bonsPlansCat/");
+        router.push("/shopByCategory/shopByCatXs/bonsPlansCat/");
+      } else if (category === "Nouveautés") {
+        router.prefetch("/shopByCategory/shopByCatXs/nouveautesCat/");
+        router.push("/shopByCategory/shopByCatXs/nouveautesCat/");
       }
     } catch (err) {
       console.error(

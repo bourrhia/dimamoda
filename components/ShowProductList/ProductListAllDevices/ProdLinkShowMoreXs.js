@@ -30,25 +30,6 @@ export default function ProdLinkShowMoreXs({
     }
   };
 
-  /* const handleNavShowMore = () => {
-    try {
-      router.push(
-        `/product/showMoreProducts/${encodeURIComponent(
-          category
-        )}/${encodeURIComponent(searchTerm)}/${encodeURIComponent(
-          catTitle
-        )}/${encodeURIComponent(otherSearchTerm)}`
-      );
-    } catch (err) {
-      console.error(
-        "An error occurred while navigating to show more product: ",
-        err
-      );
-    } finally {
-      setNavShowMore(true);
-    }
-  }; */
-
   const handleNavShowMore = () => {
     try {
       router.push(

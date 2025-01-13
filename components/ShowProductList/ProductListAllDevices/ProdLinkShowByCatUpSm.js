@@ -47,6 +47,15 @@ export default function ProdLinkShowByCatUpSm({
       } else if (category === "Tendences") {
         router.prefetch("/shopByCategory/shopByCatUpSm/tendencesCat/");
         router.push("/shopByCategory/shopByCatUpSm/tendencesCat/");
+      } else if (category === "Meilleuresventes") {
+        router.prefetch("/shopByCategory/shopByCatUpSm/mrVentesCat/");
+        router.push("/shopByCategory/shopByCatUpSm/mrVentesCat/");
+      } else if (category === "Bonsplans") {
+        router.prefetch("/shopByCategory/shopByCatUpSm/bonsPlansCat/");
+        router.push("/shopByCategory/shopByCatUpSm/bonsPlansCat/");
+      } else if (category === "Nouveautés") {
+        router.prefetch("/shopByCategory/shopByCatUpSm/nouveautesCat/");
+        router.push("/shopByCategory/shopByCatUpSm/nouveautesCat/");
       }
     } catch (err) {
       console.error(
