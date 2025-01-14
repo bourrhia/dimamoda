@@ -243,7 +243,7 @@ export default async function Home() {
         <Box
           sx={{
             //maxHeight: '230px',
-            height: "180px",
+            height: "110px",
             //height: "600px",
             position: "relative",
             marginBottom: "0 !important",
