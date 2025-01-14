@@ -16,6 +16,7 @@ const HandlesNavBar = ({ children }) => {
   const [navFemme, setNavFemme] = useState(false);
   const [navFille, setNavFille] = useState(false);
   const [navGarcon, setNavGarcon] = useState(false);
+  const [navBigSize, setNavBigSize] = useState(false);
 
   const menuItems = [
     { label: "Acceuil", path: "/", onClick: () => handleNavHome() },
@@ -43,6 +44,11 @@ const HandlesNavBar = ({ children }) => {
       label: "Garçon",
       path: "/shopByCategory/shopByCatUpSm/garconCat",
       onClick: () => handleNavGarcon(),
+    },
+    {
+      label: "Grandes Tailles",
+      path: "/shopByCategory/shopByCatUpSm/bigSizeCat",
+      onClick: () => handleNavBigSize(),
     },
   ];
 
@@ -112,6 +118,17 @@ const HandlesNavBar = ({ children }) => {
     }
   };
 
+  const handleNavBigSize = () => {
+    try {
+      setNavBigSize(true);
+      router.prefetch("/shopByCategory/shopByCatUpSm/bigSizeCat/");
+      router.push("/shopByCategory/shopByCatUpSm/bigSizeCat/");
+    } catch (error) {
+    } finally {
+      setNavBigSize(false);
+    }
+  };
+
   return (
     <>
       {(navTendences ||
@@ -119,7 +136,8 @@ const HandlesNavBar = ({ children }) => {
         navHomme ||
         navFemme ||
         navFille ||
-        navGarcon) && <ShowLoading />}
+        navGarcon ||
+        navBigSize) && <ShowLoading />}
 
       <Box
         component="ul"

@@ -12,6 +12,7 @@ import GirlIcon from "@mui/icons-material/Girl";
 import BoyIcon from "@mui/icons-material/Boy";
 import ShopIcon from "@mui/icons-material/Shop";
 import ManIcon from "@mui/icons-material/Man";
+import PeopleIcon from "@mui/icons-material/People";
 
 function HeaderXs() {
   const vHandleNavHomeButt = "handleNavHomeButt";
@@ -56,6 +57,13 @@ function HeaderXs() {
       href: "/shopByCategory/shopByCatXs/garconCat",
       icon: <BoyIcon />,
     },
+
+    {
+      id: "7",
+      title: "Grandes tailles",
+      href: "/shopByCategory/shopByCatXs/bigSizeCat",
+      icon: <PeopleIcon />,
+    },
   ];
 
   return (
@@ -78,7 +86,6 @@ function HeaderXs() {
             minWidth: "90px",
             webkitBoxOrdinalGroup: 2,
             order: 1,
-            //paddingLeft: "16px",
             paddingLeft: "4px",
           }}
         >

@@ -8,6 +8,7 @@ import PrdListUpMd3 from "../../components/ShowProductList/ProductListUpSm/PrdLi
 import PrdListXs1 from "../../components/ShowProductList/ProductListMobile/PrdListXs1";
 import PrdListXs2 from "../../components/ShowProductList/ProductListMobile/PrdListXs2";
 import clientPromise from "../../lib/mongodb";
+import Image from "next/image";
 
 const sanitizeData = (data) =>
   data.map((item) => ({
@@ -174,6 +175,109 @@ export default async function Home() {
 
   return (
     <>
+      <Box
+        sx={{
+          display: {
+            xs: "none",
+            sm: "block",
+            // md: "block",
+            // lg: "block",
+          },
+          // width: "100%",
+          width: "100vw",
+          //width: "1200",
+          // maxWidth: "1500px",
+          //  margin: "0 auto",
+          textAlign: "left",
+        }}
+      >
+        <Box
+          sx={{
+            //maxHeight: '230px',
+            //height: "180px",
+            height: "350px",
+            position: "relative",
+            marginBottom: "0 !important",
+            width: "100vw",
+            //
+            //textAlign: "center",
+          }}
+        >
+          <Box
+            sx={{
+              height: "100%",
+              // overflow: 'hidden',
+              position: "relative",
+              width: "100vw",
+
+              marginBottom: "0 !important",
+              padding: 0,
+              margin: 0,
+            }}
+          >
+            <Image
+              src="/bandimalamode.png"
+              alt="Image"
+              fill
+              priority
+              //sizes="(min-width: 1200px) 16vw, (min-width: 1083px) 20vw, (min-width: 900px) 25vw,(min-width: 600px) 33vw"
+              style={{
+                objectFit: "contain",
+                //padding: "10px 10px 10px 10px",
+              }}
+            />
+          </Box>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          display: { xs: "block", sm: "none" },
+          // width: "100%",
+          width: "100vw",
+          //width: "1200",
+          // maxWidth: "1500px",
+          //  margin: "0 auto",
+          textAlign: "left",
+        }}
+      >
+        <Box
+          sx={{
+            //maxHeight: '230px',
+            height: "180px",
+            //height: "600px",
+            position: "relative",
+            marginBottom: "0 !important",
+            width: "100vw",
+            //
+            //textAlign: "center",
+          }}
+        >
+          <Box
+            sx={{
+              height: "100%",
+              // overflow: 'hidden',
+              position: "relative",
+              width: "100vw",
+
+              marginBottom: "0 !important",
+              padding: 0,
+              margin: 0,
+            }}
+          >
+            <Image
+              src="/bandimalamode.png"
+              alt="Image"
+              fill
+              priority
+              //sizes="(min-width: 1200px) 16vw, (min-width: 1083px) 20vw, (min-width: 900px) 25vw,(min-width: 600px) 33vw"
+              style={{
+                objectFit: "contain",
+                //padding: "10px 10px 10px 10px",
+              }}
+            />
+          </Box>
+        </Box>
+      </Box>
       <Box
         sx={{
           display: { xs: "none", sm: "block", md: "none" },
