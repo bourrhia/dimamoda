@@ -40,6 +40,7 @@ export const metadata = {
     "mode adulte",
     "mode enfant",
     "vêtements confortables",
+    "vêtements tendences",
     "style intemporel",
     "vêtements tendance",
     "mode accessible",
