@@ -312,7 +312,7 @@ export const PrdListXs2 = ({
           }}
         >
           <Box
-            component="h2"
+            // component="h2"
             sx={{
               paddingBottom: 0,
               fontSize: "20px",

@@ -177,105 +177,30 @@ export default async function Home() {
     <>
       <Box
         sx={{
-          display: {
-            xs: "none",
-            sm: "block",
-            // md: "block",
-            // lg: "block",
-          },
-          // width: "100%",
           width: "100vw",
-          //width: "1200",
-          // maxWidth: "1500px",
-          //  margin: "0 auto",
+          maxWidth: "1312px",
           textAlign: "left",
+          padding: 0,
+          paddingBottom: "4px",
+          margin: 0,
         }}
       >
         <Box
           sx={{
-            //maxHeight: '230px',
-            //height: "180px",
-            height: "350px",
+            height: "30vw !important",
             position: "relative",
-            marginBottom: "0 !important",
-            width: "100vw",
-            //
-            //textAlign: "center",
+            width: "100%",
           }}
         >
-          <Box
-            sx={{
-              height: "100%",
-              // overflow: 'hidden',
-              position: "relative",
-              width: "100vw",
-
-              marginBottom: "0 !important",
-              padding: 0,
-              margin: 0,
+          <Image
+            src="/bandimalamode.png"
+            alt="Image"
+            fill
+            priority
+            style={{
+              objectFit: "contain",
             }}
-          >
-            <Image
-              src="/bandimalamode.png"
-              alt="Image"
-              fill
-              priority
-              //sizes="(min-width: 1200px) 16vw, (min-width: 1083px) 20vw, (min-width: 900px) 25vw,(min-width: 600px) 33vw"
-              style={{
-                objectFit: "contain",
-                //padding: "10px 10px 10px 10px",
-              }}
-            />
-          </Box>
-        </Box>
-      </Box>
-      <Box
-        sx={{
-          display: { xs: "block", sm: "none" },
-          // width: "100%",
-          width: "100vw",
-          //width: "1200",
-          // maxWidth: "1500px",
-          //  margin: "0 auto",
-          textAlign: "left",
-        }}
-      >
-        <Box
-          sx={{
-            //maxHeight: '230px',
-            height: "110px",
-            //height: "600px",
-            position: "relative",
-            marginBottom: "0 !important",
-            width: "100vw",
-            //
-            //textAlign: "center",
-          }}
-        >
-          <Box
-            sx={{
-              height: "100%",
-              // overflow: 'hidden',
-              position: "relative",
-              width: "100vw",
-
-              marginBottom: "0 !important",
-              padding: 0,
-              margin: 0,
-            }}
-          >
-            <Image
-              src="/bandimalamode.png"
-              alt="Image"
-              fill
-              priority
-              //sizes="(min-width: 1200px) 16vw, (min-width: 1083px) 20vw, (min-width: 900px) 25vw,(min-width: 600px) 33vw"
-              style={{
-                objectFit: "contain",
-                //padding: "10px 10px 10px 10px",
-              }}
-            />
-          </Box>
+          />
         </Box>
       </Box>
       <Box
@@ -285,7 +210,7 @@ export default async function Home() {
           marginRight: "32px",
           maxWidth: "1248px",
           marginBottom: "64px",
-          marginTop: "32px",
+          marginTop: "4px",
           width: "100%",
           height: "100%",
         }}
@@ -408,7 +333,7 @@ export default async function Home() {
           marginRight: "32px",
           maxWidth: "1248px",
           marginBottom: "64px",
-          marginTop: "32px",
+          marginTop: "8px",
           width: "100%",
           height: "100%",
         }}
