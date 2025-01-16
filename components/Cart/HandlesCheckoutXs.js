@@ -297,8 +297,6 @@ export const HandlesCheckoutXs = () => {
       }
     };
 
-    // const mtLiv = 10;
-
     const mtLiv = 0;
 
     const cartMtLiv = parseFloat(Math.round(mtLiv * 100) / 100).toFixed(2);
@@ -353,7 +351,6 @@ export const HandlesCheckoutXs = () => {
       let email = data.email;
 
       const canAddOrder = [
-        // email,
         nom,
         prenom,
         ville,
@@ -939,14 +936,14 @@ export const HandlesCheckoutXs = () => {
                         ":WebkitAnyLink": {
                           cursor: "pointer",
                         },
-                        height: "34px",
-                        width: "75px",
+                        height: "30px",
+                        width: "60px",
                         top: "0.75rem",
                       }}
                     >
                       <Image
                         role="presentation"
-                        src="/logopic.svg"
+                        src="/logodimalamode.svg"
                         alt="logo"
                         sizes="100vw"
                         style={{
@@ -955,8 +952,8 @@ export const HandlesCheckoutXs = () => {
                           position: "absolute",
                           left: 0,
                         }}
-                        width={75}
-                        height={34}
+                        width={60}
+                        height={30}
                       />
                     </Box>
                   </Box>
@@ -1008,6 +1005,8 @@ export const HandlesCheckoutXs = () => {
                 "&:last-child": {
                   borderBottom: "none",
                 },
+                //
+                marginTop: "24px",
               }}
             >
               <Box

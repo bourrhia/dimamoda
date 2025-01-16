@@ -198,7 +198,7 @@ export const HandlesShowCartXs = () => {
       );
     };
 
-    const mtLiv = 10;
+    const mtLiv = 0;
 
     const cartMtLiv = parseFloat(Math.round(mtLiv * 100) / 100).toFixed(2);
 
@@ -1026,43 +1026,35 @@ export const HandlesShowCartXs = () => {
                       </Box>
                     </Box>
                   </Box>
-                  <Box
-                    sx={{
-                      alignItems: "center",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      marginBottom: "0.5rem",
-                      WebkitTextSizeAdjust: "100%",
-                      color: "#191919",
-                      fontSize: "0.875rem",
-                    }}
-                  >
-                    <Box>
-                      <Box
-                        component="span"
-                        sx={{
-                          alignItems: "center",
-                          display: "inline-flex",
-                          WebkitTextSizeAdjust: "100%",
-                          color: "#191919",
-                          fontSize: "0.875rem",
-                        }}
-                      >
-                        <Box component="span">
-                          <Box component="span">Livraison</Box>
-                        </Box>
-                      </Box>
-                    </Box>
+                  {cartMtLiv > 0 && (
                     <Box
                       sx={{
-                        textAlign: "right",
+                        alignItems: "center",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        marginBottom: "0.5rem",
                         WebkitTextSizeAdjust: "100%",
                         color: "#191919",
                         fontSize: "0.875rem",
                       }}
                     >
+                      <Box>
+                        <Box
+                          component="span"
+                          sx={{
+                            alignItems: "center",
+                            display: "inline-flex",
+                            WebkitTextSizeAdjust: "100%",
+                            color: "#191919",
+                            fontSize: "0.875rem",
+                          }}
+                        >
+                          <Box component="span">
+                            <Box component="span">Livraison</Box>
+                          </Box>
+                        </Box>
+                      </Box>
                       <Box
-                        component="span"
                         sx={{
                           textAlign: "right",
                           WebkitTextSizeAdjust: "100%",
@@ -1070,12 +1062,22 @@ export const HandlesShowCartXs = () => {
                           fontSize: "0.875rem",
                         }}
                       >
-                        <Box component="span">
-                          <Box component="span"> {cartMtLiv}&nbsp;Dhs</Box>
+                        <Box
+                          component="span"
+                          sx={{
+                            textAlign: "right",
+                            WebkitTextSizeAdjust: "100%",
+                            color: "#191919",
+                            fontSize: "0.875rem",
+                          }}
+                        >
+                          <Box component="span">
+                            <Box component="span"> {cartMtLiv}&nbsp;Dhs</Box>
+                          </Box>
                         </Box>
                       </Box>
                     </Box>
-                  </Box>
+                  )}
                   <Box
                     sx={{
                       margin: "0.75rem 0",

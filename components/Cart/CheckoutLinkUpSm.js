@@ -46,8 +46,6 @@ export default function CheckoutLinkUpSm({
           sx={{
             overflow: "hidden",
             position: "relative",
-            width: "117px",
-            height: "48px",
             color: "#3665f3",
             textDecoration: "underline",
             ":-webkit-any-link": {
@@ -57,6 +55,8 @@ export default function CheckoutLinkUpSm({
             top: "14px",
             left: 0,
             border: 0,
+            width: "100px",
+            height: "80px",
           }}
         >
           {children}

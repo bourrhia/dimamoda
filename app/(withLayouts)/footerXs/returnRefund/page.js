@@ -370,7 +370,7 @@ export const ReturnRefundXs = () => {
             WebkitTextSizeAdjust: "100%",
           }}
         >
-          Le retour doit être effectué dans un délai de XX jours à compter de la
+          Le retour doit être effectué dans un délai de 15 jours à compter de la
           réception de votre commande. Passé ce délai, nous nous réservons le
           droit de refuser le remboursement et de retourner l'article.
         </Box>

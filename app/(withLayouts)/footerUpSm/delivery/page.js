@@ -178,8 +178,8 @@ export const DeliveryUpSm = () => {
           }}
         >
           Dans la majorité des cas, et dans la mesure du possible, nous veillons
-          à livrer ou à mettre votre colis à disposition dans un délai de XX à
-          XX jours ouvrables après confirmation de votre commande (du lundi au
+          à livrer ou à mettre votre colis à disposition dans un délai de 1 à 4
+          jours ouvrables après confirmation de votre commande (du lundi au
           samedi, hors jours fériés).
         </Box>
         <Box
@@ -203,7 +203,7 @@ export const DeliveryUpSm = () => {
           }}
         >
           Pour les clients résidant en dehors de Casablanca, le délai de
-          livraison peut atteindre XX jours ouvrables.
+          livraison peut atteindre 4 jours ouvrables.
         </Box>
         <Box
           component="p"
@@ -227,6 +227,7 @@ export const DeliveryUpSm = () => {
         >
           Frais de Livraison
         </Box>
+
         <Box
           component="p"
           sx={{
@@ -247,33 +248,8 @@ export const DeliveryUpSm = () => {
             WebkitTextSizeAdjust: "100%",
           }}
         >
-          Les frais de livraison vous seront précisés au moment de la validation
-          de votre commande. De plus, les frais de livraison sont offerts pour
-          toute commande d’un montant supérieur ou égal à XXX Dhs.
-        </Box>
-        <Box
-          component="p"
-          sx={{
-            boxSizing: "inherit",
-            fontSize: "14px",
-            lineHeight: "20px",
-            color: "#41413f",
-            display: "block",
-            marginBlockStart: "1em",
-            marginBlockEnd: "1em",
-            marginInlineStart: "0px",
-            marginInlineEnd: "0px",
-            unicodeBidi: "isolate",
-            WebkitFontSmoothing: "antialiased",
-            fontWeight: 400,
-            colorScheme: "only light",
-            MsTextSizeAdjust: "100%",
-            WebkitTextSizeAdjust: "100%",
-          }}
-        >
-          Les frais de livraison au Maroc sont fixés à XX Dhs pour Casablanca et
-          à XX Dhs hors Casablanca. Pour une livraison internationale, nous vous
-          invitons à nous contacter via WhatsApp au
+          La livraison est gratuite au Maroc. Pour une livraison internationale,
+          nous vous invitons à nous contacter via WhatsApp au
           <strong>+212 6 61 44 91 63</strong>.
         </Box>
       </Box>

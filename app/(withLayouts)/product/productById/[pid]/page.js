@@ -11,7 +11,9 @@ async function generateAllPrds() {
   const client = await clientPromise;
   const db = client.db(process.env.MONGODB_DB);
 
-  const allPrdsImg = await db.collection("product").find().limit(21).toArray();
+  //const allPrdsImg = await db.collection("product").find().limit(21).toArray();
+
+  const allPrdsImg = await db.collection("product").find().toArray();
 
   return allPrdsImg;
 }

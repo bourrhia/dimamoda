@@ -342,7 +342,6 @@ export const HandlesCheckoutUpSm = () => {
       }
     };
 
-    //const mtLiv = 10;
     const mtLiv = 0;
 
     const cartMtLiv = parseFloat(Math.round(mtLiv * 100) / 100).toFixed(2);
@@ -873,15 +872,15 @@ export const HandlesCheckoutUpSm = () => {
                     <Box>
                       <CheckoutLinkUpSm buttonName={vNavHomeButt}>
                         <Image
-                          src="/logopic.svg"
+                          src="/logodimalamode.svg"
                           alt="logo"
                           sizes="100vw"
                           style={{
                             width: "100%",
                             height: "auto",
                           }}
-                          width={150}
-                          height={35}
+                          width={100}
+                          height={80}
                         />
                       </CheckoutLinkUpSm>
                     </Box>
