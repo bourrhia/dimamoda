@@ -82,7 +82,8 @@ export const metadata = {
       "Découvrez notre boutique en ligne dédiée aux vêtements de qualité pour adultes et enfants. Une large gamme de prêt-à-porter pour tous les styles et occasions.",
     images: [
       {
-        url: "/opengraph-image.png", // Path to your image in the public folder
+        // url: "/opengraph-image.png", // Path to your image in the public folder
+        url: "https://dimalamode.com/opengraph-image.png",
         alt: "A beautiful collection of our latest fashion designs.",
         width: 1200, // Recommended Open Graph width
         height: 630, // Recommended Open Graph height
