@@ -84,7 +84,7 @@ export const metadata = {
     type: "website", // Use 'website' or 'article', depending on the content
     images: [
       {
-        url: "https://dimalamode.com/opengraph-image.png", // Full URL of the image
+        url: "https://www.dimalamode.com/opengraph-image.png", // Full URL of the image
         alt: "Vêtements de Qualité pour Toute la Famille - Mode en Ligne.",
         width: 1200,
         height: 630,
@@ -102,7 +102,7 @@ export const metadata = {
       "Découvrez notre boutique en ligne dédiée aux vêtements de qualité pour adultes et enfants. Une large gamme de prêt-à-porter pour tous les styles et occasions.",
     images: [
       {
-        url: "https://dimalamode.com/twitter-image.png", // Full URL of the Twitter image
+        url: "https://www.dimalamode.com/twitter-image.png", // Full URL of the Twitter image
         alt: "Vêtements de Qualité pour Toute la Famille - Mode en Ligne.",
       },
     ],
