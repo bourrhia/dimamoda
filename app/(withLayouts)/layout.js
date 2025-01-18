@@ -84,13 +84,30 @@ export const metadata = {
     title: "Vêtements de Qualité pour Toute la Famille - Mode en Ligne",
     description:
       "Découvrez notre boutique en ligne dédiée aux vêtements de qualité pour adultes et enfants. Une large gamme de prêt-à-porter pour tous les styles et occasions.",
+    url: "https://www.dimalamode.com", // Add the canonical URL of your page
+    type: "website", // Use 'website' or 'article', depending on the content
     images: [
       {
-        url: "/opengraph-image.png", // Path to your image in the public folder
-        alt: "A beautiful collection of our latest fashion designs.",
-        width: 1200, // Recommended Open Graph width
-        height: 630, // Recommended Open Graph height
+        url: "https://dimalamode.com/opengraph-image.png", // Full URL of the image
+        alt: "Vêtements de Qualité pour Toute la Famille - Mode en Ligne.",
+        width: 1200,
+        height: 630,
         type: "image/png",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image", // Use the "summary_large_image" card type for a large preview
+    // site: "@YourTwitterHandle", // Replace with your Twitter handle (optional)
+    // creator: "@YourTwitterHandle", // Replace with your Twitter handle (optional)
+    title: "Vêtements de Qualité pour Toute la Famille - Mode en Ligne",
+    description:
+      "Découvrez notre boutique en ligne dédiée aux vêtements de qualité pour adultes et enfants. Une large gamme de prêt-à-porter pour tous les styles et occasions.",
+    images: [
+      {
+        url: "https://dimalamode.com/twitter-image.png", // Full URL of the Twitter image
+        alt: "Vêtements de Qualité pour Toute la Famille - Mode en Ligne.",
       },
     ],
   },
