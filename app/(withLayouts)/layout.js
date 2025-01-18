@@ -99,8 +99,8 @@ export const metadata = {
 
   twitter: {
     card: "summary_large_image", // Use the "summary_large_image" card type for a large preview
-    // site: "@YourTwitterHandle", // Replace with your Twitter handle (optional)
-    // creator: "@YourTwitterHandle", // Replace with your Twitter handle (optional)
+    site: "@dimalamode", // Replace with your actual Twitter handle
+    creator: "@dimalamode", // Replace with your actual Twitter handle
     title: "Vêtements de Qualité pour Toute la Famille - Mode en Ligne",
     description:
       "Découvrez notre boutique en ligne dédiée aux vêtements de qualité pour adultes et enfants. Une large gamme de prêt-à-porter pour tous les styles et occasions.",
