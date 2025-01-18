@@ -90,6 +90,7 @@ export const metadata = {
         alt: "A beautiful collection of our latest fashion designs.",
         width: 1200, // Recommended Open Graph width
         height: 630, // Recommended Open Graph height
+        type: "image/png",
       },
     ],
   },
