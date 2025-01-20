@@ -68,9 +68,7 @@ export const metadata = {
     "mode accessible",
     "tendance mode",
   ],
-  icons: {
-    icon: "/favicdimalamode.png",
-  },
+
   authors: {
     name: "DimaLamode",
     url: "https://www.dimalamode.com",
